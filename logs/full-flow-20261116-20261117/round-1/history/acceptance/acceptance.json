@@ -1,0 +1,115 @@
+{
+  "ok": true,
+  "status": "passed",
+  "observed_at": "2026-11-17 01:50:27 +0800",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "checks": {
+    "same_participant_campaign": true,
+    "same_journal_campaign": true,
+    "same_task_and_baseline": true,
+    "upgrade_launch_receipt": true,
+    "outer_harness": true,
+    "official_formal_budget": true,
+    "model_calls_64_63_1": true,
+    "all_original_model_receipts_unchanged": true,
+    "uncertain_reservation_preserved": true,
+    "uncertain_charge_remains_unknown": true,
+    "same_contract": true,
+    "contract_parent": true,
+    "candidate_preflight": true,
+    "candidate_diff_collected": true,
+    "prechecked_candidate_source_unchanged": true,
+    "at_most_one_evaluation": true,
+    "same_submission_request": true,
+    "one_bound_submit_intent": true,
+    "evaluation_succeeded": true,
+    "public_receipt_binding": true,
+    "public_feedback_matches_official_score": true,
+    "official_score_binding": true,
+    "exact_nine_training_cells": true,
+    "all_nine_physically_valid": true,
+    "finite_official_scores": true,
+    "summary_same_campaign_and_delivery": true,
+    "summary_pending_charge": true,
+    "official_agent_delivery": true,
+    "official_session_completed": true,
+    "participant_finished_one_record": true
+  },
+  "failed_assertions": [],
+  "pending": [],
+  "evaluations": [
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "task": "full_flow",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "status": "succeeded",
+      "accepted_at": "2026-11-16T13:20:44.942757+00:00",
+      "completed_at": "2026-11-16T17:20:18.254705+00:00",
+      "reason": null
+    }
+  ],
+  "job_outbox_states": {
+    "pending": 9
+  },
+  "model_call_states": {
+    "settled": 63,
+    "uncertain": 1
+  },
+  "settled_cost_rmb": "0.31092516",
+  "reserved_uncertain_rmb": "2.228224",
+  "actual_total_model_charge_rmb": null,
+  "accounting_note": "The uncertain provider request remains reserved; its actual charge is unknown.",
+  "scope": "One full_flow training evaluation; no held-out/test feedback, physical artifacts, model or evaluation calls.",
+  "artifacts": {
+    "session-result.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/session-result.json",
+      "sha256": "fe98c648fb1c1761128c29df91100964e14f5440ac2d007dd81440b05097fe4f",
+      "bytes": 551
+    },
+    "agent-session-result.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/control/agent-session-result.json",
+      "sha256": "ef9ec1abf1ef66f810ae1b675b2be28c09c48b7bb54b9e745c4c6edbc6477e56",
+      "bytes": 113
+    },
+    "state.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/state.json",
+      "sha256": "f66c079ef9987fe11ba7a96bb53575aad0153413de70e4f163863d637cac3a3d",
+      "bytes": 17179
+    },
+    "summary.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/summary.json",
+      "sha256": "d851f91b4d6f305dc40b0ef36031f0e073c6fdb9a2d44d5cd4e7ef2b7f785dba",
+      "bytes": 4098
+    },
+    "contract.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/contract.json",
+      "sha256": "988139d7c0b20e6e7fb066b9d3b9bc2a95e4502e5af626f821930e5653fc9b77",
+      "bytes": 6042
+    },
+    "preflight.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/preflight-1.json",
+      "sha256": "c9ee875b4a8452ea4c53230502457805957f8c336325cffc4991282ad5d2e27b",
+      "bytes": 4685
+    },
+    "official-evidence.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/official-evidence.json",
+      "sha256": "d5f1a2135d070e1507359c706a28e183dbd988ce2e309965014b0ded2c3d7a53",
+      "bytes": 19101631
+    },
+    "evaluations/49518aee056fd7d032539e65aa231e3266846902/feedback.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/feedback.json",
+      "sha256": "4cfff1c1d0d2f6cd625d88b3676dc3bb9d6c108081637625c13abe87152fd545",
+      "bytes": 5059
+    },
+    "evaluations/49518aee056fd7d032539e65aa231e3266846902/competition-score.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/control/contest-agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/competition-score.json",
+      "sha256": "79f9faa530873fd6c3db5aaefd02049985e114513ec962c500f4fe6bc13ea27c",
+      "bytes": 4286
+    },
+    "candidate.diff": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/candidates/ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc/tree",
+      "bytes": 1123,
+      "sha256": "4df66d32aa2fd86b5cd60d8c3355746ee18b609e1ef517a90a607bfbbcd1a929"
+    }
+  }
+}

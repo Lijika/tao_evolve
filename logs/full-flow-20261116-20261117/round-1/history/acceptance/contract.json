@@ -1,0 +1,55 @@
+{
+  "contract_id": "adf9465b45b1dbe31cbe46636f971623916c656e-crossdie-fanout-weight-v1",
+  "task": "full_flow",
+  "parent_candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+  "main_mechanism": "In Concurrent LoL global placement, treat the default unit cross-die multiplier as an automatic mode: scale each cross-die net weight by a fanout-aware factor (1.30 for two-pin nets, 1.15 for three-pin nets, 1.05 for four-or-more-pin nets). This gives nets that must traverse an HBT a stronger placement pull toward aligned die-local coordinates, while an explicit non-unit cross_die_net_weight remains authoritative.",
+  "tradeoff_statement": "Stronger cross-die weights can shorten point-to-point cross-die wirelength and reduce HBT-interface detours, but may pull cells toward die boundaries, raising local density, legalization displacement and GRT overflow; no area, power or runtime improvement is guaranteed.",
+  "portability_obligation": "The mechanism depends on a valid partition_assignment, real DEF net/pin identity and DREAMPlace net_weights. It makes no claim for unseen PDKs, designs or seeds; degree thresholds are a source-level timing proxy, not a calibrated criticality model, and the edit must remain confined to the placement objective without changing netlist, PDK, Liberty, LEF, SDC or clock contracts.",
+  "final_endpoint": "post_grt",
+  "falsifier": "Reject this candidate if a comparable same-stage parent/child evaluation with identical design, seed, config and routing schedule shows no improvement in post-GRT cross-die HPWL or WNS/TNS, or shows increased GRT overflow, DRC, legalization displacement or a PDN/HBT/CTS contract failure; also reject if a paid ablation of the fanout factors is indistinguishable from the parent.",
+  "edit_stages": [
+    "placement"
+  ],
+  "source_refs": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+    "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+  ],
+  "impact_refs": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+    "open3dbench/runner.py:2269"
+  ],
+  "downstream_obligations": [
+    "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in their existing stage contract.",
+    "Keep die fences, node-to-fence assignment, macro halo, legalization and PDN execution unchanged; only net objective weights may change.",
+    "Keep HBT grid/placement, CTS clock/parasitic models, routing layers/adjustment, endpoint coverage and stage order unchanged.",
+    "Compare parent and child only on matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+    "Retain every training case/seed cell, including failures, in later evidence; unknown cells must remain unknown until an official evaluation exists."
+  ],
+  "physical_invariants": [
+    "Net weights remain finite and positive; only cross-die nets with endpoints on both assigned dies are scaled.",
+    "Die assignment and physical connectivity are not rewritten; cross-die net identity continues to come from pin-to-node assignment.",
+    "Placement units remain DREAMPlace DBU/um consistent; target density, site/row geometry and macro-halo constraints are untouched.",
+    "HBT, PDN, CTS, SDC, clock, Liberty, LEF and RC/parasitic models are not modified by this edit.",
+    "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+  ],
+  "unknowns": [
+    "No official scored matrix exists for this campaign; all nine training cells are unscored and no -100 failure cells were supplied.",
+    "No comparable parent/child cell, stage report or cross-process paid ablation is available, so physical sign and magnitude are unknown.",
+    "The post-GRT scoring weights among timing, wirelength, congestion and power are unknown.",
+    "The assumption that low-fanout cross-die nets are timing-critical is unverified for these designs.",
+    "Training case/seed concentration and cross-process generalization are unknown because no scored cell exists.",
+    "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists."
+  ],
+  "task_analysis": {
+    "candidate_intervention_set": [
+      "placement"
+    ],
+    "first_observed_divergence": "No official parent/child cell or stage report exists. The first source-observable divergence is at Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:307-322, where the default unit-multiplier path now enters an automatic fanout-aware branch and changes cross-die net_weights; the first physical divergence is unmeasured.",
+    "downstream_constraints": "Placement must still emit the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage parent/child reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+    "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+    "endpoint_expected_effect": "At post_grt, expect equal or lower cross-die weighted HPWL and possibly lower WNS/TNS if cross-die nets are critical, at the risk of higher local congestion and GRT overflow; sign, magnitude and critical-set migration remain unknown.",
+    "alternative_explanation": "Any post-GRT change could instead come from placement density, legalization displacement or local congestion rather than cross-die weighting. Untested short alternatives are a uniform cross-die weight boost and a backend-density whitespace reserve; neither is claimed as causal without a paid ablation."
+  }
+}

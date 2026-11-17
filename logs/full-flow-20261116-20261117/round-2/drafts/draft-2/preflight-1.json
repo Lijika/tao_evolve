@@ -1,0 +1,505 @@
+{
+  "assurance": "source_scope_and_integrity_only",
+  "changed_paths": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+  ],
+  "digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+  "errors": [
+    "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+    "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count"
+  ],
+  "portability_card": {
+    "assurance": "source_observations_require_evidence_disposition",
+    "candidate_digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+    "changed_paths": [
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+    ],
+    "items": {
+      "explanation_scope": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "observed_processes": [
+          "ng45"
+        ],
+        "review_flag_ids": [],
+        "scope": "observed_source_only",
+        "status": "source_observed",
+        "transfer_status": "CROSS_PROCESS_UNVERIFIED"
+      },
+      "failure_behavior": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "only_separate_executed_contracts_can_establish_coverage"
+        ]
+      },
+      "feature_origin": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "input_feature_information_flow_not_verified"
+        ]
+      },
+      "process_attributes": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "process_parameter_origin_not_semantically_verified"
+        ]
+      },
+      "randomness": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "seed_use_and_selection_behavior_not_semantically_verified"
+        ]
+      },
+      "scale": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [
+          "cc4ad8c27b9d84f09431",
+          "56c2a1ba3e3e8316a7ad",
+          "060f223f6e250222a531",
+          "b809b1a8a28e249123aa",
+          "5fbaff87efb1274268b3"
+        ],
+        "status": "unknown",
+        "unknowns": [
+          "normalization_population_and_branch_activation_not_verified"
+        ]
+      },
+      "units": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "numeric_units_and_conversion_require_source_review"
+        ]
+      }
+    },
+    "review_flags": [
+      {
+        "category": "scale",
+        "id": "cc4ad8c27b9d84f09431",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:315",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "56c2a1ba3e3e8316a7ad",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:321",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "060f223f6e250222a531",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:322",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "b809b1a8a28e249123aa",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:323",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "5fbaff87efb1274268b3",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:325",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      }
+    ],
+    "schema_version": 1,
+    "source_evidence": [
+      {
+        "changed_lines": [
+          306,
+          310,
+          311,
+          312,
+          313,
+          314,
+          315,
+          316,
+          317,
+          318,
+          319,
+          320,
+          321,
+          322,
+          323,
+          324,
+          325,
+          326,
+          327
+        ],
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      }
+    ],
+    "status": "review_required",
+    "unknowns": []
+  },
+  "probes": {
+    "assurance": "READY_FOR_OFFICIAL_UNPROVEN_PHYSICAL",
+    "budget_seconds": 180.0,
+    "cache": {
+      "enabled": true,
+      "reason": "exact_execution_inputs"
+    },
+    "capabilities": {
+      "A0": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      },
+      "A1": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      },
+      "B0": {
+        "reason": "tested_contract_only",
+        "status": "pass"
+      },
+      "B1": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "C": {
+        "reason": "public_placement_summary_has_no_current_pin_geometry_or_capacity",
+        "status": "unknown"
+      },
+      "D": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "E": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "F": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      }
+    },
+    "hard_errors": [],
+    "results": [
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "A0",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "binding": {
+          "mode": "candidate_code_executed",
+          "module": "/workspace/workspaces/bef488b75834ded48302fec1e54dede48d3d2adf/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py",
+          "python_version": "3.8.10",
+          "source_sha256": {
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          "torch_version": "1.7.1+cu110"
+        },
+        "cache": {
+          "execution_reused": false,
+          "key": "45d41ebb377330fc98df90289efe0168f213c2149c491b2dfd85266383e7f2d0",
+          "record": "/workspace/scratch/tao-evolve/6eb7bdac44e94227b27fddf42e989687/probe-cache/45d41ebb377330fc98df90289efe0168f213c2149c491b2dfd85266383e7f2d0.json",
+          "status": "miss",
+          "stored": true
+        },
+        "candidate_bound": true,
+        "contract_verified": true,
+        "coverage": [
+          "density_range",
+          "net_weight_summary",
+          "initialization_region",
+          "pin_projection_and_gradient"
+        ],
+        "elapsed_seconds": 0.874,
+        "evidence_id": "/workspace/scratch/tao-evolve/draft-2/probes-1/B0-first/result.json",
+        "hard_errors": [],
+        "input_class": "synthetic_fixture",
+        "input_current": true,
+        "invariant_errors": [],
+        "kind": "invariant",
+        "metrics": {
+          "density_cases": 10,
+          "initialization_same_seed_equal": true,
+          "weight_cases": 3
+        },
+        "probe": "B0",
+        "reason": "tested_contract_only",
+        "reproducible": false,
+        "status": "pass"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "A1",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "C",
+        "reason": "public_placement_summary_has_no_current_pin_geometry_or_capacity",
+        "reproducible": false,
+        "status": "unknown"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "F",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "B1",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "D",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "E",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      }
+    ]
+  },
+  "research_assessment": {
+    "assurance": "reference_and_consistency_checks_not_algorithm_quality_proof",
+    "behavior_assessment": {
+      "assurance": "model_reported",
+      "claimed_status": "source_hypothesis",
+      "current_candidate_behavior_verified": false,
+      "limitation": "Source references and prior measurements do not prove current draft execution."
+    },
+    "decision": "evaluate",
+    "errors": [
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count"
+    ],
+    "measurement_checks": [
+      {
+        "consumer_source": {
+          "first_line": 311,
+          "last_line": 315,
+          "sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55",
+          "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:311-315",
+          "text": "    cross_die_count = len(cross_die_ids)\n    automatic_weight = float(multiplier) == 1.0\n    total_net_count = len(placedb.net2pin_map)\n    if automatic_weight and total_net_count:\n        automatic_weight = cross_die_count <= 0.12 * total_net_count"
+        },
+        "declared_population_match": "unknown",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+        "limitation": "Consumer meaning and population correspondence remain model interpretations.",
+        "public_measurement": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "case": "bp_fe-ng45",
+          "coverage": "unknown",
+          "definition": "output/run/20_partition/metrics.json#cut_net_ratio",
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "seed": 1001,
+          "unit": "unknown",
+          "value": 0.12845038599133873
+        },
+        "use": "support"
+      },
+      {
+        "consumer_source": {
+          "first_line": 306,
+          "last_line": 311,
+          "sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55",
+          "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306-311",
+          "text": "    cross_die_ids = []\n    for net_id in range(len(placedb.net2pin_map)):\n        dies = set(_iter_node_dies_for_net(placedb, net_id, assignment))\n        if len(dies) >= 2:\n            cross_die_ids.append(net_id)\n    cross_die_count = len(cross_die_ids)"
+        },
+        "declared_population_match": "unknown",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+        "limitation": "Consumer meaning and population correspondence remain model interpretations.",
+        "public_measurement": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "case": "bp_fe-ng45",
+          "coverage": "unknown",
+          "definition": "output/run/30_placement/metrics.json#cross_die_net_count",
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "seed": 1001,
+          "unit": "unknown",
+          "value": 3411
+        },
+        "use": "support"
+      },
+      {
+        "consumer_source": {
+          "first_line": 169,
+          "last_line": 170,
+          "sha256": "9d27641e4d9e37af48d211799ba3bef42547ce7a4e289c2783147d02d5d0bfb8",
+          "source_ref": "open3dbench/backend/post_route.py:169-170",
+          "text": "puts $metrics \"wns_setup\\t[sta::time_sta_ui [sta::worst_slack_cmd max]]\"\nputs $metrics \"tns_setup\\t[sta::time_sta_ui [sta::total_negative_slack_cmd max]]\""
+        },
+        "declared_population_match": "same",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.wns_deficit_ns",
+        "limitation": "Consumer meaning and population correspondence remain model interpretations.",
+        "public_measurement": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "case": "ariane133-ng45",
+          "coverage": "all_constrained_setup_endpoints",
+          "definition": "post-grt-passive-hbt-timing:metrics.wns_deficit_ns",
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "seed": 1001,
+          "unit": "ns",
+          "value": 0.7956884265574681
+        },
+        "use": "counterevidence"
+      },
+      {
+        "consumer_source": {
+          "first_line": 169,
+          "last_line": 170,
+          "sha256": "9d27641e4d9e37af48d211799ba3bef42547ce7a4e289c2783147d02d5d0bfb8",
+          "source_ref": "open3dbench/backend/post_route.py:169-170",
+          "text": "puts $metrics \"wns_setup\\t[sta::time_sta_ui [sta::worst_slack_cmd max]]\"\nputs $metrics \"tns_setup\\t[sta::time_sta_ui [sta::total_negative_slack_cmd max]]\""
+        },
+        "declared_population_match": "same",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.tns_deficit_ns",
+        "limitation": "Consumer meaning and population correspondence remain model interpretations.",
+        "public_measurement": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "case": "ariane133-ng45",
+          "coverage": "all_constrained_setup_endpoints",
+          "definition": "post-grt-passive-hbt-timing:metrics.tns_deficit_ns",
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "seed": 1001,
+          "unit": "ns",
+          "value": 376.2350608663137
+        },
+        "use": "counterevidence"
+      },
+      {
+        "consumer_source": {
+          "first_line": 718,
+          "last_line": 733,
+          "sha256": "3181471270c493c16af6dd2b9c1072e7a0540389054469bc3d73404e3b5c1825",
+          "source_ref": "open3dbench/backend/three_d_route.py:718-733",
+          "text": "def _grt_metrics(directory: Path) -> Dict[str, object]:\n    log = directory / \"grt.log\"\n    text = log.read_text(encoding=\"utf-8\", errors=\"replace\")\n    if \"OPEN3D_GRT_DONE die={}\".format(directory.name) not in text:\n        raise ThreeDRouteError(\"GRT has no completion marker: {}\".format(log))\n    lengths = re.findall(r\"\\[INFO GRT-0018\\] Total wirelength:\\s*([0-9.]+)\\s+um\", text)\n    times = re.findall(r\"Global routing runtime\\s*=\\s*(\\d+):(\\d+):(\\d+)\", text)\n    if not lengths or not times:\n        raise ThreeDRouteError(\"GRT has no wirelength/runtime summary: {}\".format(log))\n    hours, minutes, seconds = map(int, times[-1])\n    overflow = _grt_overflow_count(log)\n    return {\n        \"grt_total_overflow\": overflow,\n        \"grt_congestion_bins\": _grt_congestion_count(directory, overflow),\n        \"grt_wire_length_um\": float(lengths[-1]),\n        \"grt_native_runtime_seconds\": hours * 3600 + minutes * 60 + seconds,"
+        },
+        "declared_population_match": "same",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cell:bp_fe-ng45:1001#overflow_penalty",
+        "limitation": "Consumer meaning and population correspondence remain model interpretations.",
+        "public_measurement": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "case": "bp_fe-ng45",
+          "coverage": "official_cell",
+          "definition": "public_feedback.cells.overflow_penalty",
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "seed": 1001,
+          "unit": "ratio",
+          "value": 0.0
+        },
+        "use": "support"
+      }
+    ],
+    "reflection": {
+      "competing_explanation": "The mixed parent result may reflect seed noise, placement density, legalization, CTS, or routing rather than cross-die weighting; uniform damping and full reversion remain untested.",
+      "next_discriminating_check": "Run the official nine-cell matrix and compare matched post-GRT endpoint metrics against parent ecf5, checking bp_fe recovery, retained bp/Ariane gains, overflow, DRC, and legality.",
+      "observations": "Parent ecf5 is complete and valid at score -6.5938: bp_fe is negative on all three seeds, Ariane 1001 is clamped to -100, and Ariane 1003 is +130.39. The guarded source change is present but unexecuted.",
+      "supporting_counterevidence": "Cross-die ratios are 0.128-0.138 for bp_fe and 0.039-0.118 for bp/Ariane, supporting a guard aimed at the harmed case; counterevidence is the lack of same-stage parent/child cells and Ariane 1001's poor result despite a low ratio."
+    },
+    "reflection_subject": {
+      "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "evidence_role": "latest_experiment_for_reflection",
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "task": "full_flow"
+    },
+    "unknowns": [
+      "measurement_population:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+      "measurement_population:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+      "candidate_effect_requires_official_evaluation"
+    ],
+    "version": 1
+  },
+  "review": {
+    "confirmed_violations": [],
+    "disposition": "unknown",
+    "portability_flag_ids": [
+      "cc4ad8c27b9d84f09431",
+      "56c2a1ba3e3e8316a7ad",
+      "060f223f6e250222a531",
+      "b809b1a8a28e249123aa",
+      "5fbaff87efb1274268b3"
+    ],
+    "semantic_warnings": [],
+    "status": "review_required"
+  },
+  "warnings": []
+}

@@ -1,0 +1,196 @@
+{
+  "status": "passed_for_recovery_and_checkpoint_execution",
+  "observed_at": "2026-11-17 04:48:54 +0800",
+  "reviewed_at": "2026-11-17T04:55:01.832987+08:00",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "scope": "Read-only local verification of archived real recovery, accounting, research schema and official session; no SSH, code edits or new evaluation.",
+  "checks": {
+    "collector_passed": true,
+    "all94_original_model_rows_unchanged": true,
+    "all126_pre_fix_model_rows_unchanged": true,
+    "all3_original_budget_rows_unchanged": true,
+    "legacy_missing_ids_not_fabricated": true,
+    "all_budget_charges_stay_unknown": true,
+    "all4_original_codex_intents_and_receipts_unchanged": true,
+    "recovered_success_receipt_preserved": true,
+    "recovered_turn_observed_exactly_once": true,
+    "recovery_event_uses_existing_turn": true,
+    "only2_new_draft3_codex_intents": true,
+    "one_original_evaluation_preserved": true,
+    "one_original_submit_intent_preserved": true,
+    "research_marker_and_phase": true,
+    "top_level_contract_schema_complete": true,
+    "research_review_schema_complete": true,
+    "reflection_four_fields_complete": true,
+    "reflection_preserved_in_assessment": true,
+    "reflection_subject_bound_to_actual_evidence": true,
+    "portability_and_cost_plan_schema_complete": true,
+    "measurement_row_schema_complete": true,
+    "current_review_fields_and_preflight_agree": true,
+    "current_candidate_identity_bound": true,
+    "original_champion_is_parent_and_return_value": true,
+    "unsubmitted_checkpoint": true,
+    "session_succeeded_and_services_stopped": true,
+    "unchanged_first_champion_score_and_cells": true,
+    "snapshot_stable_and_original_harness": true,
+    "all_collected_artifact_hashes_match": true,
+    "official_model_totals": true,
+    "original_uncertain_row_unchanged": true,
+    "actual_total_charge_stays_unknown": true,
+    "cached_response_branch_bound_to_installed_package": true,
+    "final_successful_model_turn_bound": true
+  },
+  "failed_checks": [],
+  "historical_preservation": {
+    "model_rows_from_original_second_checkpoint": 94,
+    "model_rows_before_fix": 126,
+    "all_model_rows_unchanged": true,
+    "legacy_budget_rows_unchanged": 3,
+    "legacy_rows_without_id_preserved": 2,
+    "codex_intents_before_fix_preserved": 4
+  },
+  "recovery": {
+    "request_id": "5e402ec71f510e94be73342860da383df53e58f3",
+    "successful_receipt_reused": true,
+    "observation_count": 1,
+    "model_redelivery": "No new AgentContext.codex_turn dispatch for the recovered logical turn: the persisted succeeded receipt is identical, recovering=true is recorded, and the installed adapter returns the cached journal response before dispatch.",
+    "new_codex_turn_ids": [
+      "a2452c4295cb2a4146900ce2ade98fd6d680a461",
+      "448c3a70151caf67f2beb80c7a3ee2d6a77d7793"
+    ],
+    "new_turn_scope": "draft-3 design plus its one repair; these are new authorized turns, separately retained.",
+    "prior_draft_rejection": [
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count"
+    ]
+  },
+  "checkpoint": {
+    "draft_key": "draft-3",
+    "phase": "submit_ready",
+    "repair_count": 1,
+    "research_review_version": 1,
+    "tree_digest": "0d57dd24144a05d8739a882de16d0fcbc9aacb3d85487f95ece5d0d2de4ed64b",
+    "official_evaluations": 1,
+    "submit_intents": 1,
+    "officially_submitted": false,
+    "official_score": null,
+    "physical_validity": null,
+    "research_decision": "evaluate",
+    "research_errors": [],
+    "reflection_fields": [
+      "competing_explanation",
+      "next_discriminating_check",
+      "observations",
+      "supporting_counterevidence"
+    ],
+    "reflection_subject": {
+      "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "evidence_role": "latest_experiment_for_reflection",
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "task": "full_flow"
+    },
+    "behavior_assessment": {
+      "assurance": "model_reported",
+      "claimed_status": "source_hypothesis",
+      "current_candidate_behavior_verified": false,
+      "limitation": "Source references and prior measurements do not prove current draft execution."
+    },
+    "research_unknowns": [
+      "measurement_population:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+      "measurement_population:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+      "measurement_population:49518aee056fd7d032539e65aa231e3266846902:cell:bp_fe-ng45:1001#overflow_penalty",
+      "candidate_effect_requires_official_evaluation"
+    ],
+    "reflection_memory_scope": "The new reflection is retained in active contract/assessment. This unsubmitted draft has no new official record yet, so future record_research and next-turn memory reuse are not demonstrated by this checkpoint."
+  },
+  "session": {
+    "status": "succeeded",
+    "services_stopped": true,
+    "reason": "design_review_checkpoint",
+    "accepted_champion": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "champion_score": -6.593792926992297,
+    "valid_cells": 9,
+    "training_budget": 1
+  },
+  "accounting": {
+    "provider_requests": 170,
+    "settled": 169,
+    "settled_cost_rmb": "1.29919808",
+    "uncertain": 1,
+    "reserved_uncertain_rmb": "2.228224",
+    "uncertain_request_id": "156bf54ba0fc47339a9fbabae6a8c85e",
+    "actual_total_model_charge_rmb": null,
+    "new_provider_rows_since126": 44,
+    "settled_increment_since126_rmb": "0.28160456"
+  },
+  "evidence": {
+    "final_acceptance": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/acceptance.json",
+      "sha256": "97787a682f11958658b34171918ad4a84006767ffcf6bfc7df76ebe2e571132a"
+    },
+    "final_snapshot": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/snapshot.json",
+      "sha256": "9f56b7732955ab5c8d56ed172692f1d1d8e2b51b9c440b0365d6664fe8941245"
+    },
+    "original94_snapshot": {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/snapshot.json",
+      "sha256": "e8ae0ef8ac220e5f815d141728af0f790614c23abb662dc7f5c92b67f32d3669"
+    },
+    "pre_fix126_snapshot": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/acceptance/snapshot.json",
+      "sha256": "c773f4b40271661423c6bfd361ad8b8b929a7e2db802d38f148921ec7de106ac"
+    },
+    "first_installation": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/install-receipt.json",
+      "sha256": "39154e40b64a806ad0a3727f8db8ab725b8ea23ea2eda6a5b26d73390738e6b5"
+    },
+    "fixed_installation": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/install-receipt.json",
+      "sha256": "c330fc41f7324bd5d8632f50707d11c1f59039b4f0493c36219730b85ab0c73f"
+    },
+    "fixed_launch": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/launch-receipt.json",
+      "sha256": "7b8ee0aaf3c1bfba96706918cba997fca1c15adcb824e93fb9a1aee76bc38f7c"
+    },
+    "recovery_sample": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/recovered-draft-check.json",
+      "sha256": "26b8e3f3eb7e48804e13391bb535aaf612b44f5324793f0517d9d88ad9d443c9"
+    },
+    "final_state": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/state.json",
+      "sha256": "5797cc8515f25988623ef1179154f1f7bb9633a18399dda7a021fc03e435f6d8"
+    },
+    "contract": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/draft/contract.json",
+      "sha256": "6a46d1563daec8257ec3c4247d351b7105edbbd9919075c4c660cbd2fb468e4c"
+    },
+    "contract_schema": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/draft/contract-schema.json",
+      "sha256": "6807480edf5b15500804a487de102f21f6c00776bc11ab315d6e72cdea3554b1"
+    },
+    "preflight": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/draft/preflight-1.json",
+      "sha256": "1a7d83f9836cfc0cc44790c1e58e073f9a843b3481bafcf610645c7adbbe48f0"
+    },
+    "session": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/acceptance/session-result.json",
+      "sha256": "fe98c648fb1c1761128c29df91100964e14f5440ac2d007dd81440b05097fe4f"
+    },
+    "adapter": {
+      "path": "/home/lhjysyx/taoeda/agent-development/architecture-review-20261117/legacy-observation-fix/dist/agent/full_flow/tao_evolve/adapter.py",
+      "sha256": "9f7b986757a636c0e0e44b4f711f3bad39b578e456f18c3af07e0ed25b69d52c",
+      "symbol": "PublicAdapter.codex",
+      "line_start": 167,
+      "cached_return_line": 172
+    }
+  },
+  "not_verified": [
+    "Algorithm effectiveness, the new draft physical validity, and its official score require its own complete official evaluation.",
+    "This report checks research schema and archived consistency results; it does not independently establish natural-language causal claims or threshold quality.",
+    "The complete remote checkout is not archived here. Full source-reference validation was executed remotely and preserved in assessment; this local audit does not rerun every reference against a complete checkout.",
+    "Provider ledger rows in these snapshots do not include a per-Codex-turn attribution field. Cached logical-turn non-redelivery is established from the unchanged success receipt, real recovery event and installed adapter branch, rather than a new network trace.",
+    "Service shutdown follows the official services_stopped receipt; this task did not perform a fresh SSH process query.",
+    "The original uncertain request has no trusted settlement receipt; actual total model charge remains unknown."
+  ]
+}

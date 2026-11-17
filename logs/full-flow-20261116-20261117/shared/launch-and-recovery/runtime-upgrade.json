@@ -1,0 +1,14 @@
+{
+  "backup": "/mnt/taoeda-work/agent-development/runtime-upgrade",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "retained_official_requests": {
+    "evaluations": 0,
+    "model_calls": 64
+  },
+  "retained_draft": "draft-1",
+  "participant_state_sha256": "59c148eea4f57e87e89f866f38d4f91a68f7b1a5c7f3653c04d25c53fbcac07b",
+  "official_framework_verified": true,
+  "resource_config_matches_original_campaign": true,
+  "agent_files": 65,
+  "official_ledger_manually_modified": false
+}

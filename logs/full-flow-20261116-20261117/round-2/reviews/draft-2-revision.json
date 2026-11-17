@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-17",
+  "runtime_inclusion": false,
+  "task": "full_flow",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "draft_key": "draft-2",
+  "checkout_id": "bef488b75834ded48302fec1e54dede48d3d2adf",
+  "turn_request_id": "5e402ec71f510e94be73342860da383df53e58f3",
+  "snapshot_root": "legacy-observation-fix/before",
+  "snapshot_observed_at": "2026-11-17 04:30:25 +0800",
+  "snapshot_stable": true,
+  "status": "initial_revision_review_completed_material_content_error",
+  "scope": "Finished model-turn output from the archived failed session; subsequent recovery and final version acceptance are outside this review.",
+  "model_turn": {
+    "success": true,
+    "duration_seconds": 156.4910394109902,
+    "terminal_tool_calls": 30,
+    "source": "legacy-observation-fix/before/turn-result.json"
+  },
+  "execution": {
+    "official_session_status": "failed",
+    "cause": "Controller._observe_model indexed turn_request_id in two historical budget_observations rows that have no such key.",
+    "failure_type": "KeyError",
+    "failure_key": "turn_request_id",
+    "controller_validate_reached_after_this_turn": false,
+    "design_review_checkpoint_reached": false,
+    "official_evaluations": 1,
+    "submit_intents": 1,
+    "second_draft_officially_submitted": false,
+    "second_draft_physical_validity": null,
+    "second_draft_official_score": null,
+    "evidence": [
+      "revision-failure-logs.json",
+      "legacy-observation-fix/before/state.json#budget_observations",
+      "legacy-observation-fix/before/session-result.json",
+      "legacy-observation-fix/before/acceptance.json"
+    ]
+  },
+  "quality_review_completed": true,
+  "candidate_quality_accepted": false,
+  "ready_for_next_official_evaluation": false,
+  "overall_conclusion": "模型准确补写公开测量及WNS/TNS反证，仍将集合未确认一致的partition比例用作12%消费者分支的support。会话在研究校验前因历史预算记录兼容问题失败，内容通过与整体通过均未成立。",
+  "criteria": [
+    {
+      "id": "Q1",
+      "criterion": "反馈与父代身份",
+      "verdict": "supported",
+      "finding": "prompt、evidence和contract均绑定当前campaign的首轮ecf5候选，最新反馈与编辑父代分别声明。",
+      "evidence": ["legacy-observation-fix/before/draft/prompt-1.txt#mandatory.reflection_binding", "legacy-observation-fix/before/draft/contract.json#parent_candidate_id"]
+    },
+    {
+      "id": "Q2",
+      "criterion": "完整九组与退化",
+      "verdict": "supported_with_wording_error",
+      "finding": "九组完整，识别bp_fe三组负分和Ariane种子波动；unknowns仍误写nine seeds，实际三个种子。",
+      "evidence": ["legacy-observation-fix/before/draft/contract-evidence.json#cells", "legacy-observation-fix/before/draft/contract.json#unknowns", "legacy-observation-fix/before/final-report.md"]
+    },
+    {
+      "id": "Q3",
+      "criterion": "对准正式终点",
+      "verdict": "improved_partial",
+      "finding": "新增Ariane1001的WNS/TNS反证和overflow引用，五项数字与catalog一致；局部绝对值与官方归一化分项的对应仍需限定。",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#research_review.measurement_checks", "legacy-observation-fix/before/draft/contract-evidence.json#measurement_catalog"]
+    },
+    {
+      "id": "Q4",
+      "criterion": "跨阶段解释与因果边界",
+      "verdict": "supported_uncertainty_boundary",
+      "finding": "明确缺少可比父子矩阵和端点映射，保留density、legalization、CTS/routing及seed等替代解释。",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#task_analysis", "legacy-observation-fix/before/draft/contract-evidence.json#risk"]
+    },
+    {
+      "id": "Q5",
+      "criterion": "机制与实际代码",
+      "verdict": "material_content_error",
+      "finding": "前两项测量以population unknown和unit unknown声明support，仍断言partition比例会触发PlaceDB的12%开关。",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#research_review.measurement_checks[0:2]", "legacy-observation-fix/before/final-report.md", "../round-2-design/design-quality-review.json#count_comparison"]
+    },
+    {
+      "id": "Q6",
+      "criterion": "收益、代价与可推翻假设",
+      "verdict": "testable_statement_without_verified_trigger",
+      "finding": "反证可观察，但真实九组触发行为与运行代价未在此次归档证明；模型自报只补合同、算法原样。",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#falsifier", "legacy-observation-fix/before/draft/contract.json#tradeoff_statement", "legacy-observation-fix/before/final-report.md"]
+    },
+    {
+      "id": "Q7",
+      "criterion": "证据不足时的判断",
+      "verdict": "partial",
+      "finding": "物理效果、端点迁移和跨工艺泛化保持unknown；最终报告仍把未知集合的比例作为确定支撑。",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#research_review.behavior_check", "legacy-observation-fix/before/draft/contract.json#unknowns", "legacy-observation-fix/before/final-report.md"]
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR1",
+      "severity": "high",
+      "status": "confirmed_content_contradiction",
+      "finding": "两条support同时声明集合未知且单位未知，第一条又断言bp_fe关闭自动权重。",
+      "indices": [0, 1],
+      "catalog_values": [0.12845038599133873, 3411],
+      "partition_numerator": 3411,
+      "partition_denominator": 26555,
+      "consumer_population_claimed": "PlaceDB net2pin_map",
+      "support_compatibility_static_check": false,
+      "expected_error_prefix_from_current_source": "research_measurement_support_incompatible:",
+      "runtime_assessment_of_final_contract": "not_reached_in_archived_session",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#research_review.measurement_checks[0:2]", "../../contest-source/agent/full_flow/tao_evolve/research_record.py:199"]
+    },
+    {
+      "id": "IR2",
+      "severity": "medium",
+      "status": "independent_verification_missing",
+      "finding": "模型报告py_compile和四项单测通过，固定归档未含命令输出及新候选源码副本，无法独立确认当前候选绑定及真实输入触发覆盖。",
+      "model_claimed_algorithm_unchanged": true,
+      "full_checkout_available_in_fixed_archive": false,
+      "local_assess_research_executed": false,
+      "reason_not_executed": "No complete corresponding checkout; avoid manufacturing source-reference success or failure.",
+      "evidence": ["legacy-observation-fix/before/final-report.md", "legacy-observation-fix/before/draft/contract.json#research_review.behavior_check"]
+    },
+    {
+      "id": "IR3",
+      "severity": "low",
+      "status": "confirmed_wording_and_unmeasured_claim",
+      "finding": "nine seeds与三个种子九组不符；runtime guarantees缺本次测量支撑。",
+      "evidence": ["legacy-observation-fix/before/draft/contract.json#unknowns", "legacy-observation-fix/before/draft/contract.json#tradeoff_statement"]
+    }
+  ],
+  "measurement_verification": {
+    "checked_count": 5,
+    "exact_value_definition_unit_matches": 5,
+    "support_incompatibility_indices": [0, 1],
+    "method": "Read-only comparison against the fixed archived measurement_catalog and static examination of current assess_research support conditions.",
+    "full_assessor_run": false
+  },
+  "knowledge_boundary": {
+    "expert_knowledge_text_empty": true,
+    "reflection_memory_empty": true,
+    "all_five_measurement_refs_current_campaign_first_evaluation": true,
+    "no_violation_observed_in_archived_prompt_and_contract": true,
+    "complete_terminal_transcript_reviewed": false,
+    "scope_limit": "Only archived prompt, evidence, contract and final turn result; no claim of complete execution-trace audit.",
+    "review_injected_into_runtime": false
+  },
+  "artifact_sha256": {
+    "legacy-observation-fix/before/draft/contract.json": "353d3acc98598bbcbd95dbf0635144818c2c321ff04225fce04cf56c95bafe72",
+    "legacy-observation-fix/before/draft/contract-evidence.json": "380d644ed57bed331362e60c4e2af18a682c5f60f8e9be16f800fe4131de0d9e",
+    "legacy-observation-fix/before/final-report.md": "fcb9a8a814ef4b1400d0b0fef5e8dcbe38ff5eefe8c0f9b09d12613320566644",
+    "legacy-observation-fix/before/turn-result.json": "0ad567c3fd4a19556c13358cc00da5c7d36ca816c41c8ff90c15dbd05d5f090e",
+    "legacy-observation-fix/before/session-result.json": "b866bc7834909222a4e1045a9ca36233b163396b08f350b44d5449249c7edf87"
+  },
+  "remaining_evidence": [
+    "Same-request recovery receipt and actual research assessment of this completed turn.",
+    "Final controller disposition and official session status.",
+    "Fresh candidate source/diff and original bounded-test outputs if current behavior is claimed independently verified.",
+    "Candidate-specific official evaluation for any physical-effect or score claim."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "evidence_files": 3052,
+  "cell_archives": 9,
+  "remote_export_checks": {
+    "files": 2971,
+    "exported_at": "2026-11-17 15:28:16 +0800",
+    "credential_replacements": 0,
+    "exported_bytes": 66124203,
+    "json": 1635,
+    "jsonl": 115,
+    "text": 1221,
+    "jsonl_lines": 843
+  },
+  "local_capture_files_checked": 81,
+  "credential_replacements": 0,
+  "archive_members_and_hashes_verified": true,
+  "source_files_modified": false,
+  "scope": "Publication content, format and provenance only; no model or physical evaluation rerun.",
+  "semantic_checks": {
+    "complete_model_turns": 6,
+    "journal_codex_intents": 6,
+    "journal_submit_intents": 1,
+    "official_evaluations": 1,
+    "official_cells": 9,
+    "official_valid_cells": 9,
+    "official_score": -6.593792926992297,
+    "round_2_phase": "submit_ready",
+    "round_2_official_evaluation_submitted": false,
+    "recovery_reused_existing_request_id": true,
+    "session_status": "succeeded",
+    "turn_receipts_match_journal_and_codex_state": true
+  },
+  "independent_credential_review": {
+    "files": 69,
+    "gzip_files": 2,
+    "decoded_bytes_approx": 48400000,
+    "scope": "Six model turns, Controller records and launch/recovery records",
+    "checks": [
+      "API keys",
+      "token/password assignments",
+      "Bearer credentials",
+      "URL passwords",
+      "GitHub tokens",
+      "JWT",
+      "private key headers",
+      "nested JSON"
+    ],
+    "suspicious_matches": 0,
+    "turn_event_lines": 377,
+    "turn_final_text_matches_result": true
+  }
+}

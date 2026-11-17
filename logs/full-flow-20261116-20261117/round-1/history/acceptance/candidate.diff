@@ -1,0 +1,27 @@
+--- parent/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py
++++ candidate/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py
+@@ -304,12 +304,22 @@
+ 
+ def _apply_cross_die_net_weights(placedb, assignment: Mapping[int, str], multiplier: float) -> Tuple[int, float]:
+     cross_die_count = 0
++    automatic_weight = float(multiplier) == 1.0
+     for net_id in range(len(placedb.net2pin_map)):
+         dies = set(_iter_node_dies_for_net(placedb, net_id, assignment))
+         if len(dies) >= 2:
+             cross_die_count += 1
+-            if multiplier != 1.0:
+-                placedb.net_weights[net_id] *= multiplier
++            factor = float(multiplier)
++            if automatic_weight:
++                degree = len(placedb.net2pin_map[net_id])
++                if degree <= 2:
++                    factor = 1.30
++                elif degree == 3:
++                    factor = 1.15
++                else:
++                    factor = 1.05
++            if factor != 1.0:
++                placedb.net_weights[net_id] *= factor
+     return cross_die_count, float(np.sum(placedb.net_weights))
+ 
+ 

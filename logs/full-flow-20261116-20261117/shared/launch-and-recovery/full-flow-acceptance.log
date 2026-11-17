@@ -1,0 +1,71 @@
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/mnt/taoeda-work/contest-source/framework/competition/agent_runner.py", line 114, in <module>
+    main()
+  File "/mnt/taoeda-work/contest-source/framework/competition/agent_runner.py", line 96, in main
+    candidate = run_agent(startup_command=startup, name=name, scratch=scratch)
+  File "/mnt/taoeda-work/contest-source/framework/competition/agent_container.py", line 112, in run_agent
+    raise RuntimeError("Agent.run failed; see agent.stderr")
+RuntimeError: Agent.run failed; see agent.stderr
+Traceback (most recent call last):
+  File "/mnt/taoeda-work/contest-source/start.py", line 12, in <module>
+    raise SystemExit(main())
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 364, in main
+    return run(args.task, release=release, data_file=data_file,
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 285, in run
+    raise RuntimeError("Agent session failed; inspect its retained logs")
+RuntimeError: Agent session failed; inspect its retained logs
+Traceback (most recent call last):
+  File "/mnt/taoeda-work/contest-source/start.py", line 12, in <module>
+    raise SystemExit(main())
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 364, in main
+    return run(args.task, release=release, data_file=data_file,
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 244, in run
+    config_path = _bootstrap(config, release, task_name)
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 152, in _bootstrap
+    raise ValueError("Existing contest deployment differs; use a separate work directory")
+ValueError: Existing contest deployment differs; use a separate work directory
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/mnt/taoeda-work/contest-source/framework/competition/agent_runner.py", line 114, in <module>
+    main()
+  File "/mnt/taoeda-work/contest-source/framework/competition/agent_runner.py", line 96, in main
+    candidate = run_agent(startup_command=startup, name=name, scratch=scratch)
+  File "/mnt/taoeda-work/contest-source/framework/competition/agent_container.py", line 112, in run_agent
+    raise RuntimeError("Agent.run failed; see agent.stderr")
+RuntimeError: Agent.run failed; see agent.stderr
+Traceback (most recent call last):
+  File "/mnt/taoeda-work/contest-source/start.py", line 12, in <module>
+    raise SystemExit(main())
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 364, in main
+    return run(args.task, release=release, data_file=data_file,
+  File "/mnt/taoeda-work/contest-source/framework/competition/launch.py", line 285, in run
+    raise RuntimeError("Agent session failed; inspect its retained logs")
+RuntimeError: Agent session failed; inspect its retained logs
+{
+  "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+  "training_budget": 1
+}
+{
+  "task": "full_flow",
+  "evaluation_mode": "formal",
+  "work_root": "/mnt/taoeda-work/contest-work/full_flow",
+  "baseline": {
+    "candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+    "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+    "reference_cells": 15,
+    "physical_replay": false
+  },
+  "status": "succeeded",
+  "agent": {
+    "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "training_budget": 1
+  },
+  "services_stopped": true
+}

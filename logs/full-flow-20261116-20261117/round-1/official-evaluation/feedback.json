@@ -1,0 +1,162 @@
+{
+  "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+  "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+  "status": "succeeded",
+  "reason": null,
+  "feedback": {
+    "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "cells": [
+      {
+        "case": "bp_fe-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": -55.26847361545787,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 339.2830195787466,
+          "wns_ns": 0.6848528604730505
+        },
+        "score": -55.26847361545787,
+        "seed": 1001,
+        "tns_improvement": -0.5986346508842654,
+        "valid": true,
+        "wns_improvement": -0.4837598640600486
+      },
+      {
+        "case": "bp_fe-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": -11.202262913701672,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 339.2830195787466,
+          "wns_ns": 0.6848528604730505
+        },
+        "score": -11.202262913701672,
+        "seed": 1002,
+        "tns_improvement": 0.006963793162135275,
+        "valid": true,
+        "wns_improvement": -0.2905022625857447
+      },
+      {
+        "case": "bp_fe-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": -32.37863930035398,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 339.2830195787466,
+          "wns_ns": 0.6848528604730505
+        },
+        "score": -32.37863930035398,
+        "seed": 1003,
+        "tns_improvement": -0.3017884123252465,
+        "valid": true,
+        "wns_improvement": -0.3567833640209797
+      },
+      {
+        "case": "bp-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": -4.719286773631615,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 7709.019494591678,
+          "wns_ns": 7.97252834464225
+        },
+        "score": -4.719286773631615,
+        "seed": 1001,
+        "tns_improvement": -0.08127227400123847,
+        "valid": true,
+        "wns_improvement": 0.0039262416610673185
+      },
+      {
+        "case": "bp-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": 10.095481049074893,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 7709.019494591678,
+          "wns_ns": 7.97252834464225
+        },
+        "score": 10.095481049074893,
+        "seed": 1002,
+        "tns_improvement": 0.17203835590730998,
+        "valid": true,
+        "wns_improvement": -0.005670507634092613
+      },
+      {
+        "case": "bp-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": -1.4382908592195527,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 7709.019494591678,
+          "wns_ns": 7.97252834464225
+        },
+        "score": -1.4382908592195527,
+        "seed": 1003,
+        "tns_improvement": -0.02863573894283609,
+        "valid": true,
+        "wns_improvement": 0.006996336933765319
+      },
+      {
+        "case": "ariane133-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": -143.99450727907416,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 136.73199137711958,
+          "wns_ns": 0.7123820253851022
+        },
+        "score": -100.0,
+        "seed": 1001,
+        "tns_improvement": -2.5276540299069543,
+        "valid": true,
+        "wns_improvement": 0.19161836288357742
+      },
+      {
+        "case": "ariane133-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": 5.175826124197975,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 136.73199137711958,
+          "wns_ns": 0.7123820253851022
+        },
+        "score": 5.175826124197975,
+        "seed": 1002,
+        "tns_improvement": -0.1382205608892833,
+        "valid": true,
+        "wns_improvement": 0.3367264944388743
+      },
+      {
+        "case": "ariane133-ng45",
+        "overflow_penalty": 0.0,
+        "raw_score": 130.39150994616116,
+        "reason": null,
+        "reference_mean_deficits": {
+          "tns_ns": 136.73199137711958,
+          "wns_ns": 0.7123820253851022
+        },
+        "score": 130.39150994616116,
+        "seed": 1003,
+        "tns_improvement": 1.9076238495583646,
+        "valid": true,
+        "wns_improvement": 0.3983519743164829
+      }
+    ],
+    "completed_cells": 9,
+    "invalid_cells": 0,
+    "per_case": {
+      "ariane133-ng45": 11.855778690119713,
+      "bp-ng45": 1.312634472074575,
+      "bp_fe-ng45": -32.94979194317118
+    },
+    "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+    "score": -6.593792926992297,
+    "split": "train",
+    "task": "full_flow",
+    "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+    "verified_cells": 9
+  },
+  "artifacts_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+  "logs_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+  "files_index": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902/files.json"
+}

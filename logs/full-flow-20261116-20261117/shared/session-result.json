@@ -1,0 +1,17 @@
+{
+  "agent": {
+    "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "training_budget": 1
+  },
+  "baseline": {
+    "candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+    "physical_replay": false,
+    "reference_cells": 15,
+    "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f"
+  },
+  "evaluation_mode": "formal",
+  "services_stopped": true,
+  "status": "succeeded",
+  "task": "full_flow",
+  "work_root": "/mnt/taoeda-work/contest-work/full_flow"
+}

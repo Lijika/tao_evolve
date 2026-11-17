@@ -1,0 +1,304 @@
+{
+  "active": null,
+  "active_parent_roles": {
+    "delivery": null,
+    "exploration": null,
+    "score": null
+  },
+  "baseline": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+  "budget_observations": [
+    {
+      "after_available_rmb": "14.71719156",
+      "before_available_rmb": "15",
+      "draft": "draft-1",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "unresolved_model_calls": 0
+    },
+    {
+      "after_available_rmb": "12.46085084",
+      "before_available_rmb": "14.71719156",
+      "draft": "draft-1",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "unresolved_model_calls": 1
+    }
+  ],
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "draft_failures": 0,
+  "policy_digest": "264c55f0cf17a646abe79b9ba3c7f890dac2b72087176e7047e78b245c7e4af1",
+  "records": [
+    {
+      "contract": {
+        "contract_id": "adf9465b45b1dbe31cbe46636f971623916c656e-crossdie-fanout-weight-v1",
+        "downstream_obligations": [
+          "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in their existing stage contract.",
+          "Keep die fences, node-to-fence assignment, macro halo, legalization and PDN execution unchanged; only net objective weights may change.",
+          "Keep HBT grid/placement, CTS clock/parasitic models, routing layers/adjustment, endpoint coverage and stage order unchanged.",
+          "Compare parent and child only on matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+          "Retain every training case/seed cell, including failures, in later evidence; unknown cells must remain unknown until an official evaluation exists."
+        ],
+        "edit_stages": [
+          "placement"
+        ],
+        "falsifier": "Reject this candidate if a comparable same-stage parent/child evaluation with identical design, seed, config and routing schedule shows no improvement in post-GRT cross-die HPWL or WNS/TNS, or shows increased GRT overflow, DRC, legalization displacement or a PDN/HBT/CTS contract failure; also reject if a paid ablation of the fanout factors is indistinguishable from the parent.",
+        "final_endpoint": "post_grt",
+        "impact_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+          "open3dbench/runner.py:2269"
+        ],
+        "main_mechanism": "In Concurrent LoL global placement, treat the default unit cross-die multiplier as an automatic mode: scale each cross-die net weight by a fanout-aware factor (1.30 for two-pin nets, 1.15 for three-pin nets, 1.05 for four-or-more-pin nets). This gives nets that must traverse an HBT a stronger placement pull toward aligned die-local coordinates, while an explicit non-unit cross_die_net_weight remains authoritative.",
+        "parent_candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+        "physical_invariants": [
+          "Net weights remain finite and positive; only cross-die nets with endpoints on both assigned dies are scaled.",
+          "Die assignment and physical connectivity are not rewritten; cross-die net identity continues to come from pin-to-node assignment.",
+          "Placement units remain DREAMPlace DBU/um consistent; target density, site/row geometry and macro-halo constraints are untouched.",
+          "HBT, PDN, CTS, SDC, clock, Liberty, LEF and RC/parasitic models are not modified by this edit.",
+          "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+        ],
+        "portability_obligation": "The mechanism depends on a valid partition_assignment, real DEF net/pin identity and DREAMPlace net_weights. It makes no claim for unseen PDKs, designs or seeds; degree thresholds are a source-level timing proxy, not a calibrated criticality model, and the edit must remain confined to the placement objective without changing netlist, PDK, Liberty, LEF, SDC or clock contracts.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+          "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+        ],
+        "task": "full_flow",
+        "task_analysis": {
+          "alternative_explanation": "Any post-GRT change could instead come from placement density, legalization displacement or local congestion rather than cross-die weighting. Untested short alternatives are a uniform cross-die weight boost and a backend-density whitespace reserve; neither is claimed as causal without a paid ablation.",
+          "candidate_intervention_set": [
+            "placement"
+          ],
+          "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+          "downstream_constraints": "Placement must still emit the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage parent/child reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+          "endpoint_expected_effect": "At post_grt, expect equal or lower cross-die weighted HPWL and possibly lower WNS/TNS if cross-die nets are critical, at the risk of higher local congestion and GRT overflow; sign, magnitude and critical-set migration remain unknown.",
+          "first_observed_divergence": "No official parent/child cell or stage report exists. The first source-observable divergence is at Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:307-322, where the default unit-multiplier path now enters an automatic fanout-aware branch and changes cross-die net_weights; the first physical divergence is unmeasured."
+        },
+        "tradeoff_statement": "Stronger cross-die weights can shorten point-to-point cross-die wirelength and reduce HBT-interface detours, but may pull cells toward die boundaries, raising local density, legalization displacement and GRT overflow; no area, power or runtime improvement is guaranteed.",
+        "unknowns": [
+          "No official scored matrix exists for this campaign; all nine training cells are unscored and no -100 failure cells were supplied.",
+          "No comparable parent/child cell, stage report or cross-process paid ablation is available, so physical sign and magnitude are unknown.",
+          "The post-GRT scoring weights among timing, wirelength, congestion and power are unknown.",
+          "The assumption that low-fanout cross-die nets are timing-critical is unverified for these designs.",
+          "Training case/seed concentration and cross-process generalization are unknown because no scored cell exists.",
+          "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists."
+        ],
+        "verified_impact_refs": [
+          {
+            "first_line": 405,
+            "last_line": 405,
+            "sha256": "0f1ae69eb5019776afa998e70ba1196bd838e15f84e3cb78c969c245c251b87e",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+            "text": "        return (hpwl_x+hpwl_y)*self.net_weights[net_id]"
+          },
+          {
+            "first_line": 258,
+            "last_line": 271,
+            "sha256": "7f5cc89c291e5d29b959a2b01186d6ad3cf70d62cf1e7620973fefccd27456e1",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+            "text": "        self.net_weights = net_weights\n        self.net_mask = net_mask\n        self.pin_mask = pin_mask\n        self.gamma = gamma\n        self.algorithm = algorithm\n\n    def forward(self, pos):\n        if self.algorithm == 'net-by-net':\n            return WeightedAverageWirelengthFunction.apply(\n                pos,\n                self.flat_netpin,\n                self.netpin_start,\n                self.pin2net_map,\n                self.net_weights,"
+          },
+          {
+            "first_line": 2269,
+            "last_line": 2269,
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2269",
+            "text": "        placement = self.run_dir / STAGE_DIRS[\"placement\"]"
+          }
+        ],
+        "verified_source_refs": [
+          {
+            "first_line": 305,
+            "last_line": 323,
+            "sha256": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+            "text": "def _apply_cross_die_net_weights(placedb, assignment: Mapping[int, str], multiplier: float) -> Tuple[int, float]:\n    cross_die_count = 0\n    automatic_weight = float(multiplier) == 1.0\n    for net_id in range(len(placedb.net2pin_map)):\n        dies = set(_iter_node_dies_for_net(placedb, net_id, assignment))\n        if len(dies) >= 2:\n            cross_die_count += 1\n            factor = float(multiplier)\n            if automatic_weight:\n                degree = len(placedb.net2pin_map[net_id])\n                if degree <= 2:\n                    factor = 1.30\n                elif degree == 3:\n                    factor = 1.15\n                else:\n                    factor = 1.05\n            if factor != 1.0:\n                placedb.net_weights[net_id] *= factor\n    return cross_die_count, float(np.sum(placedb.net_weights))"
+          },
+          {
+            "first_line": 622,
+            "last_line": 626,
+            "sha256": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+            "text": "    cross_die_net_count, net_weight_sum = _apply_cross_die_net_weights(\n        placedb,\n        assignment,\n        float(cfg.get(\"cross_die_net_weight\", 0.2)),\n    )"
+          },
+          {
+            "first_line": 3,
+            "last_line": 3,
+            "sha256": "b527a379386ca6cf1336b00e79c5722761fe7ca46958dc3c7109697f380eff1c",
+            "source_ref": "Place-3D/config/placement/concurrent_dreamplace/default.json:3",
+            "text": "    \"cross_die_net_weight\": 1.0,"
+          }
+        ]
+      },
+      "parent_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+      "receipt": {
+        "artifacts_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+        "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+        "feedback": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "cells": [
+            {
+              "case": "bp_fe-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -55.26847361545787,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 339.2830195787466,
+                "wns_ns": 0.6848528604730505
+              },
+              "score": -55.26847361545787,
+              "seed": 1001,
+              "tns_improvement": -0.5986346508842654,
+              "valid": true,
+              "wns_improvement": -0.4837598640600486
+            },
+            {
+              "case": "bp_fe-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -11.202262913701672,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 339.2830195787466,
+                "wns_ns": 0.6848528604730505
+              },
+              "score": -11.202262913701672,
+              "seed": 1002,
+              "tns_improvement": 0.006963793162135275,
+              "valid": true,
+              "wns_improvement": -0.2905022625857447
+            },
+            {
+              "case": "bp_fe-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -32.37863930035398,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 339.2830195787466,
+                "wns_ns": 0.6848528604730505
+              },
+              "score": -32.37863930035398,
+              "seed": 1003,
+              "tns_improvement": -0.3017884123252465,
+              "valid": true,
+              "wns_improvement": -0.3567833640209797
+            },
+            {
+              "case": "bp-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -4.719286773631615,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 7709.019494591678,
+                "wns_ns": 7.97252834464225
+              },
+              "score": -4.719286773631615,
+              "seed": 1001,
+              "tns_improvement": -0.08127227400123847,
+              "valid": true,
+              "wns_improvement": 0.0039262416610673185
+            },
+            {
+              "case": "bp-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": 10.095481049074893,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 7709.019494591678,
+                "wns_ns": 7.97252834464225
+              },
+              "score": 10.095481049074893,
+              "seed": 1002,
+              "tns_improvement": 0.17203835590730998,
+              "valid": true,
+              "wns_improvement": -0.005670507634092613
+            },
+            {
+              "case": "bp-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -1.4382908592195527,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 7709.019494591678,
+                "wns_ns": 7.97252834464225
+              },
+              "score": -1.4382908592195527,
+              "seed": 1003,
+              "tns_improvement": -0.02863573894283609,
+              "valid": true,
+              "wns_improvement": 0.006996336933765319
+            },
+            {
+              "case": "ariane133-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -143.99450727907416,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 136.73199137711958,
+                "wns_ns": 0.7123820253851022
+              },
+              "score": -100.0,
+              "seed": 1001,
+              "tns_improvement": -2.5276540299069543,
+              "valid": true,
+              "wns_improvement": 0.19161836288357742
+            },
+            {
+              "case": "ariane133-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": 5.175826124197975,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 136.73199137711958,
+                "wns_ns": 0.7123820253851022
+              },
+              "score": 5.175826124197975,
+              "seed": 1002,
+              "tns_improvement": -0.1382205608892833,
+              "valid": true,
+              "wns_improvement": 0.3367264944388743
+            },
+            {
+              "case": "ariane133-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": 130.39150994616116,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 136.73199137711958,
+                "wns_ns": 0.7123820253851022
+              },
+              "score": 130.39150994616116,
+              "seed": 1003,
+              "tns_improvement": 1.9076238495583646,
+              "valid": true,
+              "wns_improvement": 0.3983519743164829
+            }
+          ],
+          "completed_cells": 9,
+          "invalid_cells": 0,
+          "per_case": {
+            "ariane133-ng45": 11.855778690119713,
+            "bp-ng45": 1.312634472074575,
+            "bp_fe-ng45": -32.94979194317118
+          },
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "score": -6.593792926992297,
+          "split": "train",
+          "task": "full_flow",
+          "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+          "verified_cells": 9
+        },
+        "files_index": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902/files.json",
+        "logs_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+        "reason": null,
+        "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+        "status": "succeeded"
+      },
+      "tree_digest": "20e9666e0063a5959c44d274170595296391373e7af2599a6d593f9289305f36"
+    }
+  ],
+  "sequence": 1,
+  "stagnation": 0,
+  "task": "full_flow",
+  "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+  "version": 1
+}

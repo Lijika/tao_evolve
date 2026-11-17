@@ -1,0 +1,17 @@
+**Repair**
+- Removed the extra top-level `reflection` field from `draft-1/contract.json`; the contract now matches the required `action_contract_schema` key set exactly.
+- Preserved the same placement mechanism and all required contract fields. No source-code changes were needed.
+
+**Checks**
+- Contract key-set and task-analysis schema shape: passed.
+- All `source_refs` / `impact_refs` resolve and are within 100 lines: passed.
+- `py_compile` on the edited module: passed.
+- `unit_tests.test_lol_concurrent_dreamplace`: 4 tests passed.
+
+**Reflection**
+- Observations: latest evidence remains an unscored bootstrap matrix; no physical parent/child evidence exists.
+- Supporting/counterevidence: source confirms the default cross-die weight is `1.0`; no post-GRT timing or congestion report exists to support or refute the effect.
+- Competing explanation: density, legalization, or local congestion could dominate; the fanout criticality proxy is unverified.
+- Next discriminating check: matched paid parent/child cells on all nine case/seed inputs, comparing post-GRT HPWL, WNS/TNS, overflow, and DRC with routing held fixed.
+
+Unresolved: no official scored cells, unknown effect sign/magnitude, and critical endpoint migration remains unknown without identity mapping.

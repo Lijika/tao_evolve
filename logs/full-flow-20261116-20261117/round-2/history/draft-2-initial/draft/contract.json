@@ -1,0 +1,55 @@
+{
+  "contract_id": "bef488b75834ded48302fec1e54dede48d3d2adf-crossdie-fraction-guard-v1",
+  "task": "full_flow",
+  "parent_candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+  "main_mechanism": "Gate the automatic fanout-aware cross-die placement weight by the observed cross-die net fraction: apply the 1.30/1.15/1.05 factors only when cross-die nets are at most 12% of all PlaceDB nets; otherwise keep unit net weights. An explicit non-unit cross_die_net_weight remains authoritative.",
+  "tradeoff_statement": "The guard gives up potential cross-die timing pull on high-cut designs but avoids over-constraining a large shared-net set and adding local congestion. It does not change density, legality, area, power or runtime guarantees, and its 12% threshold is an empirically derived proxy rather than a calibrated criticality model.",
+  "portability_obligation": "The rule depends on valid partition assignment, cross-die net identity and PlaceDB net/pin metadata. The threshold was inferred from the current nine training cells and makes no claim for unseen designs, PDKs, seeds or the hidden validation cases; explicit configuration weights continue to override the automatic path.",
+  "final_endpoint": "post_grt",
+  "falsifier": "Reject if the next official same-stage matrix does not improve over parent ecf5 or if bp_fe does not recover while bp and Ariane gains disappear; also reject on worse GRT overflow, DRC, legality or PDN/HBT/CTS contract failure, or if a comparable paid ablation shows the guard is indistinguishable from the parent.",
+  "edit_stages": [
+    "placement"
+  ],
+  "source_refs": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-328",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:627-631",
+    "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+  ],
+  "impact_refs": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+    "open3dbench/runner.py:2269"
+  ],
+  "downstream_obligations": [
+    "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in the existing stage contract.",
+    "Keep die fences, node-to-fence assignment, macro halo, density policy, legalization and PDN execution unchanged; only the automatic net-weight decision may change.",
+    "Keep HBT grid/placement, OPT, CTS clock and parasitic models, routing layers and adjustment, endpoint coverage and stage order intact.",
+    "Compare parent and child only for matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+    "Retain all nine training cells, including the Ariane 1001 -100 clamp, in later evidence; unknown or unscored cells must remain unknown."
+  ],
+  "physical_invariants": [
+    "Net weights remain finite and positive; only nets with assigned endpoints on both dies are candidates for automatic scaling.",
+    "When the cross-die fraction exceeds 12%, automatic weighting is disabled and cross-die weights remain at their incoming values.",
+    "Die assignment, physical connectivity, netlist identity, PDK/Liberty/LEF/SDC and clock definitions are not rewritten.",
+    "Placement units, target density, site/row geometry, macro-halo constraints and PDN special wires are untouched.",
+    "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+  ],
+  "unknowns": [
+    "selected_parent_cells is empty, so no same-stage parent/child cell evidence exists for causal comparison.",
+    "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists; local and final sign consistency is therefore unestablished.",
+    "The 12% threshold was inferred from three training cases and nine seeds; hidden-validation and cross-process generalization are unknown.",
+    "The training evidence is concentrated: all three bp_fe cells are negative, while the largest positive cell is Ariane seed 1003; equal-case averaging can hide this seed concentration.",
+    "The official score is authoritative; endpoint metrics and placement proxies are observations, and their exact mapping to the score is not assumed.",
+    "No invalid or missing cell was reported; the Ariane 1001 raw score was clamped to -100."
+  ],
+  "task_analysis": {
+    "candidate_intervention_set": [
+      "placement"
+    ],
+    "first_observed_divergence": "The parent ecf5 official matrix is complete and valid (9/9, score -6.5938): bp_fe seeds score -55.27/-11.20/-32.38, Ariane 1001 is clamped to -100, and Ariane 1003 scores +130.39. No selected parent cells are available, so this is not a same-stage parent/child comparison. The first source-observable divergence is the cross-die fraction guard at concurrent_lol.py:312-315; physical divergence remains endpoint-level and mixed.",
+    "downstream_constraints": "Placement must still publish the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+    "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+    "endpoint_expected_effect": "At post_grt, disabling automatic cross-die overweighting above 12% should move the three bp_fe cells back toward their reference deficits while retaining the prior bp and Ariane behavior; overflow should remain near the parent's zero/near-zero levels. Sign, magnitude and critical-set migration remain unknown.",
+    "alternative_explanation": "The mixed parent result may instead reflect seed noise, placement density, legalization displacement, CTS or routing rather than cross-die weighting. Two short untested alternatives are uniformly damping all automatic factors and reverting the weighting entirely; neither is claimed causal without a comparable paid ablation."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "candidate_and_participant_state_unchanged": true,
+  "installed_at": 1794861464.3647454,
+  "official_framework_verified": true,
+  "official_ledger_manually_modified": false,
+  "retained_model_calls": 126,
+  "retained_official_evaluations": 1,
+  "runtime_config": {
+    "max_evaluations": 10,
+    "pending_model_usage_policy": "continue_after_successful_turn",
+    "review_after_evaluations": 1
+  },
+  "same_official_campaign": true,
+  "upgrade_id": "3d2efc9624f155c38791d79ad3ea94dc15180ad5d8fc6192b5f89026169763ea"
+}

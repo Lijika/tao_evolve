@@ -1,0 +1,10 @@
+{
+  "differences": [
+    {
+      "field": "capacity.storage_gb",
+      "saved": 267,
+      "current": 265
+    }
+  ],
+  "framework_changed": false
+}

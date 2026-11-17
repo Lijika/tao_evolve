@@ -1,0 +1,19 @@
+{
+  "actual_model_charge_rmb": null,
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "checkout_id": "bef488b75834ded48302fec1e54dede48d3d2adf",
+  "completed_evaluations": 1,
+  "contract_path": "/workspace/workspaces/.tao-evolve-full_flow/drafts/draft-2/contract.json",
+  "delivery_champion_candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+  "draft_key": "draft-2",
+  "official_score": null,
+  "officially_submitted": false,
+  "parent_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+  "phase": "submit_ready",
+  "physical_validity": null,
+  "preflight_path": "/workspace/workspaces/.tao-evolve-full_flow/drafts/draft-2/preflight-0.json",
+  "review_after_evaluations": 1,
+  "task": "full_flow",
+  "tree_digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+  "unresolved_model_calls": 1
+}

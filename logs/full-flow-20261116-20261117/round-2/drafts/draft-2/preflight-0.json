@@ -1,0 +1,372 @@
+{
+  "assurance": "source_scope_and_integrity_only",
+  "changed_paths": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+  ],
+  "digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+  "errors": [
+    "research_review_missing"
+  ],
+  "portability_card": {
+    "assurance": "source_observations_require_evidence_disposition",
+    "candidate_digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+    "changed_paths": [
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+    ],
+    "items": {
+      "explanation_scope": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "observed_processes": [
+          "ng45"
+        ],
+        "review_flag_ids": [],
+        "scope": "observed_source_only",
+        "status": "source_observed",
+        "transfer_status": "CROSS_PROCESS_UNVERIFIED"
+      },
+      "failure_behavior": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "only_separate_executed_contracts_can_establish_coverage"
+        ]
+      },
+      "feature_origin": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "input_feature_information_flow_not_verified"
+        ]
+      },
+      "process_attributes": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "process_parameter_origin_not_semantically_verified"
+        ]
+      },
+      "randomness": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "seed_use_and_selection_behavior_not_semantically_verified"
+        ]
+      },
+      "scale": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [
+          "cc4ad8c27b9d84f09431",
+          "56c2a1ba3e3e8316a7ad",
+          "060f223f6e250222a531",
+          "b809b1a8a28e249123aa",
+          "5fbaff87efb1274268b3"
+        ],
+        "status": "unknown",
+        "unknowns": [
+          "normalization_population_and_branch_activation_not_verified"
+        ]
+      },
+      "units": {
+        "evidence_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+        ],
+        "review_flag_ids": [],
+        "status": "unknown",
+        "unknowns": [
+          "numeric_units_and_conversion_require_source_review"
+        ]
+      }
+    },
+    "review_flags": [
+      {
+        "category": "scale",
+        "id": "cc4ad8c27b9d84f09431",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:315",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "56c2a1ba3e3e8316a7ad",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:321",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "060f223f6e250222a531",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:322",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "b809b1a8a28e249123aa",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:323",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      },
+      {
+        "category": "scale",
+        "id": "5fbaff87efb1274268b3",
+        "reason": "numeric constant needs source/unit rationale",
+        "severity": "review",
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:325",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      }
+    ],
+    "schema_version": 1,
+    "source_evidence": [
+      {
+        "changed_lines": [
+          306,
+          310,
+          311,
+          312,
+          313,
+          314,
+          315,
+          316,
+          317,
+          318,
+          319,
+          320,
+          321,
+          322,
+          323,
+          324,
+          325,
+          326,
+          327
+        ],
+        "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306",
+        "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+      }
+    ],
+    "status": "review_required",
+    "unknowns": []
+  },
+  "probes": {
+    "assurance": "READY_FOR_OFFICIAL_UNPROVEN_PHYSICAL",
+    "budget_seconds": 180.0,
+    "cache": {
+      "enabled": true,
+      "reason": "exact_execution_inputs"
+    },
+    "capabilities": {
+      "A0": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      },
+      "A1": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      },
+      "B0": {
+        "reason": "tested_contract_only",
+        "status": "pass"
+      },
+      "B1": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "C": {
+        "reason": "public_placement_summary_has_no_current_pin_geometry_or_capacity",
+        "status": "unknown"
+      },
+      "D": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "E": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "F": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      }
+    },
+    "hard_errors": [],
+    "results": [
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "A0",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "binding": {
+          "mode": "candidate_code_executed",
+          "module": "/workspace/workspaces/bef488b75834ded48302fec1e54dede48d3d2adf/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py",
+          "python_version": "3.8.10",
+          "source_sha256": {
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          "torch_version": "1.7.1+cu110"
+        },
+        "cache": {
+          "execution_reused": false,
+          "key": "a731e778fb933243fe005a47bf5a33ccd153709c0062a97fb368425690b5683e",
+          "record": "/workspace/scratch/tao-evolve/6eb7bdac44e94227b27fddf42e989687/probe-cache/a731e778fb933243fe005a47bf5a33ccd153709c0062a97fb368425690b5683e.json",
+          "status": "miss",
+          "stored": true
+        },
+        "candidate_bound": true,
+        "contract_verified": true,
+        "coverage": [
+          "density_range",
+          "net_weight_summary",
+          "initialization_region",
+          "pin_projection_and_gradient"
+        ],
+        "elapsed_seconds": 1.075,
+        "evidence_id": "/workspace/scratch/tao-evolve/draft-2/probes-0/B0-first/result.json",
+        "hard_errors": [],
+        "input_class": "synthetic_fixture",
+        "input_current": true,
+        "invariant_errors": [],
+        "kind": "invariant",
+        "metrics": {
+          "density_cases": 10,
+          "initialization_same_seed_equal": true,
+          "weight_cases": 3
+        },
+        "probe": "B0",
+        "reason": "tested_contract_only",
+        "reproducible": false,
+        "status": "pass"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "A1",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "C",
+        "reason": "public_placement_summary_has_no_current_pin_geometry_or_capacity",
+        "reproducible": false,
+        "status": "unknown"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "F",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "B1",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "D",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "E",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      }
+    ]
+  },
+  "research_assessment": {
+    "assurance": "reference_and_consistency_checks_not_algorithm_quality_proof",
+    "decision": "revise",
+    "errors": [
+      "research_review_missing"
+    ],
+    "measurement_checks": [],
+    "reflection": {},
+    "reflection_subject": {
+      "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "evidence_role": "latest_experiment_for_reflection",
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "task": "full_flow"
+    },
+    "unknowns": [],
+    "version": 1
+  },
+  "review": {
+    "confirmed_violations": [],
+    "disposition": "unknown",
+    "portability_flag_ids": [
+      "cc4ad8c27b9d84f09431",
+      "56c2a1ba3e3e8316a7ad",
+      "060f223f6e250222a531",
+      "b809b1a8a28e249123aa",
+      "5fbaff87efb1274268b3"
+    ],
+    "semantic_warnings": [],
+    "status": "review_required"
+  },
+  "warnings": []
+}

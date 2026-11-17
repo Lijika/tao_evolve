@@ -1,0 +1,463 @@
+{
+  "canonical_source": "/home/lhjysyx/taoeda/contest-source/agent/full_flow",
+  "checks": {
+    "import_interpreter": "3.12.3",
+    "isolated_task_imports": "passed",
+    "python_3_8_syntax": "passed",
+    "runtime_image_execution": "not_performed_by_builder"
+  },
+  "files": {
+    "__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "full_flow/__init__.py": {
+      "bytes": 81,
+      "canonical_source": "__init__.py",
+      "sha256": "dd9b22e7fed06bb5a55b849b81d8cfb4469dfc5775e8efc2f98c2f2ce3d2aacf",
+      "transformed": false
+    },
+    "full_flow/agent.py": {
+      "bytes": 10921,
+      "canonical_source": "agent.py",
+      "sha256": "5ae813cf676906b725105e73649b93f4ab3b308ad1f367fa3253ecdc056932cc",
+      "transformed": true
+    },
+    "full_flow/prompts/00_initial.txt": {
+      "bytes": 706,
+      "canonical_source": "prompts/00_initial.txt",
+      "sha256": "6e433b7b0bad1ce58c9fd4e43bc7629a7bed15d101f03a36766aa11c0a6cd5d1",
+      "transformed": false
+    },
+    "full_flow/prompts/01_plan_full_flow.txt": {
+      "bytes": 813,
+      "canonical_source": "prompts/01_plan_full_flow.txt",
+      "sha256": "68ab2c1f59d9faf93f6063c23496fff2fe0952dc99f7898d585d790b5d59ce45",
+      "transformed": false
+    },
+    "full_flow/prompts/02_edit.txt": {
+      "bytes": 927,
+      "canonical_source": "prompts/02_edit.txt",
+      "sha256": "70d245702936eebe8e6f4e9eda449b5f749461adf2197011323aab2f7d6e3068",
+      "transformed": false
+    },
+    "full_flow/prompts/03_repair.txt": {
+      "bytes": 356,
+      "canonical_source": "prompts/03_repair.txt",
+      "sha256": "086a89e70755373c7922526e45e59e8f47bb4bf1316777053fc38fa1210e70d0",
+      "transformed": false
+    },
+    "full_flow/prompts/04_reflect_full_flow.txt": {
+      "bytes": 689,
+      "canonical_source": "prompts/04_reflect_full_flow.txt",
+      "sha256": "e8b1b7654d57e61a7fd4b2a0ea2da7136072e0171e57ec2d82528e39ff2c6a81",
+      "transformed": false
+    },
+    "full_flow/runtime.json": {
+      "bytes": 127,
+      "canonical_source": "runtime.json",
+      "sha256": "b331d0825cf60a8748a9e5f1eaf78cfeee99aeabb165cd91fe0c664ff9dcaaea",
+      "transformed": true
+    },
+    "full_flow/tao_evolve/__init__.py": {
+      "bytes": 93,
+      "canonical_source": "tao_evolve/__init__.py",
+      "sha256": "11cb69fd7368f6882be474f92f8bf56afe0c3f21d4872daf83150f4f9eb14554",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/adapter.py": {
+      "bytes": 9696,
+      "canonical_source": "tao_evolve/adapter.py",
+      "sha256": "a91702f1e5e247e11db7b21ab977b09ac81b69be639315fbc77ac5aa9aa9d877",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/budget_v11.py": {
+      "bytes": 4071,
+      "canonical_source": "tao_evolve/budget_v11.py",
+      "sha256": "883a626fe2b79ca9036b8fc4c8535e6610fb352ee48458350fd0dc96b5533028",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/compatibility.py": {
+      "bytes": 882,
+      "canonical_source": "tao_evolve/compatibility.py",
+      "sha256": "f500ffbbea34d8ffab79f64f21b18c34d690a8b1475e6d8dc7e97db74f439f6e",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/context_v11.py": {
+      "bytes": 1464,
+      "canonical_source": "tao_evolve/context_v11.py",
+      "sha256": "277b3fd56351e405a645d1e08e6d818823886ad738efb94cd0525baf8d309cd5",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/controller.py": {
+      "bytes": 33136,
+      "canonical_source": "tao_evolve/controller.py",
+      "sha256": "74157577e1ad490ff18c9ef52e5bfc6006b33ffd4a85b571635eefaf683302fc",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/guard_runtime.py": {
+      "bytes": 9025,
+      "canonical_source": "tao_evolve/guard_runtime.py",
+      "sha256": "98f155cc499983de27301c41c4273e242161daea0d5b9b79d4d5e19c5a6257ac",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/guards_v11.py": {
+      "bytes": 2614,
+      "canonical_source": "tao_evolve/guards_v11.py",
+      "sha256": "1d2c61d496882e92fd56c4b2c440c6a34a90ac11b83c0de69db7522953656970",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/journal.py": {
+      "bytes": 4350,
+      "canonical_source": "tao_evolve/journal.py",
+      "sha256": "7550c7e3e1841e52b235770945e9e0ce7381033bfb0b19dddc763d6977c31950",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/policy.py": {
+      "bytes": 3514,
+      "canonical_source": "tao_evolve/policy.py",
+      "sha256": "a2fc27bec09e0b98adc75ba4116693be689f9acb84e607fcc24a820e51d754f8",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/portability_v11.py": {
+      "bytes": 1699,
+      "canonical_source": "tao_evolve/portability_v11.py",
+      "sha256": "54788c30d9ec567d7db5123a79b05fe7a4d91e774cf1a80c3083a6ebdaa09e40",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/portfolio_v11.py": {
+      "bytes": 4214,
+      "canonical_source": "tao_evolve/portfolio_v11.py",
+      "sha256": "76af08f40cbecade7a427410ee2fa1d544061f52a1d53889eae1c33df898bc1d",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/preflight.py": {
+      "bytes": 3067,
+      "canonical_source": "tao_evolve/preflight.py",
+      "sha256": "29c7ffefdfa66b620f42cda6428feb0d19670fc506211bac30bb95b1f599821d",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/probe_worker.py": {
+      "bytes": 19535,
+      "canonical_source": "tao_evolve/probe_worker.py",
+      "sha256": "783bd9b2ba660761a1af39c640b19d8f56c23977987cae953e47398a5426f10a",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/probes.py": {
+      "bytes": 12052,
+      "canonical_source": "tao_evolve/probes.py",
+      "sha256": "eca4780cb7c177351906afd2fe602fba8fbf8051e03273bae324dfd18ad01567",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/prompting.py": {
+      "bytes": 1320,
+      "canonical_source": "tao_evolve/prompting.py",
+      "sha256": "a33f151502235b02eeda3b914064cfd653a71d4efaf1a88e22c4247d2b42389d",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/provenance.py": {
+      "bytes": 2204,
+      "canonical_source": "tao_evolve/provenance.py",
+      "sha256": "4401fbef23c6e514a50be9626d336675cd12ac74595f19ce9eaf41f9ac0bb1da",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/public_artifacts.py": {
+      "bytes": 3074,
+      "canonical_source": "tao_evolve/public_artifacts.py",
+      "sha256": "5f535117c3ee983aecdb181d3bf7febd64afa99989e621186beccbaceee279b8",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/research.py": {
+      "bytes": 49278,
+      "canonical_source": "tao_evolve/research.py",
+      "sha256": "d41d7214d818d44db31651e7a8e68c89cbfb12fe596401e942ffe8b5b918efd4",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/strategy_v11.py": {
+      "bytes": 1570,
+      "canonical_source": "tao_evolve/strategy_v11.py",
+      "sha256": "2e815eeffa96f28b39d52ecda14b6b2fef35a63bcb3a55b20a4bfb9ad6221221",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/submission.py": {
+      "bytes": 2705,
+      "canonical_source": "tao_evolve/submission.py",
+      "sha256": "08cd5f801cfd9abf2be0a414b4ab4f791091514593d4e8ffc3d19d29b587c079",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/task_profiles.py": {
+      "bytes": 1544,
+      "canonical_source": "tao_evolve/task_profiles.py",
+      "sha256": "5b2ef6dc5df386a307693cbb7e4784b096738149cfcd0e16b25bb7dce602ffdb",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/tradeoff_v11.py": {
+      "bytes": 5038,
+      "canonical_source": "tao_evolve/tradeoff_v11.py",
+      "sha256": "5dfef93b8a07fc8f22425fbd1983dc4478901bf91673182857fd006cd376ce82",
+      "transformed": false
+    },
+    "full_flow/tao_evolve/types.py": {
+      "bytes": 1485,
+      "canonical_source": "tao_evolve/types.py",
+      "sha256": "bd34b79e43bb2988580431970889ba19cfb81dbc4a3e97fd850f30e546acc9f2",
+      "transformed": false
+    },
+    "partition_placement/__init__.py": {
+      "bytes": 81,
+      "canonical_source": "__init__.py",
+      "sha256": "dd9b22e7fed06bb5a55b849b81d8cfb4469dfc5775e8efc2f98c2f2ce3d2aacf",
+      "transformed": false
+    },
+    "partition_placement/agent.py": {
+      "bytes": 10941,
+      "canonical_source": "agent.py",
+      "sha256": "54126096c900bfe6cef7e954b0ebfaf14bd729e766bcb28180ae14e527d54cdc",
+      "transformed": true
+    },
+    "partition_placement/prompts/00_initial.txt": {
+      "bytes": 706,
+      "canonical_source": "prompts/00_initial.txt",
+      "sha256": "6e433b7b0bad1ce58c9fd4e43bc7629a7bed15d101f03a36766aa11c0a6cd5d1",
+      "transformed": false
+    },
+    "partition_placement/prompts/01_plan_partition_placement.txt": {
+      "bytes": 816,
+      "canonical_source": "prompts/01_plan_partition_placement.txt",
+      "sha256": "26ffa257e7120a2684d47d5a47edf02a9982e3e3eef4e19617e3293067afbee9",
+      "transformed": false
+    },
+    "partition_placement/prompts/02_edit.txt": {
+      "bytes": 927,
+      "canonical_source": "prompts/02_edit.txt",
+      "sha256": "70d245702936eebe8e6f4e9eda449b5f749461adf2197011323aab2f7d6e3068",
+      "transformed": false
+    },
+    "partition_placement/prompts/03_repair.txt": {
+      "bytes": 356,
+      "canonical_source": "prompts/03_repair.txt",
+      "sha256": "086a89e70755373c7922526e45e59e8f47bb4bf1316777053fc38fa1210e70d0",
+      "transformed": false
+    },
+    "partition_placement/prompts/04_reflect_partition_placement.txt": {
+      "bytes": 678,
+      "canonical_source": "prompts/04_reflect_partition_placement.txt",
+      "sha256": "8f4a4677a86ddcc6b4027784491dabe063aa0d7ed3314758e5ef4bb873d89fd4",
+      "transformed": false
+    },
+    "partition_placement/runtime.json": {
+      "bytes": 127,
+      "canonical_source": "runtime.json",
+      "sha256": "b331d0825cf60a8748a9e5f1eaf78cfeee99aeabb165cd91fe0c664ff9dcaaea",
+      "transformed": true
+    },
+    "partition_placement/tao_evolve/__init__.py": {
+      "bytes": 93,
+      "canonical_source": "tao_evolve/__init__.py",
+      "sha256": "11cb69fd7368f6882be474f92f8bf56afe0c3f21d4872daf83150f4f9eb14554",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/adapter.py": {
+      "bytes": 9696,
+      "canonical_source": "tao_evolve/adapter.py",
+      "sha256": "a91702f1e5e247e11db7b21ab977b09ac81b69be639315fbc77ac5aa9aa9d877",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/budget_v11.py": {
+      "bytes": 4071,
+      "canonical_source": "tao_evolve/budget_v11.py",
+      "sha256": "883a626fe2b79ca9036b8fc4c8535e6610fb352ee48458350fd0dc96b5533028",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/compatibility.py": {
+      "bytes": 882,
+      "canonical_source": "tao_evolve/compatibility.py",
+      "sha256": "f500ffbbea34d8ffab79f64f21b18c34d690a8b1475e6d8dc7e97db74f439f6e",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/context_v11.py": {
+      "bytes": 1464,
+      "canonical_source": "tao_evolve/context_v11.py",
+      "sha256": "277b3fd56351e405a645d1e08e6d818823886ad738efb94cd0525baf8d309cd5",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/controller.py": {
+      "bytes": 33136,
+      "canonical_source": "tao_evolve/controller.py",
+      "sha256": "74157577e1ad490ff18c9ef52e5bfc6006b33ffd4a85b571635eefaf683302fc",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/guard_runtime.py": {
+      "bytes": 9025,
+      "canonical_source": "tao_evolve/guard_runtime.py",
+      "sha256": "98f155cc499983de27301c41c4273e242161daea0d5b9b79d4d5e19c5a6257ac",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/guards_v11.py": {
+      "bytes": 2614,
+      "canonical_source": "tao_evolve/guards_v11.py",
+      "sha256": "1d2c61d496882e92fd56c4b2c440c6a34a90ac11b83c0de69db7522953656970",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/journal.py": {
+      "bytes": 4350,
+      "canonical_source": "tao_evolve/journal.py",
+      "sha256": "7550c7e3e1841e52b235770945e9e0ce7381033bfb0b19dddc763d6977c31950",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/policy.py": {
+      "bytes": 3514,
+      "canonical_source": "tao_evolve/policy.py",
+      "sha256": "a2fc27bec09e0b98adc75ba4116693be689f9acb84e607fcc24a820e51d754f8",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/portability_v11.py": {
+      "bytes": 1699,
+      "canonical_source": "tao_evolve/portability_v11.py",
+      "sha256": "54788c30d9ec567d7db5123a79b05fe7a4d91e774cf1a80c3083a6ebdaa09e40",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/portfolio_v11.py": {
+      "bytes": 4214,
+      "canonical_source": "tao_evolve/portfolio_v11.py",
+      "sha256": "76af08f40cbecade7a427410ee2fa1d544061f52a1d53889eae1c33df898bc1d",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/preflight.py": {
+      "bytes": 3067,
+      "canonical_source": "tao_evolve/preflight.py",
+      "sha256": "29c7ffefdfa66b620f42cda6428feb0d19670fc506211bac30bb95b1f599821d",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/probe_worker.py": {
+      "bytes": 19535,
+      "canonical_source": "tao_evolve/probe_worker.py",
+      "sha256": "783bd9b2ba660761a1af39c640b19d8f56c23977987cae953e47398a5426f10a",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/probes.py": {
+      "bytes": 12052,
+      "canonical_source": "tao_evolve/probes.py",
+      "sha256": "eca4780cb7c177351906afd2fe602fba8fbf8051e03273bae324dfd18ad01567",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/prompting.py": {
+      "bytes": 1320,
+      "canonical_source": "tao_evolve/prompting.py",
+      "sha256": "a33f151502235b02eeda3b914064cfd653a71d4efaf1a88e22c4247d2b42389d",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/provenance.py": {
+      "bytes": 2204,
+      "canonical_source": "tao_evolve/provenance.py",
+      "sha256": "4401fbef23c6e514a50be9626d336675cd12ac74595f19ce9eaf41f9ac0bb1da",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/public_artifacts.py": {
+      "bytes": 3074,
+      "canonical_source": "tao_evolve/public_artifacts.py",
+      "sha256": "5f535117c3ee983aecdb181d3bf7febd64afa99989e621186beccbaceee279b8",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/research.py": {
+      "bytes": 49278,
+      "canonical_source": "tao_evolve/research.py",
+      "sha256": "d41d7214d818d44db31651e7a8e68c89cbfb12fe596401e942ffe8b5b918efd4",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/strategy_v11.py": {
+      "bytes": 1570,
+      "canonical_source": "tao_evolve/strategy_v11.py",
+      "sha256": "2e815eeffa96f28b39d52ecda14b6b2fef35a63bcb3a55b20a4bfb9ad6221221",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/submission.py": {
+      "bytes": 2705,
+      "canonical_source": "tao_evolve/submission.py",
+      "sha256": "08cd5f801cfd9abf2be0a414b4ab4f791091514593d4e8ffc3d19d29b587c079",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/task_profiles.py": {
+      "bytes": 1544,
+      "canonical_source": "tao_evolve/task_profiles.py",
+      "sha256": "5b2ef6dc5df386a307693cbb7e4784b096738149cfcd0e16b25bb7dce602ffdb",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/tradeoff_v11.py": {
+      "bytes": 5038,
+      "canonical_source": "tao_evolve/tradeoff_v11.py",
+      "sha256": "5dfef93b8a07fc8f22425fbd1983dc4478901bf91673182857fd006cd376ce82",
+      "transformed": false
+    },
+    "partition_placement/tao_evolve/types.py": {
+      "bytes": 1485,
+      "canonical_source": "tao_evolve/types.py",
+      "sha256": "bd34b79e43bb2988580431970889ba19cfb81dbc4a3e97fd850f30e546acc9f2",
+      "transformed": false
+    }
+  },
+  "max_evaluations": 10,
+  "pending_model_usage_policy": "continue_after_successful_turn",
+  "review_after_evaluations": 1,
+  "schema_version": 1,
+  "source_files": {
+    "__init__.py": "dd9b22e7fed06bb5a55b849b81d8cfb4469dfc5775e8efc2f98c2f2ce3d2aacf",
+    "agent.py": "5ae813cf676906b725105e73649b93f4ab3b308ad1f367fa3253ecdc056932cc",
+    "prompts/00_initial.txt": "6e433b7b0bad1ce58c9fd4e43bc7629a7bed15d101f03a36766aa11c0a6cd5d1",
+    "prompts/01_plan_full_flow.txt": "68ab2c1f59d9faf93f6063c23496fff2fe0952dc99f7898d585d790b5d59ce45",
+    "prompts/01_plan_partition_placement.txt": "26ffa257e7120a2684d47d5a47edf02a9982e3e3eef4e19617e3293067afbee9",
+    "prompts/02_edit.txt": "70d245702936eebe8e6f4e9eda449b5f749461adf2197011323aab2f7d6e3068",
+    "prompts/03_repair.txt": "086a89e70755373c7922526e45e59e8f47bb4bf1316777053fc38fa1210e70d0",
+    "prompts/04_reflect_full_flow.txt": "e8b1b7654d57e61a7fd4b2a0ea2da7136072e0171e57ec2d82528e39ff2c6a81",
+    "prompts/04_reflect_partition_placement.txt": "8f4a4677a86ddcc6b4027784491dabe063aa0d7ed3314758e5ef4bb873d89fd4",
+    "runtime.json": "b9d6f6b5da27a5829ab60c0175814a2c64c9d3f7bf16517761addebc3fbb05ce",
+    "tao_evolve/__init__.py": "11cb69fd7368f6882be474f92f8bf56afe0c3f21d4872daf83150f4f9eb14554",
+    "tao_evolve/adapter.py": "a91702f1e5e247e11db7b21ab977b09ac81b69be639315fbc77ac5aa9aa9d877",
+    "tao_evolve/budget_v11.py": "883a626fe2b79ca9036b8fc4c8535e6610fb352ee48458350fd0dc96b5533028",
+    "tao_evolve/compatibility.py": "f500ffbbea34d8ffab79f64f21b18c34d690a8b1475e6d8dc7e97db74f439f6e",
+    "tao_evolve/context_v11.py": "277b3fd56351e405a645d1e08e6d818823886ad738efb94cd0525baf8d309cd5",
+    "tao_evolve/controller.py": "74157577e1ad490ff18c9ef52e5bfc6006b33ffd4a85b571635eefaf683302fc",
+    "tao_evolve/guard_runtime.py": "98f155cc499983de27301c41c4273e242161daea0d5b9b79d4d5e19c5a6257ac",
+    "tao_evolve/guards_v11.py": "1d2c61d496882e92fd56c4b2c440c6a34a90ac11b83c0de69db7522953656970",
+    "tao_evolve/journal.py": "7550c7e3e1841e52b235770945e9e0ce7381033bfb0b19dddc763d6977c31950",
+    "tao_evolve/policy.py": "a2fc27bec09e0b98adc75ba4116693be689f9acb84e607fcc24a820e51d754f8",
+    "tao_evolve/portability_v11.py": "54788c30d9ec567d7db5123a79b05fe7a4d91e774cf1a80c3083a6ebdaa09e40",
+    "tao_evolve/portfolio_v11.py": "76af08f40cbecade7a427410ee2fa1d544061f52a1d53889eae1c33df898bc1d",
+    "tao_evolve/preflight.py": "29c7ffefdfa66b620f42cda6428feb0d19670fc506211bac30bb95b1f599821d",
+    "tao_evolve/probe_worker.py": "783bd9b2ba660761a1af39c640b19d8f56c23977987cae953e47398a5426f10a",
+    "tao_evolve/probes.py": "eca4780cb7c177351906afd2fe602fba8fbf8051e03273bae324dfd18ad01567",
+    "tao_evolve/prompting.py": "a33f151502235b02eeda3b914064cfd653a71d4efaf1a88e22c4247d2b42389d",
+    "tao_evolve/provenance.py": "4401fbef23c6e514a50be9626d336675cd12ac74595f19ce9eaf41f9ac0bb1da",
+    "tao_evolve/public_artifacts.py": "5f535117c3ee983aecdb181d3bf7febd64afa99989e621186beccbaceee279b8",
+    "tao_evolve/research.py": "d41d7214d818d44db31651e7a8e68c89cbfb12fe596401e942ffe8b5b918efd4",
+    "tao_evolve/strategy_v11.py": "2e815eeffa96f28b39d52ecda14b6b2fef35a63bcb3a55b20a4bfb9ad6221221",
+    "tao_evolve/submission.py": "08cd5f801cfd9abf2be0a414b4ab4f791091514593d4e8ffc3d19d29b587c079",
+    "tao_evolve/task_profiles.py": "5b2ef6dc5df386a307693cbb7e4784b096738149cfcd0e16b25bb7dce602ffdb",
+    "tao_evolve/tradeoff_v11.py": "5dfef93b8a07fc8f22425fbd1983dc4478901bf91673182857fd006cd376ce82",
+    "tao_evolve/types.py": "bd34b79e43bb2988580431970889ba19cfb81dbc4a3e97fd850f30e546acc9f2"
+  },
+  "tasks": {
+    "full_flow": {
+      "entry_task": "full_flow",
+      "file_count": 32,
+      "prompts": [
+        "00_initial.txt",
+        "01_plan_full_flow.txt",
+        "02_edit.txt",
+        "03_repair.txt",
+        "04_reflect_full_flow.txt"
+      ]
+    },
+    "partition_placement": {
+      "entry_task": "partition_placement",
+      "file_count": 32,
+      "prompts": [
+        "00_initial.txt",
+        "01_plan_partition_placement.txt",
+        "02_edit.txt",
+        "03_repair.txt",
+        "04_reflect_partition_placement.txt"
+      ]
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "active_parent_roles": {
+    "delivery": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "exploration": null,
+    "score": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc"
+  },
+  "actual_model_charge_rmb": null,
+  "budget_assurance": "managed_codex_advisory_public_balance_only",
+  "budget_observations": [
+    {
+      "after_available_rmb": "14.71719156",
+      "before_available_rmb": "15",
+      "draft": "draft-1",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "unresolved_model_calls": 0
+    },
+    {
+      "after_available_rmb": "12.46085084",
+      "before_available_rmb": "14.71719156",
+      "draft": "draft-1",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "unresolved_model_calls": 1
+    },
+    {
+      "after_available_rmb": "12.19779200",
+      "before_available_rmb": "12.46085084",
+      "before_unresolved_model_calls": 1,
+      "draft": "draft-2",
+      "pending_model_usage_policy": "continue_after_successful_turn",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "turn_request_id": "5f2d6063b29103a6ad122defc923df8f1f63dbca",
+      "turn_success": true,
+      "unresolved_model_calls": 1
+    }
+  ],
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "delivery_champion": {
+    "campaign": "6eb7bdac44e94227b27fddf42e989687",
+    "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "cells": [
+      {
+        "case": "bp_fe-ng45",
+        "physical_valid": true,
+        "score": -55.26847361545787,
+        "seed": 1001
+      },
+      {
+        "case": "bp_fe-ng45",
+        "physical_valid": true,
+        "score": -11.202262913701672,
+        "seed": 1002
+      },
+      {
+        "case": "bp_fe-ng45",
+        "physical_valid": true,
+        "score": -32.37863930035398,
+        "seed": 1003
+      },
+      {
+        "case": "bp-ng45",
+        "physical_valid": true,
+        "score": -4.719286773631615,
+        "seed": 1001
+      },
+      {
+        "case": "bp-ng45",
+        "physical_valid": true,
+        "score": 10.095481049074893,
+        "seed": 1002
+      },
+      {
+        "case": "bp-ng45",
+        "physical_valid": true,
+        "score": -1.4382908592195527,
+        "seed": 1003
+      },
+      {
+        "case": "ariane133-ng45",
+        "physical_valid": true,
+        "score": -100.0,
+        "seed": 1001
+      },
+      {
+        "case": "ariane133-ng45",
+        "physical_valid": true,
+        "score": 5.175826124197975,
+        "seed": 1002
+      },
+      {
+        "case": "ariane133-ng45",
+        "physical_valid": true,
+        "score": 130.39150994616116,
+        "seed": 1003
+      }
+    ],
+    "definition_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+    "score": -6.593792926992297,
+    "status": "succeeded",
+    "task": "full_flow"
+  },
+  "official_evaluations": 1,
+  "pending_model_usage_policy": "continue_after_successful_turn",
+  "reason": "design_review_checkpoint",
+  "review_after_evaluations": 1,
+  "score_champion": {
+    "campaign": "6eb7bdac44e94227b27fddf42e989687",
+    "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "cells": [
+      {
+        "case": "bp_fe-ng45",
+        "physical_valid": true,
+        "score": -55.26847361545787,
+        "seed": 1001
+      },
+      {
+        "case": "bp_fe-ng45",
+        "physical_valid": true,
+        "score": -11.202262913701672,
+        "seed": 1002
+      },
+      {
+        "case": "bp_fe-ng45",
+        "physical_valid": true,
+        "score": -32.37863930035398,
+        "seed": 1003
+      },
+      {
+        "case": "bp-ng45",
+        "physical_valid": true,
+        "score": -4.719286773631615,
+        "seed": 1001
+      },
+      {
+        "case": "bp-ng45",
+        "physical_valid": true,
+        "score": 10.095481049074893,
+        "seed": 1002
+      },
+      {
+        "case": "bp-ng45",
+        "physical_valid": true,
+        "score": -1.4382908592195527,
+        "seed": 1003
+      },
+      {
+        "case": "ariane133-ng45",
+        "physical_valid": true,
+        "score": -100.0,
+        "seed": 1001
+      },
+      {
+        "case": "ariane133-ng45",
+        "physical_valid": true,
+        "score": 5.175826124197975,
+        "seed": 1002
+      },
+      {
+        "case": "ariane133-ng45",
+        "physical_valid": true,
+        "score": 130.39150994616116,
+        "seed": 1003
+      }
+    ],
+    "definition_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+    "score": -6.593792926992297,
+    "status": "succeeded",
+    "task": "full_flow"
+  },
+  "task": "full_flow",
+  "unresolved_model_calls": 1
+}

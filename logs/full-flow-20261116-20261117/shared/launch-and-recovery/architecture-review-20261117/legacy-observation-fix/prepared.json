@@ -1,0 +1,33 @@
+{
+  "immutable_sha256": "3a5551d41ef8d357ce33a50ea8ce9073afb6164fc8dcf1ce76bc23940dfa348c",
+  "preserved": {
+    "/mnt/taoeda-work/contest-data/deployment.json": "05cad4799df214d3916b4da0662e984275eaafe0dc7bb576da3546a8a1aa415c",
+    "/mnt/taoeda-work/contest-work/full_flow/control/contest-budget.sqlite": "f01c5985b48153761a4e132dfe25ae01bdc5749ee31420a0c359f0f15f327a7a",
+    "/mnt/taoeda-work/contest-work/full_flow/control/deployment-config.json": "27e878ab2392fd6aa95452d954a7b1fe2fa2742b9346e1a388dc223c1e21c8bb",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/before.json": "075634b12400f7c6aa7134eb6fe0f15f9c2a96de8bffe2dfb73a569fe68b2ffc",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/contract-evidence.json": "30f6126b28a63442f556fce4e7e1cb9cb019553d83c465aaf907dffa561b244c",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/contract-source-policy.json": "264c55f0cf17a646abe79b9ba3c7f890dac2b72087176e7047e78b245c7e4af1",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/contract.json": "988139d7c0b20e6e7fb066b9d3b9bc2a95e4502e5af626f821930e5653fc9b77",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/official-evidence.json": "d5f1a2135d070e1507359c706a28e183dbd988ce2e309965014b0ded2c3d7a53",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/preflight-0.json": "47714bbd88a03f9f46319ef9192064fa2b00eeed9e471231edf5359a472ad8d3",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/preflight-1.json": "c9ee875b4a8452ea4c53230502457805957f8c336325cffc4991282ad5d2e27b",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/prompt-0.txt": "77124603fafeb0cdcb2afc2fa6bfa72aed80d3af5bb339fa6636a2c7bfb695b1",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-1/prompt-1.txt": "eb7debffac9aaab48e0c3358a30d25e0478a7c2a5386fc796f8cd5c30da4e5d9",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/before.json": "99b5dbbd5a5cde382d51c1e31890a5f1e36e0d1379cff12cd4b6fe375b0406ec",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract-evidence.json": "380d644ed57bed331362e60c4e2af18a682c5f60f8e9be16f800fe4131de0d9e",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract-schema.json": "6807480edf5b15500804a487de102f21f6c00776bc11ab315d6e72cdea3554b1",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract-source-policy.json": "264c55f0cf17a646abe79b9ba3c7f890dac2b72087176e7047e78b245c7e4af1",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract.json": "353d3acc98598bbcbd95dbf0635144818c2c321ff04225fce04cf56c95bafe72",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/preflight-0.json": "27c7abb89ea4f9e2c4b5d2840ea89abf4ccc0a4c9c93cc7fa69fdbb0fcbb31d2",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/prompt-0.txt": "a4d765370ad1ca396a6c113170123c9e704fb23578c08d23e8192b55aeb8c501",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/prompt-1.txt": "cd7fd65dbd0e6bd2234c02a369e9a2f5fb688edc306f935d7c01dc7cf0ed5784",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/review.json": "494a49f181c574e69816edc3f50a9e1b0a943e2de21474eb04a1947604a22443",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/events.jsonl": "8b8f707fe6e6d8b65f8422af4c110174ef09e38266fcb67cbd4d6680f5f004bd",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/intents.sqlite": "45980ca8a4d7528462236e961ba54203ac168fb69c6d91d27771c75c77c76088",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/intents.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/original-paths.json": "b3ca80c9d97b8df1b57bb01ab0c4c23fe18ffbe9d68ca502aca5e67cd4c37610",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/state.json": "f4c89dea3dd376e084532e57c369db3a60b3f1a6611a7d810cfe8eda8a99af45",
+    "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/summary.json": "7e71f95ad87793904f842a7c7a9ec10eedb63796c6224b1de32dd180f869d405"
+  },
+  "upgrade_id": "3d2efc9624f155c38791d79ad3ea94dc15180ad5d8fc6192b5f89026169763ea"
+}

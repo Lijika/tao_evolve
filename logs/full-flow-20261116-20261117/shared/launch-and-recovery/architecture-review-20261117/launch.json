@@ -1,0 +1,28 @@
+{
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "codex_version": "codex-cli 0.167.1",
+  "command": [
+    "python3",
+    "-u",
+    "start.py",
+    "--task",
+    "full_flow",
+    "--api-key-file",
+    "/home/vipuser/.config/taoeda/deepseek.key",
+    "--agent-cpu",
+    "4",
+    "--agent-memory-gb",
+    "16",
+    "--no-retain-physical-files"
+  ],
+  "log": "/mnt/taoeda-work/agent-development/architecture-review-20261117/research-revision.log",
+  "pid": 854639,
+  "runtime_config": {
+    "max_evaluations": 10,
+    "pending_model_usage_policy": "continue_after_successful_turn",
+    "review_after_evaluations": 1
+  },
+  "same_official_campaign": true,
+  "started_epoch": 1794860603.2863965,
+  "upgrade_id": "3732ef19f0af329395d7228ce106d0282832c76003e395dd44302d2e40d8a82e"
+}

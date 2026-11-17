@@ -1,0 +1,298 @@
+{
+  "digest": "4560f36216994921d339d0f1a11d3a3fc191209854cb98e1adefe9b9fafb7c7a",
+  "paths": {
+    "/inputs": {
+      "digest": "1a43b97df53eebde5e5d7d1fc2451227d2ef2959619890dcc9ec4baab17ae48e",
+      "entries": {
+        "ariane133-ng45/case.yaml": {
+          "bytes": 1295,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "6e1b3d7a63172d0189687789ddff987e4d50d360e45f8025a0ff7d1dc09ae657"
+        },
+        "ariane133-ng45/input-manifest.json": {
+          "bytes": 513,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "1ecad6c179d0ea393aeb8df361d19fee40cf02271fc42f983784f7902246dbc5"
+        },
+        "ariane133-ng45/partition.json": {
+          "bytes": 1088,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "579ce61090f3a18b3f5a149e9f8dad2df0f45fe3c87c978ae25a8270719326c0"
+        },
+        "ariane133-ng45/placement.json": {
+          "bytes": 390,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "19c68a50557caed1128c9110e861bbbcd12e680160a510aa7dd80ce36e254441"
+        },
+        "bp-ng45/case.yaml": {
+          "bytes": 1288,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "1880d818b6707d8154769d7cac0257063fae9dda777c7a7573f594b5bf721b62"
+        },
+        "bp-ng45/input-manifest.json": {
+          "bytes": 513,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "34b16db71b9e0284701b8661d2101ceb21d01099b8142d51ad8c3770911edf48"
+        },
+        "bp-ng45/partition.json": {
+          "bytes": 1088,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "579ce61090f3a18b3f5a149e9f8dad2df0f45fe3c87c978ae25a8270719326c0"
+        },
+        "bp-ng45/placement.json": {
+          "bytes": 390,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "19c68a50557caed1128c9110e861bbbcd12e680160a510aa7dd80ce36e254441"
+        },
+        "bp_fe-ng45/case.yaml": {
+          "bytes": 1291,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "4e4f1d1983e57b61ed7079d613f8d7c488f9058f44f956381d5763343f8161d1"
+        },
+        "bp_fe-ng45/input-manifest.json": {
+          "bytes": 513,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "3b753c361a45f8c95a438e07695038893d8a147c350d60db00f6a6f08bcee72f"
+        },
+        "bp_fe-ng45/partition.json": {
+          "bytes": 1088,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "579ce61090f3a18b3f5a149e9f8dad2df0f45fe3c87c978ae25a8270719326c0"
+        },
+        "bp_fe-ng45/placement.json": {
+          "bytes": 390,
+          "kind": "file",
+          "mode": 384,
+          "sha256": "19c68a50557caed1128c9110e861bbbcd12e680160a510aa7dd80ce36e254441"
+        }
+      },
+      "kind": "tree"
+    },
+    "/opt/contest/AgenticBench/competition/manifests/full-flow-native-task.json": {
+      "kind": "file",
+      "mode": 292,
+      "sha256": "f5abb635c7da774779c479e48a1dd9e54311be961027d8401e7c643363e80beb"
+    },
+    "/workspace/README.md": {
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b1d8b17dbae822a227946e9398309af07e6e4e4d310f6592b436de069f309710"
+    },
+    "/workspace/agent": {
+      "digest": "c2c6e4f9f6bd211f49ee4379888578938699a6d8ee12ad6e1f7fbab566f7ee83",
+      "entries": {
+        "__init__.py": {
+          "bytes": 81,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "dd9b22e7fed06bb5a55b849b81d8cfb4469dfc5775e8efc2f98c2f2ce3d2aacf"
+        },
+        "agent.py": {
+          "bytes": 10921,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "5ae813cf676906b725105e73649b93f4ab3b308ad1f367fa3253ecdc056932cc"
+        },
+        "prompts/00_initial.txt": {
+          "bytes": 610,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "bdce36f0aac955c8147b29c3f18a1735e1f0af04f93ec324a88a69791c28abad"
+        },
+        "prompts/01_plan_full_flow.txt": {
+          "bytes": 506,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "c3b93d41fd1a507401c43836fcca7077ac36005d069e812482d831b01dfa099a"
+        },
+        "prompts/02_edit.txt": {
+          "bytes": 1121,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "c80305a4eb06ad9963258ffd8120eb5cb55f647bff493e09518a57c504a47565"
+        },
+        "prompts/03_repair.txt": {
+          "bytes": 231,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "fb27744ebdb96d1d52a59aab1e9aba31ff19c6f467073959b0c7f35c84e94c35"
+        },
+        "prompts/04_reflect_full_flow.txt": {
+          "bytes": 647,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "324214f6362c99014320aa9c8f87ea854957a09497e29e45d17619b989d04448"
+        },
+        "runtime.json": {
+          "bytes": 127,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "b331d0825cf60a8748a9e5f1eaf78cfeee99aeabb165cd91fe0c664ff9dcaaea"
+        },
+        "tao_evolve/__init__.py": {
+          "bytes": 93,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "11cb69fd7368f6882be474f92f8bf56afe0c3f21d4872daf83150f4f9eb14554"
+        },
+        "tao_evolve/adapter.py": {
+          "bytes": 10661,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "9f7b986757a636c0e0e44b4f711f3bad39b578e456f18c3af07e0ed25b69d52c"
+        },
+        "tao_evolve/budget_v11.py": {
+          "bytes": 4071,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "883a626fe2b79ca9036b8fc4c8535e6610fb352ee48458350fd0dc96b5533028"
+        },
+        "tao_evolve/compatibility.py": {
+          "bytes": 882,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "f500ffbbea34d8ffab79f64f21b18c34d690a8b1475e6d8dc7e97db74f439f6e"
+        },
+        "tao_evolve/context_v11.py": {
+          "bytes": 1464,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "277b3fd56351e405a645d1e08e6d818823886ad738efb94cd0525baf8d309cd5"
+        },
+        "tao_evolve/controller.py": {
+          "bytes": 42926,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "87dcae4791576de6ac373c448edd79db93c33c1d70df41c0cece72c8f637f96e"
+        },
+        "tao_evolve/guard_runtime.py": {
+          "bytes": 9898,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "b273a085e7a7a45cc12e8d3b50af576e8c82b2da24ca70e43c77bb0a8b9c8a73"
+        },
+        "tao_evolve/guards_v11.py": {
+          "bytes": 2614,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "1d2c61d496882e92fd56c4b2c440c6a34a90ac11b83c0de69db7522953656970"
+        },
+        "tao_evolve/journal.py": {
+          "bytes": 6043,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "f30f288b563181f225ba2a73ba3eae1e65c2443373ba60752df027d62b01b0ae"
+        },
+        "tao_evolve/policy.py": {
+          "bytes": 3514,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "a2fc27bec09e0b98adc75ba4116693be689f9acb84e607fcc24a820e51d754f8"
+        },
+        "tao_evolve/portability_v11.py": {
+          "bytes": 5305,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "e8fce891ca84f10506b1fed41efee5ef0e6e3f2d0139276ff9d518c1d90f86e3"
+        },
+        "tao_evolve/portfolio_v11.py": {
+          "bytes": 4214,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "76af08f40cbecade7a427410ee2fa1d544061f52a1d53889eae1c33df898bc1d"
+        },
+        "tao_evolve/preflight.py": {
+          "bytes": 3067,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "29c7ffefdfa66b620f42cda6428feb0d19670fc506211bac30bb95b1f599821d"
+        },
+        "tao_evolve/probe_worker.py": {
+          "bytes": 19535,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "783bd9b2ba660761a1af39c640b19d8f56c23977987cae953e47398a5426f10a"
+        },
+        "tao_evolve/probes.py": {
+          "bytes": 18235,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "d58702f7e86f773deac721254e611bac4fbdea5b77f943d39a8e7b54c4b5e800"
+        },
+        "tao_evolve/prompting.py": {
+          "bytes": 1320,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "a33f151502235b02eeda3b914064cfd653a71d4efaf1a88e22c4247d2b42389d"
+        },
+        "tao_evolve/provenance.py": {
+          "bytes": 2204,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "4401fbef23c6e514a50be9626d336675cd12ac74595f19ce9eaf41f9ac0bb1da"
+        },
+        "tao_evolve/public_artifacts.py": {
+          "bytes": 8695,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "ce6e40394d544fa8be5ffcf827ae89471e82d6f6e2b2b4606a369e412614e759"
+        },
+        "tao_evolve/research.py": {
+          "bytes": 65509,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "b0ee039fc4c32835382c1f431646d6575a2d2158989e1d9565963fd12567537d"
+        },
+        "tao_evolve/research_record.py": {
+          "bytes": 16595,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "218c32b7a3911bee06059a683dd8e1ea3423867269c422c7ca9bc5b7f95ad326"
+        },
+        "tao_evolve/strategy_v11.py": {
+          "bytes": 1570,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "2e815eeffa96f28b39d52ecda14b6b2fef35a63bcb3a55b20a4bfb9ad6221221"
+        },
+        "tao_evolve/submission.py": {
+          "bytes": 2705,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "08cd5f801cfd9abf2be0a414b4ab4f791091514593d4e8ffc3d19d29b587c079"
+        },
+        "tao_evolve/task_profiles.py": {
+          "bytes": 1544,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "5b2ef6dc5df386a307693cbb7e4784b096738149cfcd0e16b25bb7dce602ffdb"
+        },
+        "tao_evolve/tradeoff_v11.py": {
+          "bytes": 9640,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "19a52973c30fd12e404cfb427d0d06eceea3d3e30480bf2bb64b8b74a6715660"
+        },
+        "tao_evolve/types.py": {
+          "bytes": 1485,
+          "kind": "file",
+          "mode": 436,
+          "sha256": "bd34b79e43bb2988580431970889ba19cfb81dbc4a3e97fd850f30e546acc9f2"
+        }
+      },
+      "kind": "tree"
+    }
+  },
+  "version": 1
+}

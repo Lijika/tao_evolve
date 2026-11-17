@@ -1,0 +1,20 @@
+{
+  "pid": 762949,
+  "started_epoch": 1794835122.3382313,
+  "command": [
+    "python3",
+    "-u",
+    "start.py",
+    "--task",
+    "full_flow",
+    "--api-key-file",
+    "/home/vipuser/.config/taoeda/deepseek.key",
+    "--agent-cpu",
+    "4",
+    "--agent-memory-gb",
+    "16",
+    "--no-retain-physical-files"
+  ],
+  "work_root": "/mnt/taoeda-work/contest-work/full_flow",
+  "same_official_campaign": true
+}

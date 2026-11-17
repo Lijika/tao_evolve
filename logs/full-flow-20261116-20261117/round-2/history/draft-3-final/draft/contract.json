@@ -1,0 +1,201 @@
+{
+  "contract_id": "691b92379f97bbe3dd1870ff31ec9af6b84e2564-crossdie-fraction-guard-v1",
+  "downstream_obligations": [
+    "Preserve the placement handoff: partition_assignment.csv input, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs must remain in their existing stage contract.",
+    "Keep die fences, node-to-fence assignment, macro halo, target density, legalization, PDN construction and fixed PDN special wires unchanged.",
+    "Keep HBT grid/placement, OPT, CTS clock and parasitic models, GRT layers/adjustment, endpoint coverage and stage order intact.",
+    "Compare parent and child only on matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+    "Retain all nine training cells, including the Ariane 1001 -100 clamp and bp_fe negatives, in later evidence; unknown or unscored cells must remain unknown."
+  ],
+  "edit_stages": [
+    "placement"
+  ],
+  "falsifier": "Reject if the next official same-stage matrix does not improve over parent ecf5 or if bp_fe does not recover while bp and Ariane gains disappear; also reject on worse GRT overflow, DRC, legality or PDN/HBT/CTS contract failure, or if a comparable paid ablation shows the guard is indistinguishable from the parent.",
+  "final_endpoint": "post_grt",
+  "impact_refs": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:635",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+    "open3dbench/runner.py:2215",
+    "open3dbench/runner.py:2269"
+  ],
+  "main_mechanism": "Gate automatic fanout-aware cross-die placement weights by the observed cross-die net fraction: apply the 1.30/1.15/1.05 factors only when cross-die nets are at most 12% of all PlaceDB nets; otherwise keep incoming unit weights. An explicit non-unit cross_die_net_weight remains authoritative.",
+  "parent_candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+  "physical_invariants": [
+    "Net weights remain finite and positive; only nets with assigned endpoints on both dies are candidates for automatic scaling.",
+    "When the cross-die fraction exceeds 12%, automatic weighting is disabled and cross-die weights remain at their incoming values.",
+    "Die assignment, physical connectivity, netlist identity, PDK/Liberty/LEF/SDC and clock definitions are not rewritten.",
+    "Placement units, target density, site/row geometry, macro-halo constraints and PDN special wires are untouched.",
+    "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+  ],
+  "portability_obligation": "The rule depends on valid partition assignment, cross-die net identity and PlaceDB net/pin metadata. The 12% threshold was inferred from the current nine NG45 training cells and makes no claim for unseen designs, PDKs, seeds or hidden validation; explicit configuration weights continue to override the automatic path.",
+  "research_review": {
+    "behavior_check": {
+      "evidence_ids": [
+        "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+        "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+        "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.wns_deficit_ns",
+        "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.tns_deficit_ns"
+      ],
+      "source_refs": [
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-327",
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626"
+      ],
+      "status": "source_hypothesis",
+      "summary": "The source guard is present: synthetic low-fraction input applied 1.30, high-fraction input kept unit weights, and explicit 2.5 remained authoritative; py_compile and four unit tests passed. No physical cell has executed the guard, so post-GRT behavior remains a hypothesis."
+    },
+    "cost_plan": {
+      "compile_and_execute": "py_compile, four unit tests and synthetic branch checks are sub-second. No physical flow or official matrix was run; the next paid nine-cell evaluation is the meaningful execution cost.",
+      "local_probe_seconds": 180,
+      "model_rmb": "advisory_work_packet_envelope",
+      "repair_limit": 1
+    },
+    "decision": "evaluate",
+    "measurement_checks": [
+      {
+        "consumer_definition": "Automatic guard ratio: number of nets whose assigned endpoints span both dies divided by len(placedb.net2pin_map).",
+        "consumer_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306-314",
+        "consumer_unit": "fraction (net count / PlaceDB net count)",
+        "definition": "output/run/20_partition/metrics.json#cut_net_ratio",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+        "explanation": "The catalog value 0.12845 exceeds the 0.12 gate, so bp_fe disables automatic overweighting. Partition cut ratio and the PlaceDB assignment fraction are not proven to be identical populations, so this is supporting proxy evidence, not an exact branch-activation measurement.",
+        "observed_value": 0.12845038599133873,
+        "population_match": "unknown",
+        "unit": "unknown",
+        "use": "hypothesis"
+      },
+      {
+        "consumer_definition": "Count of nets whose assigned endpoints span both bottom and top dies; returned as cross_die_net_count.",
+        "consumer_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306-310",
+        "consumer_unit": "count",
+        "definition": "output/run/30_placement/metrics.json#cross_die_net_count",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+        "explanation": "The placement report records 3411 cross-die nets for bp_fe 1001, matching the numerator population used by the guard. The total PlaceDB net denominator is not exposed in the catalog, so exact activation remains source-inferred.",
+        "observed_value": 3411.0,
+        "population_match": "unknown",
+        "unit": "unknown",
+        "use": "hypothesis"
+      },
+      {
+        "consumer_definition": "Post-GRT passive-HBT assembly setup WNS deficit derived from worst setup slack.",
+        "consumer_ref": "open3dbench/backend/post_route.py:169-170",
+        "consumer_unit": "ns",
+        "definition": "post-grt-passive-hbt-timing:metrics.wns_deficit_ns",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.wns_deficit_ns",
+        "explanation": "Ariane 1001 has WNS deficit 0.795688 ns and cross-die fraction 0.07078, below the gate, yet official TNS improvement is -2.5277 and the score is clamped to -100. This is counterevidence that the fraction gate alone explains all parent harm.",
+        "observed_value": 0.7956884265574681,
+        "population_match": "same",
+        "unit": "ns",
+        "use": "counterevidence"
+      },
+      {
+        "consumer_definition": "Post-GRT passive-HBT assembly setup TNS deficit derived from total negative slack over constrained setup endpoints.",
+        "consumer_ref": "open3dbench/backend/post_route.py:169-170",
+        "consumer_unit": "ns",
+        "definition": "post-grt-passive-hbt-timing:metrics.tns_deficit_ns",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.tns_deficit_ns",
+        "explanation": "Ariane 1001 TNS deficit is 376.235 ns against a 136.732 ns reference mean, consistent with the -100 clamp. Because its cross-die fraction stays below 0.12, this candidate does not directly alter that cell's automatic weights.",
+        "observed_value": 376.2350608663137,
+        "population_match": "same",
+        "unit": "ns",
+        "use": "counterevidence"
+      },
+      {
+        "consumer_definition": "Official overflow penalty attached to the public cell score.",
+        "consumer_ref": "open3dbench/backend/three_d_route.py:728-733",
+        "consumer_unit": "ratio",
+        "definition": "public_feedback.cells.overflow_penalty",
+        "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cell:bp_fe-ng45:1001#overflow_penalty",
+        "explanation": "bp_fe 1001 has zero official overflow penalty, so its parent endpoint deficit is not reflected in that penalty field. The exact scorer aggregation is external to the checkout and remains unverified. Population correspondence remains unknown, so this is a hypothesis rather than exact support.",
+        "observed_value": 0.0,
+        "population_match": "unknown",
+        "unit": "ratio",
+        "use": "hypothesis"
+      }
+    ],
+    "portability": {
+      "failure_behavior": "unknown: synthetic branch checks only; no separate executed contract establishes physical failure coverage for the guard.",
+      "feature_sources": "source-observed: cross-die numerator comes from pin-to-node assignment; denominator is PlaceDB net count; full input information-flow audit not performed.",
+      "randomness": "source-observed deterministic guard; upstream DREAMPlace placement seeds 1001/1002/1003 are used, but seed selection semantics were not re-verified.",
+      "scale_and_population": "observed training NG45 cross-die fractions span 0.039-0.138 over nine cells; the 0.12 gate is dimensionless and hidden or ASAP7 populations are unknown.",
+      "scope": "observed source only; NG45 training cases; cross-process transfer unverified.",
+      "technology": "NG45 is the only observed process; ASAP7 and hidden validation are unknown.",
+      "units": "dimensionless net-count fraction and net-weight multipliers; no physical-unit conversion is claimed."
+    },
+    "reason": "The parent matrix is complete and valid but mixed: bp_fe is consistently negative and Ariane 1001 is clamped at -100. The guard targets the high cross-die fraction observed for bp_fe while leaving the lower-fraction bp and Ariane automatic branches unchanged; the branch is not yet physically executed, so evaluation is meaningful. The repair reclassified three unknown-population proxy measurements from support to hypothesis; no code or mechanism change was made.",
+    "reflection": {
+      "competing_explanation": "The mixed parent result may instead reflect seed noise, placement density, legalization displacement, CTS or routing rather than cross-die weighting; the 12% threshold may also be overfit to the small NG45 training set.",
+      "next_discriminating_check": "Run the official nine-cell matched matrix and compare post-GRT endpoint metrics against parent ecf5, checking bp_fe recovery, retained bp/Ariane gains, overflow, DRC and legality.",
+      "observations": "Parent ecf5 is complete and valid at -6.5938: bp_fe is negative on all three seeds, Ariane 1001 is clamped to -100, and Ariane 1003 is +130.39. The guard source is implemented but unexecuted.",
+      "supporting_counterevidence": "Cross-die ratios are 0.128-0.138 for bp_fe and 0.039 for bp, supporting a gate aimed at the harmed case; counterevidence is Ariane 1001's poor result at 0.0708 and the absence of same-stage parent/child cells."
+    },
+    "review_flags": [
+      {
+        "disposition": "explained",
+        "finding": "scale: numeric constant 0.12 at the cross-die fraction gate",
+        "reason": "Numerator and denominator are both net counts from the same PlaceDB, so 0.12 is dimensionless. Observed NG45 cut ratios 0.039-0.138 separate bp_fe from bp, but cross-process calibration is unknown.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:314"
+        ]
+      },
+      {
+        "disposition": "explained",
+        "finding": "scale: numeric net-weight multiplier 1.30",
+        "reason": "The factor is a dimensionless multiplier applied to existing DREAMPlace net weights; explicit non-unit configuration overrides it and no physical-unit conversion occurs.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:320"
+        ]
+      },
+      {
+        "disposition": "explained",
+        "finding": "scale: numeric fanout-class boundary 3",
+        "reason": "The literal 3 is a pin-count class boundary, not a physical quantity; it selects the dimensionless 1.15 multiplier for three-pin cross-die nets.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:321"
+        ]
+      },
+      {
+        "disposition": "explained",
+        "finding": "scale: numeric net-weight multiplier 1.15",
+        "reason": "The factor is a dimensionless multiplier for three-pin cross-die nets and is applied directly to existing DREAMPlace net weights without physical-unit conversion.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:322"
+        ]
+      },
+      {
+        "disposition": "explained",
+        "finding": "scale: numeric net-weight multiplier 1.05",
+        "reason": "The factor is a dimensionless multiplier for four-or-more-pin cross-die nets and performs no unit conversion.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:324"
+        ]
+      }
+    ]
+  },
+  "source_refs": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-327",
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+    "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+  ],
+  "task": "full_flow",
+  "task_analysis": {
+    "alternative_explanation": "The mixed parent result may instead reflect seed noise, placement density, legalization displacement, CTS or routing rather than cross-die weighting. Two short untested alternatives are uniformly damping every automatic factor and using an absolute cross-die-count cap; neither is claimed causal without a comparable paid ablation.",
+    "candidate_intervention_set": [
+      "placement"
+    ],
+    "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no critical-set migration claim is supported.",
+    "downstream_constraints": "Placement must still emit the same partition handoff, legal DEF and die ODBs; PDN consumes placement at runner.py:2215 and HBT consumes placement at runner.py:2269. HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged; only matched same-stage reports may be compared.",
+    "endpoint_expected_effect": "Only cells above the 12% fraction, observed here as bp_fe, disable automatic fanout boosting and retain incoming unit cross-die weights; bp and Ariane automatically weighted cells should remain behaviorally unchanged. At post_grt this should move bp_fe WNS/TNS back toward reference deficits while preserving bp/Ariane outcomes; sign, magnitude and critical-set migration remain unknown.",
+    "first_observed_divergence": "The parent ecf5 official matrix is complete and valid (9/9, score -6.5938): all three bp_fe cells are negative, Ariane 1001 is clamped to -100, and Ariane 1003 is +130.39. No selected parent cells or same-stage parent/child reports exist. The source-observable divergence is the new fraction gate at concurrent_lol.py:311-314; physical post-GRT divergence is unmeasured."
+  },
+  "tradeoff_statement": "The guard gives up potential cross-die timing pull on high-fraction designs but avoids over-constraining a large shared-net set and adding local congestion. It stores one cross-die net-ID list and performs one additional linear weighting pass, adding O(cross-die net count) memory and bounded runtime; it adds no placement iterations or changes to density, legality, area or power. The 12% threshold is an empirically derived proxy rather than a calibrated criticality model.",
+  "unknowns": [
+    "selected_parent_cells is empty, so no same-stage parent/child cell evidence exists for causal comparison.",
+    "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists; local and final sign consistency is therefore unestablished.",
+    "The 12% threshold was inferred from three training cases and nine seeds; hidden-validation and cross-process generalization are unknown.",
+    "Training evidence is concentrated: all three bp_fe cells are negative, while the largest positive cell is Ariane seed 1003; equal-case averaging can hide seed concentration.",
+    "Partition cut_net_ratio and the PlaceDB pin-assignment cross-die fraction are not proven to be identical populations; branch activation is source-inferred for bp_fe.",
+    "The official score is authoritative; endpoint metrics and placement proxies are observations, and their exact mapping to the score is not assumed.",
+    "The Ariane 1001 raw score was clamped to -100, and its low cross-die fraction means this candidate does not directly alter its automatic weighting."
+  ]
+}

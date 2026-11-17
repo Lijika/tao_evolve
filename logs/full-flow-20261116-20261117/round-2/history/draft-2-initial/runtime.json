@@ -1,0 +1,5 @@
+{
+  "max_evaluations": 10,
+  "pending_model_usage_policy": "continue_after_successful_turn",
+  "review_after_evaluations": 1
+}

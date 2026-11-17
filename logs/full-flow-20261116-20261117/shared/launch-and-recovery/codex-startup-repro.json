@@ -1,0 +1,36 @@
+{
+  "node_version": {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "v12.22.9\n",
+    "stderr": ""
+  },
+  "codex_version": {
+    "command": [
+      "/usr/local/bin/codex",
+      "--version"
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "file:///usr/local/lib/node_modules/@openai/codex/bin/codex.js:285\nconst childResult = await new Promise((resolve) => {\n                    ^^^^^\n\nSyntaxError: Unexpected reserved word\n    at Loader.moduleStrategy (internal/modules/esm/translators.js:133:18)\n    at async link (internal/modules/esm/module_job.js:42:21)\n"
+  },
+  "path_resolution": {
+    "node": "/usr/bin/node",
+    "codex": "/usr/local/bin/codex",
+    "python3": "/usr/bin/python3"
+  },
+  "installed_nodes": [],
+  "codex_package": {
+    "name": "@openai/codex",
+    "version": "0.167.1",
+    "engines": {
+      "node": ">=16"
+    },
+    "bin": {
+      "codex": "bin/codex.js"
+    }
+  }
+}

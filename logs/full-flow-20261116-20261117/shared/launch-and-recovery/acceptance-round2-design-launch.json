@@ -1,0 +1,29 @@
+{
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "codex_version": "codex-cli 0.167.1",
+  "command": [
+    "python3",
+    "-u",
+    "start.py",
+    "--task",
+    "full_flow",
+    "--api-key-file",
+    "/home/vipuser/.config/taoeda/deepseek.key",
+    "--agent-cpu",
+    "4",
+    "--agent-memory-gb",
+    "16",
+    "--no-retain-physical-files"
+  ],
+  "log": "/mnt/taoeda-work/agent-development/round-2-design/full-flow-round2-design.log",
+  "pid": 818769,
+  "runtime_config": {
+    "max_evaluations": 10,
+    "pending_model_usage_policy": "continue_after_successful_turn",
+    "review_after_evaluations": 1
+  },
+  "same_official_campaign": true,
+  "started_epoch": 1794853192.290419,
+  "upgrade_id": "bbf45b1b34d28c695b1eef613bb9a4b085a92498788cb9c803d8ee621ee8311f",
+  "work_root": "/mnt/taoeda-work/contest-work/full_flow"
+}

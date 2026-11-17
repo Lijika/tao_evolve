@@ -1,0 +1,169 @@
+{
+  "assurance": "source_scope_and_integrity_only",
+  "changed_paths": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+  ],
+  "digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+  "errors": [],
+  "probes": {
+    "assurance": "READY_FOR_OFFICIAL_UNPROVEN_PHYSICAL",
+    "budget_seconds": 180.0,
+    "capabilities": {
+      "A0": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      },
+      "A1": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      },
+      "B0": {
+        "reason": "tested_contract_only",
+        "status": "pass"
+      },
+      "B1": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "C": {
+        "reason": "no_current_artifact",
+        "status": "unknown"
+      },
+      "D": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "E": {
+        "reason": "disabled_by_v1_1",
+        "status": "disabled"
+      },
+      "F": {
+        "reason": "unaffected_scope",
+        "status": "skipped"
+      }
+    },
+    "hard_errors": [],
+    "results": [
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "A0",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "binding": {
+          "mode": "candidate_code_executed",
+          "module": "/workspace/workspaces/bef488b75834ded48302fec1e54dede48d3d2adf/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py",
+          "python_version": "3.8.10",
+          "source_sha256": {
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          "torch_version": "1.7.1+cu110"
+        },
+        "candidate_bound": true,
+        "contract_verified": true,
+        "coverage": [
+          "density_range",
+          "net_weight_summary",
+          "initialization_region",
+          "pin_projection_and_gradient"
+        ],
+        "elapsed_seconds": 0.973,
+        "evidence_id": "/workspace/scratch/tao-evolve/draft-2/probes-0/B0-first/result.json",
+        "hard_errors": [],
+        "input_class": "synthetic_fixture",
+        "input_current": true,
+        "invariant_errors": [],
+        "kind": "invariant",
+        "metrics": {
+          "density_cases": 10,
+          "initialization_same_seed_equal": true,
+          "weight_cases": 3
+        },
+        "probe": "B0",
+        "reason": "tested_contract_only",
+        "reproducible": false,
+        "status": "pass"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "A1",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "C",
+        "reason": "no_current_artifact",
+        "reproducible": false,
+        "status": "unknown"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "F",
+        "reason": "unaffected_scope",
+        "reproducible": false,
+        "status": "skipped"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "B1",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "D",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      },
+      {
+        "candidate_bound": false,
+        "contract_verified": false,
+        "hard_errors": [],
+        "input_current": false,
+        "kind": "observation",
+        "metrics": {},
+        "probe": "E",
+        "reason": "disabled_by_v1_1",
+        "reproducible": false,
+        "status": "disabled"
+      }
+    ]
+  },
+  "warnings": []
+}

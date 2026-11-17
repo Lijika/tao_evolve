@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-17",
+  "runtime_inclusion": false,
+  "task": "full_flow",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "draft_key": "draft-3",
+  "checkout_id": "691b92379f97bbe3dd1870ff31ec9af6b84e2564",
+  "tree_digest": "0d57dd24144a05d8739a882de16d0fcbc9aacb3d85487f95ece5d0d2de4ed64b",
+  "snapshot_observed_at": "2026-11-17 04:48:54 +0800",
+  "status": "review_completed_material_design_error",
+  "execution_acceptance": "passed",
+  "quality_review_completed": true,
+  "candidate_quality_accepted": false,
+  "ready_for_next_official_evaluation": false,
+  "overall_conclusion": "自动引用与一致性校验、同campaign恢复和设计检查点通过。模型把三项support改成hypothesis，仍保留bp_fe触发12%开关的错误结论；相同源码机制及真实九组输入计数支持继续保留父代自动权重，所述实验机制缺少区分能力。",
+  "recommendation": "保留检查点，先处理统计集合与实验区分能力，再决定是否消耗第二次正式评估。本审查未修改候选或提供替代算法。",
+  "execution": {
+    "session_status": "succeeded",
+    "active_phase": "submit_ready",
+    "repair_count": 1,
+    "research_review_version": 1,
+    "preflight_errors": [],
+    "official_evaluations": 1,
+    "submit_intents": 1,
+    "first_champion_accepted": true,
+    "officially_submitted_current_draft": false,
+    "physical_validity": null,
+    "official_score": null,
+    "settled_model_calls": 169,
+    "uncertain_model_calls": 1,
+    "settled_model_cost_rmb": "1.29919808",
+    "reserved_model_cost_rmb": "2.228224",
+    "actual_total_model_charge_rmb": null
+  },
+  "criteria": [
+    {
+      "id": "Q1",
+      "criterion": "反馈与父代身份",
+      "verdict": "supported",
+      "finding": "reflection_subject、编辑父代与公开反馈均绑定当前campaign首轮ecf5候选。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/draft/preflight-1.json#research_assessment.reflection_subject",
+        "legacy-observation-fix/acceptance/draft/contract.json#parent_candidate_id"
+      ]
+    },
+    {
+      "id": "Q2",
+      "criterion": "完整九组与退化",
+      "verdict": "supported_with_wording_error",
+      "finding": "九组完整，识别bp_fe负分和Ariane波动；nine seeds仍与三个种子不符。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/draft/contract-evidence.json#cells",
+        "legacy-observation-fix/acceptance/draft/contract.json#unknowns"
+      ]
+    },
+    {
+      "id": "Q3",
+      "criterion": "对准正式终点",
+      "verdict": "improved_partial",
+      "finding": "五项数值引用准确，已纳入Ariane1001官方WNS改善与TNS退化的反证；局部指标与官方归一化分项关系仍需限定。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/draft/contract.json#research_review.measurement_checks",
+        "legacy-observation-fix/acceptance/draft/contract-evidence.json#cells"
+      ]
+    },
+    {
+      "id": "Q4",
+      "criterion": "跨阶段解释与因果边界",
+      "verdict": "supported_uncertainty_boundary",
+      "finding": "明确同阶段比较要求、可比祖先与端点映射缺失，并保留density、legalization、CTS/routing、seed替代解释。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/draft/contract.json#task_analysis"
+      ]
+    },
+    {
+      "id": "Q5",
+      "criterion": "机制与实际代码",
+      "verdict": "material_design_error",
+      "finding": "实际消费者为完整PlaceDB网络集合，九组计数均低于12%；标签修复未纠正bp_fe会关闭权重的正文断言。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/candidate.diff",
+        "legacy-observation-fix/acceptance/draft/contract.json#research_review.measurement_checks[0:2]",
+        "legacy-observation-fix/acceptance/draft/contract.json#task_analysis.endpoint_expected_effect"
+      ]
+    },
+    {
+      "id": "Q6",
+      "criterion": "收益、代价与可推翻假设",
+      "verdict": "partly_supported_not_discriminating",
+      "finding": "新增列表和额外线性遍历有源码依据；实际资源和物理代价未知，九组不会触发所述关闭机制。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/candidate.diff",
+        "legacy-observation-fix/acceptance/draft/contract.json#tradeoff_statement",
+        "legacy-observation-fix/acceptance/draft/contract.json#falsifier"
+      ]
+    },
+    {
+      "id": "Q7",
+      "criterion": "证据不足时的判断",
+      "verdict": "inconsistent_unknown_handling",
+      "finding": "结构字段和最终报告承认未知，reason、reflection和endpoint_expected_effect仍将bp_fe触发当事实。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/final-report.md",
+        "legacy-observation-fix/acceptance/draft/contract.json#research_review",
+        "legacy-observation-fix/acceptance/draft/contract.json#task_analysis.endpoint_expected_effect"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "RQ1",
+      "severity": "high",
+      "status": "confirmed",
+      "finding": "标签降为hypothesis，正文仍确定断言bp_fe关闭自动权重。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/draft/contract.json#research_review.measurement_checks[0].explanation",
+        "legacy-observation-fix/acceptance/draft/contract.json#research_review.reason",
+        "legacy-observation-fix/acceptance/draft/contract.json#research_review.reflection.supporting_counterevidence",
+        "legacy-observation-fix/acceptance/draft/contract.json#task_analysis.endpoint_expected_effect"
+      ],
+      "repair_changed_source": false
+    },
+    {
+      "id": "RQ2",
+      "severity": "high",
+      "status": "confirmed_from_reused_inputs_and_source_analysis",
+      "finding": "新候选的计数和12%判断与旧候选等价，公开九组实际比例均小于12%；这些输入下自动权重行为与父代一致。",
+      "bp_fe_actual_percent": [
+        11.18907171685812,
+        11.955914312325366,
+        11.403290903446136
+      ],
+      "scope_limit": "Static decision analysis using current collected source and previously audited real input counts; no new nine-cell function run or physical evaluation. Future official score remains unknown."
+    },
+    {
+      "id": "RQ3",
+      "severity": "low",
+      "status": "confirmed_wording_and_measurement_limit",
+      "finding": "合同仍写nine seeds；实际三个种子九组。新增列表和线性遍历有源码依据，实际时间、峰值内存、面积及功耗影响未测量。",
+      "evidence": [
+        "legacy-observation-fix/acceptance/draft/contract.json#unknowns",
+        "legacy-observation-fix/acceptance/draft/contract.json#tradeoff_statement"
+      ]
+    }
+  ],
+  "confirmed_improvements": [
+    "五项公开数值、定义、单位精确对应catalog。",
+    "Ariane1001的WNS与TNS分歧已进入反证，并承认12%门槛可能过拟合。",
+    "新增列表内存和额外线性遍历的成本说明符合当前diff。",
+    "有限修复确实由不兼容support触发，最终保留明确unknown字段和源码引用。"
+  ],
+  "automatic_assurance": {
+    "research_assurance": "reference_and_consistency_checks_not_algorithm_quality_proof",
+    "behavior_assessment": {
+      "assurance": "model_reported",
+      "claimed_status": "source_hypothesis",
+      "current_candidate_behavior_verified": false,
+      "limitation": "Source references and prior measurements do not prove current draft execution."
+    },
+    "reclassified_measurement_indices": [
+      0,
+      1,
+      4
+    ],
+    "preflight0_errors": [
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+      "research_measurement_support_incompatible:49518aee056fd7d032539e65aa231e3266846902:cell:bp_fe-ng45:1001#overflow_penalty"
+    ],
+    "preflight1_errors": [],
+    "B0_current_candidate_synthetic_contract_passed": true,
+    "B0_result_reused_within_current_draft": true,
+    "B0_coverage": [
+      "density_range",
+      "net_weight_summary",
+      "initialization_region",
+      "pin_projection_and_gradient"
+    ],
+    "B0_real_nine_cell_trigger_verified": false,
+    "semantic_quality_proved": false
+  },
+  "measurement_verification": [
+    {
+      "index": 0,
+      "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_ratio",
+      "exact_value_definition_unit_match": true,
+      "use": "hypothesis",
+      "population_match": "unknown"
+    },
+    {
+      "index": 1,
+      "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/30_placement/metrics.json#cross_die_net_count",
+      "exact_value_definition_unit_match": true,
+      "use": "hypothesis",
+      "population_match": "unknown"
+    },
+    {
+      "index": 2,
+      "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.wns_deficit_ns",
+      "exact_value_definition_unit_match": true,
+      "use": "counterevidence",
+      "population_match": "same"
+    },
+    {
+      "index": 3,
+      "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/analysis/metrics.json#metrics.tns_deficit_ns",
+      "exact_value_definition_unit_match": true,
+      "use": "counterevidence",
+      "population_match": "same"
+    },
+    {
+      "index": 4,
+      "evidence_id": "49518aee056fd7d032539e65aa231e3266846902:cell:bp_fe-ng45:1001#overflow_penalty",
+      "exact_value_definition_unit_match": true,
+      "use": "hypothesis",
+      "population_match": "unknown"
+    }
+  ],
+  "reused_evidence": {
+    "source_report": "../round-2-design/design-quality-review.json",
+    "original_runtime_log_observed_at": "2026-11-17 02:35:44 +0800",
+    "reuse_method": "Reused historical public log count measurements, compared current/old parent bytes and helper AST, then inlined only cross_die_count=len(cross_die_ids) in the old weight-function AST; normalized function equals current AST. Applied current scalar gate condition to the nine historical count pairs.",
+    "source_checks": {
+      "parent_file_byte_equal": true,
+      "count_helper_ast_equal": true,
+      "weight_function_ast_equal_after_explicit_local_alias_inlining": true,
+      "final_preflight_candidate_hash_matches": true,
+      "repair_candidate_digest_unchanged": true
+    },
+    "evidence_identity_equal": {
+      "task": true,
+      "campaign_id": true,
+      "candidate_id": true,
+      "request_id": true,
+      "task_digest": true,
+      "cells": true,
+      "files_index_sha256": true
+    },
+    "public_files_index_sha256": "d501dd17c0a79536ebbac66c2f7fec48d3a9266117b1cd1585b2c3655f3fa90a",
+    "source_sha256": {
+      "new_candidate": "859449bcb867a7c4d6e39b3d98983160e0c41fb40690cec6147afd07bd472637",
+      "old_candidate": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55",
+      "new_parent": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+      "old_parent": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d"
+    },
+    "original_function_tests_reexecuted": false,
+    "new_candidate_full_physical_run": false,
+    "limits": "Reuse proves only the already observed input-count branch decision and corresponding automatic weighting. Historical synthetic tests retain their original candidate/date; they are not presented as new candidate execution."
+  },
+  "count_comparison": [
+    {
+      "case": "bp_fe-ng45",
+      "seed": 1001,
+      "cross_die_count": 3604,
+      "placedb_net_count": 32210,
+      "fraction": 0.11189071716858119,
+      "partition_cut_net_count": 3411,
+      "partition_net_count": 26555,
+      "partition_fraction": 0.12845038599133873,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "bp_fe-ng45",
+      "seed": 1002,
+      "cross_die_count": 3851,
+      "placedb_net_count": 32210,
+      "fraction": 0.11955914312325365,
+      "partition_cut_net_count": 3655,
+      "partition_net_count": 26555,
+      "partition_fraction": 0.13763886273771417,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "bp_fe-ng45",
+      "seed": 1003,
+      "cross_die_count": 3673,
+      "placedb_net_count": 32210,
+      "fraction": 0.11403290903446135,
+      "partition_cut_net_count": 3408,
+      "partition_net_count": 26555,
+      "partition_fraction": 0.1283374129165882,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "bp-ng45",
+      "seed": 1001,
+      "cross_die_count": 5844,
+      "placedb_net_count": 173429,
+      "fraction": 0.03369678658125227,
+      "partition_cut_net_count": 5831,
+      "partition_net_count": 149382,
+      "partition_fraction": 0.03903415404801114,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "bp-ng45",
+      "seed": 1002,
+      "cross_die_count": 5940,
+      "placedb_net_count": 173429,
+      "fraction": 0.034250327223244094,
+      "partition_cut_net_count": 5927,
+      "partition_net_count": 149382,
+      "partition_fraction": 0.0396768017565704,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "bp-ng45",
+      "seed": 1003,
+      "cross_die_count": 5812,
+      "placedb_net_count": 173429,
+      "fraction": 0.03351227303392166,
+      "partition_cut_net_count": 5799,
+      "partition_net_count": 149382,
+      "partition_fraction": 0.03881993814515805,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "ariane133-ng45",
+      "seed": 1001,
+      "cross_die_count": 10888,
+      "placedb_net_count": 161308,
+      "fraction": 0.0674982021970392,
+      "partition_cut_net_count": 10840,
+      "partition_net_count": 153150,
+      "partition_fraction": 0.07078028077048645,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "ariane133-ng45",
+      "seed": 1002,
+      "cross_die_count": 18125,
+      "placedb_net_count": 161308,
+      "fraction": 0.11236268504971855,
+      "partition_cut_net_count": 18022,
+      "partition_net_count": 153150,
+      "partition_fraction": 0.117675481554032,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    },
+    {
+      "case": "ariane133-ng45",
+      "seed": 1003,
+      "cross_die_count": 11885,
+      "placedb_net_count": 161308,
+      "fraction": 0.07367892478984303,
+      "partition_cut_net_count": 11830,
+      "partition_net_count": 153150,
+      "partition_fraction": 0.0772445315050604,
+      "new_candidate_disables_automatic_weights_by_static_condition": false,
+      "parent_automatic_weighting_retained": true
+    }
+  ],
+  "verification_performed": [
+    "Read final accepted contract, diff, current and parent source, full evidence JSON, preflight0/1, state, review, turn and session receipts.",
+    "Compared five measurements with exact current catalog values and definitions.",
+    "Verified current source hash against preflight and unchanged source digest across repair.",
+    "Compared source AST and current/old feedback identities before reusing historical nine-cell measurements."
+  ],
+  "not_verified": [
+    "Current draft official physical validity and score.",
+    "Real runtime, peak memory, area and power effects.",
+    "Independent raw execution transcript for model-reported four unit tests."
+  ],
+  "artifact_sha256": {
+    "legacy-observation-fix/acceptance/acceptance.json": "97787a682f11958658b34171918ad4a84006767ffcf6bfc7df76ebe2e571132a",
+    "legacy-observation-fix/acceptance/draft/contract.json": "6a46d1563daec8257ec3c4247d351b7105edbbd9919075c4c660cbd2fb468e4c",
+    "legacy-observation-fix/acceptance/draft/contract-evidence.json": "00c370dfcef3001208cabe8cd93c9c7d43605b83a0b981c85cfff68649cfc1ae",
+    "legacy-observation-fix/acceptance/draft/preflight-1.json": "1a7d83f9836cfc0cc44790c1e58e073f9a843b3481bafcf610645c7adbbe48f0",
+    "legacy-observation-fix/acceptance/candidate.diff": "69d44104941694f74113d8bc85d40f3d871e00cdbdd4f8878cf976da02f8a416",
+    "legacy-observation-fix/acceptance/candidate/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "859449bcb867a7c4d6e39b3d98983160e0c41fb40690cec6147afd07bd472637",
+    "legacy-observation-fix/acceptance/final-report.md": "479f26406193688d7113def4b7da6786777c3b57ffd0b4b593386b7a70bc8c60"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-11-17 04:31:28 +0800",
+  "stderr": [
+    {
+      "path": "/mnt/taoeda-work/contest-work/full_flow/scratch/contest-agent/160a8f3358a693f3/agent.stderr",
+      "mtime": 1794860853.1427872,
+      "text": "Traceback (most recent call last):\n  File \"/usr/lib/python3.8/runpy.py\", line 194, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/usr/lib/python3.8/runpy.py\", line 87, in _run_code\n    exec(code, run_globals)\n  File \"/opt/contest/AgenticBench/competition/agent_entry.py\", line 51, in <module>\n    run()\n  File \"/opt/contest/AgenticBench/competition/agent_entry.py\", line 27, in run\n    result = agent.run(AgentContext())\n  File \"/workspace/agent/agent.py\", line 174, in run\n    return Controller(context, Path(__file__).parent).run()\n  File \"/workspace/agent/tao_evolve/controller.py\", line 702, in run\n    handlers[phase](active)\n  File \"/workspace/agent/tao_evolve/controller.py\", line 401, in _model\n    self._observe_model(active, request_id, turn, after)\n  File \"/workspace/agent/tao_evolve/controller.py\", line 407, in _observe_model\n    if any(row[\"turn_request_id\"] == request_id for row in self.state[\"budget_observations\"]):\n  File \"/workspace/agent/tao_evolve/controller.py\", line 407, in <genexpr>\n    if any(row[\"turn_request_id\"] == request_id for row in self.state[\"budget_observations\"]):\nKeyError: 'turn_request_id'\n"
+    },
+    {
+      "path": "/mnt/taoeda-work/contest-work/full_flow/scratch/contest-agent/1e5240472b2f61d6/agent.stderr",
+      "mtime": 1794853233.8969305,
+      "text": ""
+    }
+  ],
+  "launcher_tail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/mnt/taoeda-work/contest-source/framework/competition/agent_runner.py\", line 114, in <module>\n    main()\n  File \"/mnt/taoeda-work/contest-source/framework/competition/agent_runner.py\", line 96, in main\n    candidate = run_agent(startup_command=startup, name=name, scratch=scratch)\n  File \"/mnt/taoeda-work/contest-source/framework/competition/agent_container.py\", line 112, in run_agent\n    raise RuntimeError(\"Agent.run failed; see agent.stderr\")\nRuntimeError: Agent.run failed; see agent.stderr\nTraceback (most recent call last):\n  File \"/mnt/taoeda-work/contest-source/start.py\", line 12, in <module>\n    raise SystemExit(main())\n  File \"/mnt/taoeda-work/contest-source/framework/competition/launch.py\", line 364, in main\n    return run(args.task, release=release, data_file=data_file,\n  File \"/mnt/taoeda-work/contest-source/framework/competition/launch.py\", line 285, in run\n    raise RuntimeError(\"Agent session failed; inspect its retained logs\")\nRuntimeError: Agent session failed; inspect its retained logs\n"
+}

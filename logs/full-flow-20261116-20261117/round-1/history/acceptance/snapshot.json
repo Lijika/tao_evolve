@@ -1,0 +1,1681 @@
+{
+  "observed_at": "2026-11-17 01:50:27 +0800",
+  "remote_work_root": "/mnt/taoeda-work/contest-work/full_flow",
+  "launch": {
+    "pid": 762949,
+    "started_epoch": 1794835122.3382313,
+    "same_official_campaign": true
+  },
+  "session_result": {
+    "agent": {
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "training_budget": 1
+    },
+    "baseline": {
+      "candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+      "physical_replay": false,
+      "reference_cells": 15,
+      "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f"
+    },
+    "evaluation_mode": "formal",
+    "services_stopped": true,
+    "status": "succeeded",
+    "task": "full_flow",
+    "work_root": "/mnt/taoeda-work/contest-work/full_flow"
+  },
+  "agent_result": {
+    "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "training_budget": 1
+  },
+  "state": {
+    "active": null,
+    "active_parent_roles": {
+      "delivery": null,
+      "exploration": null,
+      "score": null
+    },
+    "baseline": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+    "budget_observations": [
+      {
+        "after_available_rmb": "14.71719156",
+        "before_available_rmb": "15",
+        "draft": "draft-1",
+        "semantics": "public_available_balance_not_charge",
+        "settled_cost_rmb": null,
+        "unresolved_model_calls": 0
+      },
+      {
+        "after_available_rmb": "12.46085084",
+        "before_available_rmb": "14.71719156",
+        "draft": "draft-1",
+        "semantics": "public_available_balance_not_charge",
+        "settled_cost_rmb": null,
+        "unresolved_model_calls": 1
+      }
+    ],
+    "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+    "draft_failures": 0,
+    "policy_digest": "264c55f0cf17a646abe79b9ba3c7f890dac2b72087176e7047e78b245c7e4af1",
+    "records": [
+      {
+        "contract": {
+          "contract_id": "adf9465b45b1dbe31cbe46636f971623916c656e-crossdie-fanout-weight-v1",
+          "downstream_obligations": [
+            "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in their existing stage contract.",
+            "Keep die fences, node-to-fence assignment, macro halo, legalization and PDN execution unchanged; only net objective weights may change.",
+            "Keep HBT grid/placement, CTS clock/parasitic models, routing layers/adjustment, endpoint coverage and stage order unchanged.",
+            "Compare parent and child only on matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+            "Retain every training case/seed cell, including failures, in later evidence; unknown cells must remain unknown until an official evaluation exists."
+          ],
+          "edit_stages": [
+            "placement"
+          ],
+          "falsifier": "Reject this candidate if a comparable same-stage parent/child evaluation with identical design, seed, config and routing schedule shows no improvement in post-GRT cross-die HPWL or WNS/TNS, or shows increased GRT overflow, DRC, legalization displacement or a PDN/HBT/CTS contract failure; also reject if a paid ablation of the fanout factors is indistinguishable from the parent.",
+          "final_endpoint": "post_grt",
+          "impact_refs": [
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+            "open3dbench/runner.py:2269"
+          ],
+          "main_mechanism": "In Concurrent LoL global placement, treat the default unit cross-die multiplier as an automatic mode: scale each cross-die net weight by a fanout-aware factor (1.30 for two-pin nets, 1.15 for three-pin nets, 1.05 for four-or-more-pin nets). This gives nets that must traverse an HBT a stronger placement pull toward aligned die-local coordinates, while an explicit non-unit cross_die_net_weight remains authoritative.",
+          "parent_candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+          "physical_invariants": [
+            "Net weights remain finite and positive; only cross-die nets with endpoints on both assigned dies are scaled.",
+            "Die assignment and physical connectivity are not rewritten; cross-die net identity continues to come from pin-to-node assignment.",
+            "Placement units remain DREAMPlace DBU/um consistent; target density, site/row geometry and macro-halo constraints are untouched.",
+            "HBT, PDN, CTS, SDC, clock, Liberty, LEF and RC/parasitic models are not modified by this edit.",
+            "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+          ],
+          "portability_obligation": "The mechanism depends on a valid partition_assignment, real DEF net/pin identity and DREAMPlace net_weights. It makes no claim for unseen PDKs, designs or seeds; degree thresholds are a source-level timing proxy, not a calibrated criticality model, and the edit must remain confined to the placement objective without changing netlist, PDK, Liberty, LEF, SDC or clock contracts.",
+          "source_refs": [
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+            "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+            "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+          ],
+          "task": "full_flow",
+          "task_analysis": {
+            "alternative_explanation": "Any post-GRT change could instead come from placement density, legalization displacement or local congestion rather than cross-die weighting. Untested short alternatives are a uniform cross-die weight boost and a backend-density whitespace reserve; neither is claimed as causal without a paid ablation.",
+            "candidate_intervention_set": [
+              "placement"
+            ],
+            "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+            "downstream_constraints": "Placement must still emit the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage parent/child reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+            "endpoint_expected_effect": "At post_grt, expect equal or lower cross-die weighted HPWL and possibly lower WNS/TNS if cross-die nets are critical, at the risk of higher local congestion and GRT overflow; sign, magnitude and critical-set migration remain unknown.",
+            "first_observed_divergence": "No official parent/child cell or stage report exists. The first source-observable divergence is at Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:307-322, where the default unit-multiplier path now enters an automatic fanout-aware branch and changes cross-die net_weights; the first physical divergence is unmeasured."
+          },
+          "tradeoff_statement": "Stronger cross-die weights can shorten point-to-point cross-die wirelength and reduce HBT-interface detours, but may pull cells toward die boundaries, raising local density, legalization displacement and GRT overflow; no area, power or runtime improvement is guaranteed.",
+          "unknowns": [
+            "No official scored matrix exists for this campaign; all nine training cells are unscored and no -100 failure cells were supplied.",
+            "No comparable parent/child cell, stage report or cross-process paid ablation is available, so physical sign and magnitude are unknown.",
+            "The post-GRT scoring weights among timing, wirelength, congestion and power are unknown.",
+            "The assumption that low-fanout cross-die nets are timing-critical is unverified for these designs.",
+            "Training case/seed concentration and cross-process generalization are unknown because no scored cell exists.",
+            "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists."
+          ],
+          "verified_impact_refs": [
+            {
+              "first_line": 405,
+              "last_line": 405,
+              "sha256": "0f1ae69eb5019776afa998e70ba1196bd838e15f84e3cb78c969c245c251b87e",
+              "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+              "text": "        return (hpwl_x+hpwl_y)*self.net_weights[net_id]"
+            },
+            {
+              "first_line": 258,
+              "last_line": 271,
+              "sha256": "7f5cc89c291e5d29b959a2b01186d6ad3cf70d62cf1e7620973fefccd27456e1",
+              "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+              "text": "        self.net_weights = net_weights\n        self.net_mask = net_mask\n        self.pin_mask = pin_mask\n        self.gamma = gamma\n        self.algorithm = algorithm\n\n    def forward(self, pos):\n        if self.algorithm == 'net-by-net':\n            return WeightedAverageWirelengthFunction.apply(\n                pos,\n                self.flat_netpin,\n                self.netpin_start,\n                self.pin2net_map,\n                self.net_weights,"
+            },
+            {
+              "first_line": 2269,
+              "last_line": 2269,
+              "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+              "source_ref": "open3dbench/runner.py:2269",
+              "text": "        placement = self.run_dir / STAGE_DIRS[\"placement\"]"
+            }
+          ],
+          "verified_source_refs": [
+            {
+              "first_line": 305,
+              "last_line": 323,
+              "sha256": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+              "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+              "text": "def _apply_cross_die_net_weights(placedb, assignment: Mapping[int, str], multiplier: float) -> Tuple[int, float]:\n    cross_die_count = 0\n    automatic_weight = float(multiplier) == 1.0\n    for net_id in range(len(placedb.net2pin_map)):\n        dies = set(_iter_node_dies_for_net(placedb, net_id, assignment))\n        if len(dies) >= 2:\n            cross_die_count += 1\n            factor = float(multiplier)\n            if automatic_weight:\n                degree = len(placedb.net2pin_map[net_id])\n                if degree <= 2:\n                    factor = 1.30\n                elif degree == 3:\n                    factor = 1.15\n                else:\n                    factor = 1.05\n            if factor != 1.0:\n                placedb.net_weights[net_id] *= factor\n    return cross_die_count, float(np.sum(placedb.net_weights))"
+            },
+            {
+              "first_line": 622,
+              "last_line": 626,
+              "sha256": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+              "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+              "text": "    cross_die_net_count, net_weight_sum = _apply_cross_die_net_weights(\n        placedb,\n        assignment,\n        float(cfg.get(\"cross_die_net_weight\", 0.2)),\n    )"
+            },
+            {
+              "first_line": 3,
+              "last_line": 3,
+              "sha256": "b527a379386ca6cf1336b00e79c5722761fe7ca46958dc3c7109697f380eff1c",
+              "source_ref": "Place-3D/config/placement/concurrent_dreamplace/default.json:3",
+              "text": "    \"cross_die_net_weight\": 1.0,"
+            }
+          ]
+        },
+        "parent_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+        "receipt": {
+          "artifacts_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "feedback": {
+            "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+            "cells": [
+              {
+                "case": "bp_fe-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": -55.26847361545787,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 339.2830195787466,
+                  "wns_ns": 0.6848528604730505
+                },
+                "score": -55.26847361545787,
+                "seed": 1001,
+                "tns_improvement": -0.5986346508842654,
+                "valid": true,
+                "wns_improvement": -0.4837598640600486
+              },
+              {
+                "case": "bp_fe-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": -11.202262913701672,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 339.2830195787466,
+                  "wns_ns": 0.6848528604730505
+                },
+                "score": -11.202262913701672,
+                "seed": 1002,
+                "tns_improvement": 0.006963793162135275,
+                "valid": true,
+                "wns_improvement": -0.2905022625857447
+              },
+              {
+                "case": "bp_fe-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": -32.37863930035398,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 339.2830195787466,
+                  "wns_ns": 0.6848528604730505
+                },
+                "score": -32.37863930035398,
+                "seed": 1003,
+                "tns_improvement": -0.3017884123252465,
+                "valid": true,
+                "wns_improvement": -0.3567833640209797
+              },
+              {
+                "case": "bp-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": -4.719286773631615,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 7709.019494591678,
+                  "wns_ns": 7.97252834464225
+                },
+                "score": -4.719286773631615,
+                "seed": 1001,
+                "tns_improvement": -0.08127227400123847,
+                "valid": true,
+                "wns_improvement": 0.0039262416610673185
+              },
+              {
+                "case": "bp-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": 10.095481049074893,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 7709.019494591678,
+                  "wns_ns": 7.97252834464225
+                },
+                "score": 10.095481049074893,
+                "seed": 1002,
+                "tns_improvement": 0.17203835590730998,
+                "valid": true,
+                "wns_improvement": -0.005670507634092613
+              },
+              {
+                "case": "bp-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": -1.4382908592195527,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 7709.019494591678,
+                  "wns_ns": 7.97252834464225
+                },
+                "score": -1.4382908592195527,
+                "seed": 1003,
+                "tns_improvement": -0.02863573894283609,
+                "valid": true,
+                "wns_improvement": 0.006996336933765319
+              },
+              {
+                "case": "ariane133-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": -143.99450727907416,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 136.73199137711958,
+                  "wns_ns": 0.7123820253851022
+                },
+                "score": -100.0,
+                "seed": 1001,
+                "tns_improvement": -2.5276540299069543,
+                "valid": true,
+                "wns_improvement": 0.19161836288357742
+              },
+              {
+                "case": "ariane133-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": 5.175826124197975,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 136.73199137711958,
+                  "wns_ns": 0.7123820253851022
+                },
+                "score": 5.175826124197975,
+                "seed": 1002,
+                "tns_improvement": -0.1382205608892833,
+                "valid": true,
+                "wns_improvement": 0.3367264944388743
+              },
+              {
+                "case": "ariane133-ng45",
+                "overflow_penalty": 0.0,
+                "raw_score": 130.39150994616116,
+                "reason": null,
+                "reference_mean_deficits": {
+                  "tns_ns": 136.73199137711958,
+                  "wns_ns": 0.7123820253851022
+                },
+                "score": 130.39150994616116,
+                "seed": 1003,
+                "tns_improvement": 1.9076238495583646,
+                "valid": true,
+                "wns_improvement": 0.3983519743164829
+              }
+            ],
+            "completed_cells": 9,
+            "invalid_cells": 0,
+            "per_case": {
+              "ariane133-ng45": 11.855778690119713,
+              "bp-ng45": 1.312634472074575,
+              "bp_fe-ng45": -32.94979194317118
+            },
+            "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+            "score": -6.593792926992297,
+            "split": "train",
+            "task": "full_flow",
+            "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+            "verified_cells": 9
+          },
+          "files_index": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902/files.json",
+          "logs_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+          "reason": null,
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "status": "succeeded"
+        },
+        "tree_digest": "20e9666e0063a5959c44d274170595296391373e7af2599a6d593f9289305f36"
+      }
+    ],
+    "sequence": 1,
+    "stagnation": 0,
+    "task": "full_flow",
+    "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+    "version": 1
+  },
+  "summary": {
+    "active_parent_roles": {
+      "delivery": null,
+      "exploration": null,
+      "score": null
+    },
+    "actual_model_charge_rmb": null,
+    "budget_assurance": "managed_codex_advisory_public_balance_only",
+    "budget_observations": [
+      {
+        "after_available_rmb": "14.71719156",
+        "before_available_rmb": "15",
+        "draft": "draft-1",
+        "semantics": "public_available_balance_not_charge",
+        "settled_cost_rmb": null,
+        "unresolved_model_calls": 0
+      },
+      {
+        "after_available_rmb": "12.46085084",
+        "before_available_rmb": "14.71719156",
+        "draft": "draft-1",
+        "semantics": "public_available_balance_not_charge",
+        "settled_cost_rmb": null,
+        "unresolved_model_calls": 1
+      }
+    ],
+    "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+    "delivery_champion": {
+      "campaign": "6eb7bdac44e94227b27fddf42e989687",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "cells": [
+        {
+          "case": "bp_fe-ng45",
+          "physical_valid": true,
+          "score": -55.26847361545787,
+          "seed": 1001
+        },
+        {
+          "case": "bp_fe-ng45",
+          "physical_valid": true,
+          "score": -11.202262913701672,
+          "seed": 1002
+        },
+        {
+          "case": "bp_fe-ng45",
+          "physical_valid": true,
+          "score": -32.37863930035398,
+          "seed": 1003
+        },
+        {
+          "case": "bp-ng45",
+          "physical_valid": true,
+          "score": -4.719286773631615,
+          "seed": 1001
+        },
+        {
+          "case": "bp-ng45",
+          "physical_valid": true,
+          "score": 10.095481049074893,
+          "seed": 1002
+        },
+        {
+          "case": "bp-ng45",
+          "physical_valid": true,
+          "score": -1.4382908592195527,
+          "seed": 1003
+        },
+        {
+          "case": "ariane133-ng45",
+          "physical_valid": true,
+          "score": -100.0,
+          "seed": 1001
+        },
+        {
+          "case": "ariane133-ng45",
+          "physical_valid": true,
+          "score": 5.175826124197975,
+          "seed": 1002
+        },
+        {
+          "case": "ariane133-ng45",
+          "physical_valid": true,
+          "score": 130.39150994616116,
+          "seed": 1003
+        }
+      ],
+      "definition_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+      "score": -6.593792926992297,
+      "status": "succeeded",
+      "task": "full_flow"
+    },
+    "official_evaluations": 1,
+    "reason": "model_usage_pending_reconciliation",
+    "score_champion": {
+      "campaign": "6eb7bdac44e94227b27fddf42e989687",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "cells": [
+        {
+          "case": "bp_fe-ng45",
+          "physical_valid": true,
+          "score": -55.26847361545787,
+          "seed": 1001
+        },
+        {
+          "case": "bp_fe-ng45",
+          "physical_valid": true,
+          "score": -11.202262913701672,
+          "seed": 1002
+        },
+        {
+          "case": "bp_fe-ng45",
+          "physical_valid": true,
+          "score": -32.37863930035398,
+          "seed": 1003
+        },
+        {
+          "case": "bp-ng45",
+          "physical_valid": true,
+          "score": -4.719286773631615,
+          "seed": 1001
+        },
+        {
+          "case": "bp-ng45",
+          "physical_valid": true,
+          "score": 10.095481049074893,
+          "seed": 1002
+        },
+        {
+          "case": "bp-ng45",
+          "physical_valid": true,
+          "score": -1.4382908592195527,
+          "seed": 1003
+        },
+        {
+          "case": "ariane133-ng45",
+          "physical_valid": true,
+          "score": -100.0,
+          "seed": 1001
+        },
+        {
+          "case": "ariane133-ng45",
+          "physical_valid": true,
+          "score": 5.175826124197975,
+          "seed": 1002
+        },
+        {
+          "case": "ariane133-ng45",
+          "physical_valid": true,
+          "score": 130.39150994616116,
+          "seed": 1003
+        }
+      ],
+      "definition_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+      "score": -6.593792926992297,
+      "status": "succeeded",
+      "task": "full_flow"
+    },
+    "task": "full_flow",
+    "unresolved_model_calls": 1
+  },
+  "contract": {
+    "contract_id": "adf9465b45b1dbe31cbe46636f971623916c656e-crossdie-fanout-weight-v1",
+    "task": "full_flow",
+    "parent_candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+    "main_mechanism": "In Concurrent LoL global placement, treat the default unit cross-die multiplier as an automatic mode: scale each cross-die net weight by a fanout-aware factor (1.30 for two-pin nets, 1.15 for three-pin nets, 1.05 for four-or-more-pin nets). This gives nets that must traverse an HBT a stronger placement pull toward aligned die-local coordinates, while an explicit non-unit cross_die_net_weight remains authoritative.",
+    "tradeoff_statement": "Stronger cross-die weights can shorten point-to-point cross-die wirelength and reduce HBT-interface detours, but may pull cells toward die boundaries, raising local density, legalization displacement and GRT overflow; no area, power or runtime improvement is guaranteed.",
+    "portability_obligation": "The mechanism depends on a valid partition_assignment, real DEF net/pin identity and DREAMPlace net_weights. It makes no claim for unseen PDKs, designs or seeds; degree thresholds are a source-level timing proxy, not a calibrated criticality model, and the edit must remain confined to the placement objective without changing netlist, PDK, Liberty, LEF, SDC or clock contracts.",
+    "final_endpoint": "post_grt",
+    "falsifier": "Reject this candidate if a comparable same-stage parent/child evaluation with identical design, seed, config and routing schedule shows no improvement in post-GRT cross-die HPWL or WNS/TNS, or shows increased GRT overflow, DRC, legalization displacement or a PDN/HBT/CTS contract failure; also reject if a paid ablation of the fanout factors is indistinguishable from the parent.",
+    "edit_stages": [
+      "placement"
+    ],
+    "source_refs": [
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+      "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+    ],
+    "impact_refs": [
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+      "open3dbench/runner.py:2269"
+    ],
+    "downstream_obligations": [
+      "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in their existing stage contract.",
+      "Keep die fences, node-to-fence assignment, macro halo, legalization and PDN execution unchanged; only net objective weights may change.",
+      "Keep HBT grid/placement, CTS clock/parasitic models, routing layers/adjustment, endpoint coverage and stage order unchanged.",
+      "Compare parent and child only on matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+      "Retain every training case/seed cell, including failures, in later evidence; unknown cells must remain unknown until an official evaluation exists."
+    ],
+    "physical_invariants": [
+      "Net weights remain finite and positive; only cross-die nets with endpoints on both assigned dies are scaled.",
+      "Die assignment and physical connectivity are not rewritten; cross-die net identity continues to come from pin-to-node assignment.",
+      "Placement units remain DREAMPlace DBU/um consistent; target density, site/row geometry and macro-halo constraints are untouched.",
+      "HBT, PDN, CTS, SDC, clock, Liberty, LEF and RC/parasitic models are not modified by this edit.",
+      "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+    ],
+    "unknowns": [
+      "No official scored matrix exists for this campaign; all nine training cells are unscored and no -100 failure cells were supplied.",
+      "No comparable parent/child cell, stage report or cross-process paid ablation is available, so physical sign and magnitude are unknown.",
+      "The post-GRT scoring weights among timing, wirelength, congestion and power are unknown.",
+      "The assumption that low-fanout cross-die nets are timing-critical is unverified for these designs.",
+      "Training case/seed concentration and cross-process generalization are unknown because no scored cell exists.",
+      "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists."
+    ],
+    "task_analysis": {
+      "candidate_intervention_set": [
+        "placement"
+      ],
+      "first_observed_divergence": "No official parent/child cell or stage report exists. The first source-observable divergence is at Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:307-322, where the default unit-multiplier path now enters an automatic fanout-aware branch and changes cross-die net_weights; the first physical divergence is unmeasured.",
+      "downstream_constraints": "Placement must still emit the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage parent/child reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+      "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+      "endpoint_expected_effect": "At post_grt, expect equal or lower cross-die weighted HPWL and possibly lower WNS/TNS if cross-die nets are critical, at the risk of higher local congestion and GRT overflow; sign, magnitude and critical-set migration remain unknown.",
+      "alternative_explanation": "Any post-GRT change could instead come from placement density, legalization displacement or local congestion rather than cross-die weighting. Untested short alternatives are a uniform cross-die weight boost and a backend-density whitespace reserve; neither is claimed as causal without a paid ablation."
+    }
+  },
+  "preflight": {
+    "assurance": "source_scope_and_integrity_only",
+    "changed_paths": [
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+    ],
+    "digest": "20e9666e0063a5959c44d274170595296391373e7af2599a6d593f9289305f36",
+    "errors": [],
+    "probes": {
+      "assurance": "READY_FOR_OFFICIAL_UNPROVEN_PHYSICAL",
+      "budget_seconds": 180.0,
+      "capabilities": {
+        "A0": {
+          "reason": "unaffected_scope",
+          "status": "skipped"
+        },
+        "A1": {
+          "reason": "unaffected_scope",
+          "status": "skipped"
+        },
+        "B0": {
+          "reason": "tested_contract_only",
+          "status": "pass"
+        },
+        "B1": {
+          "reason": "disabled_by_v1_1",
+          "status": "disabled"
+        },
+        "C": {
+          "reason": "no_current_artifact",
+          "status": "unknown"
+        },
+        "D": {
+          "reason": "disabled_by_v1_1",
+          "status": "disabled"
+        },
+        "E": {
+          "reason": "disabled_by_v1_1",
+          "status": "disabled"
+        },
+        "F": {
+          "reason": "unaffected_scope",
+          "status": "skipped"
+        }
+      },
+      "hard_errors": [],
+      "results": [
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "A0",
+          "reason": "unaffected_scope",
+          "reproducible": false,
+          "status": "skipped"
+        },
+        {
+          "binding": {
+            "mode": "candidate_code_executed",
+            "module": "/workspace/workspaces/adf9465b45b1dbe31cbe46636f971623916c656e/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py",
+            "python_version": "3.8.10",
+            "source_sha256": {
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d"
+            },
+            "torch_version": "1.7.1+cu110"
+          },
+          "candidate_bound": true,
+          "contract_verified": true,
+          "coverage": [
+            "density_range",
+            "net_weight_summary",
+            "initialization_region",
+            "pin_projection_and_gradient"
+          ],
+          "elapsed_seconds": 0.975,
+          "evidence_id": "/workspace/scratch/tao-evolve/draft-1/probes-1/B0-first/result.json",
+          "hard_errors": [],
+          "input_class": "synthetic_fixture",
+          "input_current": true,
+          "invariant_errors": [],
+          "kind": "invariant",
+          "metrics": {
+            "density_cases": 10,
+            "initialization_same_seed_equal": true,
+            "weight_cases": 3
+          },
+          "probe": "B0",
+          "reason": "tested_contract_only",
+          "reproducible": false,
+          "status": "pass"
+        },
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "A1",
+          "reason": "unaffected_scope",
+          "reproducible": false,
+          "status": "skipped"
+        },
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "C",
+          "reason": "no_current_artifact",
+          "reproducible": false,
+          "status": "unknown"
+        },
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "F",
+          "reason": "unaffected_scope",
+          "reproducible": false,
+          "status": "skipped"
+        },
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "B1",
+          "reason": "disabled_by_v1_1",
+          "reproducible": false,
+          "status": "disabled"
+        },
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "D",
+          "reason": "disabled_by_v1_1",
+          "reproducible": false,
+          "status": "disabled"
+        },
+        {
+          "candidate_bound": false,
+          "contract_verified": false,
+          "hard_errors": [],
+          "input_current": false,
+          "kind": "observation",
+          "metrics": {},
+          "probe": "E",
+          "reason": "disabled_by_v1_1",
+          "reproducible": false,
+          "status": "disabled"
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "expected_keys": [
+    [
+      "bp_fe-ng45",
+      1001
+    ],
+    [
+      "bp_fe-ng45",
+      1002
+    ],
+    [
+      "bp_fe-ng45",
+      1003
+    ],
+    [
+      "bp-ng45",
+      1001
+    ],
+    [
+      "bp-ng45",
+      1002
+    ],
+    [
+      "bp-ng45",
+      1003
+    ],
+    [
+      "ariane133-ng45",
+      1001
+    ],
+    [
+      "ariane133-ng45",
+      1002
+    ],
+    [
+      "ariane133-ng45",
+      1003
+    ]
+  ],
+  "evaluations": [
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "task": "full_flow",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "status": "succeeded",
+      "accepted_at": "2026-11-16T13:20:44.942757+00:00",
+      "completed_at": "2026-11-16T17:20:18.254705+00:00",
+      "reason": null
+    }
+  ],
+  "model_calls": [
+    {
+      "request_id": "483147f2883748f18e83bb13218960cd",
+      "status": "settled",
+      "input_tokens": 9406,
+      "output_tokens": 207,
+      "cost_rmb": "0.00509096",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "e5a3bee9bc584f4d8664ccd09c692f5c",
+      "status": "settled",
+      "input_tokens": 13324,
+      "output_tokens": 140,
+      "cost_rmb": "0.004476",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "f8720fcff9d34312b700b635f11ccfad",
+      "status": "settled",
+      "input_tokens": 17963,
+      "output_tokens": 228,
+      "cost_rmb": "0.0057038",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "335d488246814159ba9203d337f42fe8",
+      "status": "settled",
+      "input_tokens": 18312,
+      "output_tokens": 290,
+      "cost_rmb": "0.00165952",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "f085d0bb55e14bb6ab4bcd07e26a7310",
+      "status": "settled",
+      "input_tokens": 19678,
+      "output_tokens": 447,
+      "cost_rmb": "0.0032772",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "07504ee32aea4c7a9e3be9ebf963ba1c",
+      "status": "settled",
+      "input_tokens": 22530,
+      "output_tokens": 143,
+      "cost_rmb": "0.00340792",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "1eb5dbe4d06443d7aa7afe0e0a73eb98",
+      "status": "settled",
+      "input_tokens": 25521,
+      "output_tokens": 147,
+      "cost_rmb": "0.00390612",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "7b325c661eaf44d199110dc247c06c72",
+      "status": "settled",
+      "input_tokens": 27943,
+      "output_tokens": 355,
+      "cost_rmb": "0.004275",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "f677221bcca8405bb80ebeefbeada548",
+      "status": "settled",
+      "input_tokens": 30995,
+      "output_tokens": 172,
+      "cost_rmb": "0.00396076",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "d41bbfd6921c4677bdce64b0b45ae6d9",
+      "status": "settled",
+      "input_tokens": 34974,
+      "output_tokens": 136,
+      "cost_rmb": "0.00503608",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "84ee90448772407da32060c39e11f4d2",
+      "status": "settled",
+      "input_tokens": 36426,
+      "output_tokens": 538,
+      "cost_rmb": "0.00420744",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "fade1eafba22402b8d2288d6102ef817",
+      "status": "settled",
+      "input_tokens": 37254,
+      "output_tokens": 136,
+      "cost_rmb": "0.00167128",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "2375381be9b64d4daa07f9ccd1dd3c8e",
+      "status": "settled",
+      "input_tokens": 40697,
+      "output_tokens": 160,
+      "cost_rmb": "0.00470852",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "e11430a8d62a417bac22a0dbaf75b816",
+      "status": "settled",
+      "input_tokens": 42339,
+      "output_tokens": 298,
+      "cost_rmb": "0.00351564",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "97c19cdf223e4c418dd530d8ba178f25",
+      "status": "settled",
+      "input_tokens": 46201,
+      "output_tokens": 117,
+      "cost_rmb": "0.00489748",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "155d340812ed46399f5e7001d0578283",
+      "status": "settled",
+      "input_tokens": 48671,
+      "output_tokens": 716,
+      "cost_rmb": "0.00625116",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "6b0bd05200ab47d7b83542905a421046",
+      "status": "settled",
+      "input_tokens": 50161,
+      "output_tokens": 183,
+      "cost_rmb": "0.0025986",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "b3f570c927994c7a9a08a5653d4370de",
+      "status": "settled",
+      "input_tokens": 53512,
+      "output_tokens": 300,
+      "cost_rmb": "0.00541408",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "378ec12a97dc4bfbbacddeb9dd5d4d93",
+      "status": "settled",
+      "input_tokens": 56028,
+      "output_tokens": 218,
+      "cost_rmb": "0.0042152",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "d9681a5a81c24c6890af01b3969ba0ee",
+      "status": "settled",
+      "input_tokens": 58345,
+      "output_tokens": 163,
+      "cost_rmb": "0.00392884",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "929647b71ec941a7894ce71f329b9d41",
+      "status": "settled",
+      "input_tokens": 60315,
+      "output_tokens": 133,
+      "cost_rmb": "0.00352092",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "08c9f4720cb749518b21c0aa9746d5e3",
+      "status": "settled",
+      "input_tokens": 60771,
+      "output_tokens": 131,
+      "cost_rmb": "0.00208732",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "cdce8a09fc7a4cfeb4e601b1699afbc3",
+      "status": "settled",
+      "input_tokens": 61442,
+      "output_tokens": 153,
+      "cost_rmb": "0.00247",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "05332d9aa60f48d58a26057de7360c64",
+      "status": "settled",
+      "input_tokens": 62564,
+      "output_tokens": 115,
+      "cost_rmb": "0.00268736",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "5fc54e7ecab948b2a2c1c8d2128a1ad7",
+      "status": "settled",
+      "input_tokens": 63075,
+      "output_tokens": 187,
+      "cost_rmb": "0.00248284",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "237aaab6563344e0aff35b50546dcaef",
+      "status": "settled",
+      "input_tokens": 66559,
+      "output_tokens": 136,
+      "cost_rmb": "0.00513564",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "6abfbfdc657c4338a2c89088094606f5",
+      "status": "settled",
+      "input_tokens": 68405,
+      "output_tokens": 447,
+      "cost_rmb": "0.00483876",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "d7dd2eacf76f423a854b141725f8d20e",
+      "status": "settled",
+      "input_tokens": 70468,
+      "output_tokens": 116,
+      "cost_rmb": "0.00357072",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "75ac7d8fa7dd4084a52d9505a0314ee8",
+      "status": "settled",
+      "input_tokens": 73604,
+      "output_tokens": 212,
+      "cost_rmb": "0.00533456",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "b65fa06e895848ff9040a6bbc8f827df",
+      "status": "settled",
+      "input_tokens": 77107,
+      "output_tokens": 152,
+      "cost_rmb": "0.00546156",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "390f86483b3946e6a02f112edde69307",
+      "status": "settled",
+      "input_tokens": 79106,
+      "output_tokens": 1229,
+      "cost_rmb": "0.00838168",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "84bca4bd4b8a44948f8e8d23d9254faa",
+      "status": "settled",
+      "input_tokens": 81744,
+      "output_tokens": 833,
+      "cost_rmb": "0.00642512",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "a81e1962396746f697a90e75a8987498",
+      "status": "settled",
+      "input_tokens": 84587,
+      "output_tokens": 568,
+      "cost_rmb": "0.0059502",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "a30b182ee5954c1e843861bbbbbd85de",
+      "status": "settled",
+      "input_tokens": 85406,
+      "output_tokens": 151,
+      "cost_rmb": "0.0025924",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "da7b49d4a4c5435f9fbb8b9a37209b1a",
+      "status": "settled",
+      "input_tokens": 86913,
+      "output_tokens": 1076,
+      "cost_rmb": "0.00742308",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "b0c57113d79d4381afaf6e53f2083e3a",
+      "status": "settled",
+      "input_tokens": 88968,
+      "output_tokens": 1636,
+      "cost_rmb": "0.00933472",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "3f7b2e1d744e453fa4cbbc13422c01c7",
+      "status": "settled",
+      "input_tokens": 90741,
+      "output_tokens": 125,
+      "cost_rmb": "0.00255492",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "2f9f0a0f277447d8a8ea5c424bb48738",
+      "status": "settled",
+      "input_tokens": 90976,
+      "output_tokens": 533,
+      "cost_rmb": "0.00417104",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "f9a4dad6f51d4d46afafb6d4229b86e1",
+      "status": "settled",
+      "input_tokens": 92339,
+      "output_tokens": 334,
+      "cost_rmb": "0.00411084",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "ebb599771aa34db4b4096c8fd52786ab",
+      "status": "settled",
+      "input_tokens": 92855,
+      "output_tokens": 1694,
+      "cost_rmb": "0.00881244",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "976d4ece078f489bb78db3b8ec34259d",
+      "status": "settled",
+      "input_tokens": 95894,
+      "output_tokens": 560,
+      "cost_rmb": "0.00555928",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "883fb943651c4491bcbf654b1dc5c07c",
+      "status": "settled",
+      "input_tokens": 96718,
+      "output_tokens": 2338,
+      "cost_rmb": "0.01161368",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "f01f2ab2175549689f6624b2b00286df",
+      "status": "settled",
+      "input_tokens": 99721,
+      "output_tokens": 805,
+      "cost_rmb": "0.00597588",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "704de48eff5446308a97650c296e33a6",
+      "status": "settled",
+      "input_tokens": 100857,
+      "output_tokens": 569,
+      "cost_rmb": "0.0046626",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "849c238620134f2d98a39118e78ae15f",
+      "status": "settled",
+      "input_tokens": 101663,
+      "output_tokens": 558,
+      "cost_rmb": "0.00454652",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "9f1db9575ee348899a3ba60d219baaf0",
+      "status": "settled",
+      "input_tokens": 102420,
+      "output_tokens": 586,
+      "cost_rmb": "0.00466288",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "ab2a30877da54f14979093296d467eb9",
+      "status": "settled",
+      "input_tokens": 103230,
+      "output_tokens": 598,
+      "cost_rmb": "0.00476824",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "247e81c073764c30b3eddb2de0d11cc5",
+      "status": "settled",
+      "input_tokens": 104018,
+      "output_tokens": 217,
+      "cost_rmb": "0.00315416",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "520b55e622a14f129c74906e7b2e6cb0",
+      "status": "settled",
+      "input_tokens": 104508,
+      "output_tokens": 382,
+      "cost_rmb": "0.00392784",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "86b642de22214e3195981c989094edf7",
+      "status": "settled",
+      "input_tokens": 105026,
+      "output_tokens": 285,
+      "cost_rmb": "0.00343064",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "9ba79ff385c749c78836c33adaafde4e",
+      "status": "settled",
+      "input_tokens": 107302,
+      "output_tokens": 180,
+      "cost_rmb": "0.00491032",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "e3cfc03c15b74fd9a8510515060d4e01",
+      "status": "settled",
+      "input_tokens": 108158,
+      "output_tokens": 2561,
+      "cost_rmb": "0.01315784",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "0852701a98f24dd78b4e64dfabfe7e6d",
+      "status": "settled",
+      "input_tokens": 110861,
+      "output_tokens": 833,
+      "cost_rmb": "0.00581284",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "d84e554b353c44ec98f6aa5aeb2babf7",
+      "status": "settled",
+      "input_tokens": 112001,
+      "output_tokens": 587,
+      "cost_rmb": "0.00496532",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "f7515b78684743fd9a9a351b5da16f0c",
+      "status": "settled",
+      "input_tokens": 112711,
+      "output_tokens": 132,
+      "cost_rmb": "0.00297724",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "224c90bc7c0143c194fe5260333b0b06",
+      "status": "settled",
+      "input_tokens": 112979,
+      "output_tokens": 1621,
+      "cost_rmb": "0.00895036",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "97c2ea2fd30e40baa0dc8e271b699ed9",
+      "status": "settled",
+      "input_tokens": 114718,
+      "output_tokens": 310,
+      "cost_rmb": "0.0036892",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "036708ebeaa24235871cea5261f0299a",
+      "status": "settled",
+      "input_tokens": 116461,
+      "output_tokens": 670,
+      "cost_rmb": "0.00649588",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "980e34b9207f430e9cc078ec41f5e3ae",
+      "status": "settled",
+      "input_tokens": 121263,
+      "output_tokens": 718,
+      "cost_rmb": "0.0093574",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "7f2219f971c344458ee29ced787d2234",
+      "status": "settled",
+      "input_tokens": 122267,
+      "output_tokens": 820,
+      "cost_rmb": "0.00612812",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "3524845b160548a2af3fa45e7b9f206b",
+      "status": "settled",
+      "input_tokens": 123232,
+      "output_tokens": 232,
+      "cost_rmb": "0.00361216",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "b08e875030804f968b62a9bef7a2b5a8",
+      "status": "settled",
+      "input_tokens": 124033,
+      "output_tokens": 221,
+      "cost_rmb": "0.00399284",
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "156bf54ba0fc47339a9fbabae6a8c85e",
+      "status": "uncertain",
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_rmb": null,
+      "max_cost_rmb": "2.228224"
+    },
+    {
+      "request_id": "fede4abd5df7464290f698251b36f2d9",
+      "status": "settled",
+      "input_tokens": 124555,
+      "output_tokens": 537,
+      "cost_rmb": "0.0050262",
+      "max_cost_rmb": "2.228224"
+    }
+  ],
+  "jobs": [
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "ariane133-ng45",
+      "seed": 1001,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "ariane133-ng45",
+      "seed": 1002,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "ariane133-ng45",
+      "seed": 1003,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "bp-ng45",
+      "seed": 1001,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "bp-ng45",
+      "seed": 1002,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "bp-ng45",
+      "seed": 1003,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "bp_fe-ng45",
+      "seed": 1001,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "bp_fe-ng45",
+      "seed": 1002,
+      "status": "pending"
+    },
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "case_id": "bp_fe-ng45",
+      "seed": 1003,
+      "status": "pending"
+    }
+  ],
+  "budget_settings": {
+    "allowed_model": "deepseek-flash",
+    "evaluation_limit": "10",
+    "evaluation_mode": "formal",
+    "model_cost_limit_rmb": "15",
+    "task_id": "full_flow"
+  },
+  "journal_campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "submit_intents": [
+    {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "state": "succeeded",
+      "payload": {
+        "checkout_id": "adf9465b45b1dbe31cbe46636f971623916c656e",
+        "workspace_digest": "20e9666e0063a5959c44d274170595296391373e7af2599a6d593f9289305f36"
+      }
+    }
+  ],
+  "feedback": {
+    "49518aee056fd7d032539e65aa231e3266846902": {
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "status": "succeeded",
+      "reason": null,
+      "feedback": {
+        "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+        "cells": [
+          {
+            "case": "bp_fe-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": -55.26847361545787,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 339.2830195787466,
+              "wns_ns": 0.6848528604730505
+            },
+            "score": -55.26847361545787,
+            "seed": 1001,
+            "tns_improvement": -0.5986346508842654,
+            "valid": true,
+            "wns_improvement": -0.4837598640600486
+          },
+          {
+            "case": "bp_fe-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": -11.202262913701672,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 339.2830195787466,
+              "wns_ns": 0.6848528604730505
+            },
+            "score": -11.202262913701672,
+            "seed": 1002,
+            "tns_improvement": 0.006963793162135275,
+            "valid": true,
+            "wns_improvement": -0.2905022625857447
+          },
+          {
+            "case": "bp_fe-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": -32.37863930035398,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 339.2830195787466,
+              "wns_ns": 0.6848528604730505
+            },
+            "score": -32.37863930035398,
+            "seed": 1003,
+            "tns_improvement": -0.3017884123252465,
+            "valid": true,
+            "wns_improvement": -0.3567833640209797
+          },
+          {
+            "case": "bp-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": -4.719286773631615,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 7709.019494591678,
+              "wns_ns": 7.97252834464225
+            },
+            "score": -4.719286773631615,
+            "seed": 1001,
+            "tns_improvement": -0.08127227400123847,
+            "valid": true,
+            "wns_improvement": 0.0039262416610673185
+          },
+          {
+            "case": "bp-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": 10.095481049074893,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 7709.019494591678,
+              "wns_ns": 7.97252834464225
+            },
+            "score": 10.095481049074893,
+            "seed": 1002,
+            "tns_improvement": 0.17203835590730998,
+            "valid": true,
+            "wns_improvement": -0.005670507634092613
+          },
+          {
+            "case": "bp-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": -1.4382908592195527,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 7709.019494591678,
+              "wns_ns": 7.97252834464225
+            },
+            "score": -1.4382908592195527,
+            "seed": 1003,
+            "tns_improvement": -0.02863573894283609,
+            "valid": true,
+            "wns_improvement": 0.006996336933765319
+          },
+          {
+            "case": "ariane133-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": -143.99450727907416,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 136.73199137711958,
+              "wns_ns": 0.7123820253851022
+            },
+            "score": -100.0,
+            "seed": 1001,
+            "tns_improvement": -2.5276540299069543,
+            "valid": true,
+            "wns_improvement": 0.19161836288357742
+          },
+          {
+            "case": "ariane133-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": 5.175826124197975,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 136.73199137711958,
+              "wns_ns": 0.7123820253851022
+            },
+            "score": 5.175826124197975,
+            "seed": 1002,
+            "tns_improvement": -0.1382205608892833,
+            "valid": true,
+            "wns_improvement": 0.3367264944388743
+          },
+          {
+            "case": "ariane133-ng45",
+            "overflow_penalty": 0.0,
+            "raw_score": 130.39150994616116,
+            "reason": null,
+            "reference_mean_deficits": {
+              "tns_ns": 136.73199137711958,
+              "wns_ns": 0.7123820253851022
+            },
+            "score": 130.39150994616116,
+            "seed": 1003,
+            "tns_improvement": 1.9076238495583646,
+            "valid": true,
+            "wns_improvement": 0.3983519743164829
+          }
+        ],
+        "completed_cells": 9,
+        "invalid_cells": 0,
+        "per_case": {
+          "ariane133-ng45": 11.855778690119713,
+          "bp-ng45": 1.312634472074575,
+          "bp_fe-ng45": -32.94979194317118
+        },
+        "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+        "score": -6.593792926992297,
+        "split": "train",
+        "task": "full_flow",
+        "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+        "verified_cells": 9
+      },
+      "artifacts_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+      "logs_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+      "files_index": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902/files.json"
+    }
+  },
+  "official_scores": {
+    "49518aee056fd7d032539e65aa231e3266846902": {
+      "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "cells": [
+        {
+          "case": "bp_fe-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": -55.26847361545787,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 339.2830195787466,
+            "wns_ns": 0.6848528604730505
+          },
+          "score": -55.26847361545787,
+          "seed": 1001,
+          "tns_improvement": -0.5986346508842654,
+          "valid": true,
+          "wns_improvement": -0.4837598640600486
+        },
+        {
+          "case": "bp_fe-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": -11.202262913701672,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 339.2830195787466,
+            "wns_ns": 0.6848528604730505
+          },
+          "score": -11.202262913701672,
+          "seed": 1002,
+          "tns_improvement": 0.006963793162135275,
+          "valid": true,
+          "wns_improvement": -0.2905022625857447
+        },
+        {
+          "case": "bp_fe-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": -32.37863930035398,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 339.2830195787466,
+            "wns_ns": 0.6848528604730505
+          },
+          "score": -32.37863930035398,
+          "seed": 1003,
+          "tns_improvement": -0.3017884123252465,
+          "valid": true,
+          "wns_improvement": -0.3567833640209797
+        },
+        {
+          "case": "bp-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": -4.719286773631615,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 7709.019494591678,
+            "wns_ns": 7.97252834464225
+          },
+          "score": -4.719286773631615,
+          "seed": 1001,
+          "tns_improvement": -0.08127227400123847,
+          "valid": true,
+          "wns_improvement": 0.0039262416610673185
+        },
+        {
+          "case": "bp-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": 10.095481049074893,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 7709.019494591678,
+            "wns_ns": 7.97252834464225
+          },
+          "score": 10.095481049074893,
+          "seed": 1002,
+          "tns_improvement": 0.17203835590730998,
+          "valid": true,
+          "wns_improvement": -0.005670507634092613
+        },
+        {
+          "case": "bp-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": -1.4382908592195527,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 7709.019494591678,
+            "wns_ns": 7.97252834464225
+          },
+          "score": -1.4382908592195527,
+          "seed": 1003,
+          "tns_improvement": -0.02863573894283609,
+          "valid": true,
+          "wns_improvement": 0.006996336933765319
+        },
+        {
+          "case": "ariane133-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": -143.99450727907416,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 136.73199137711958,
+            "wns_ns": 0.7123820253851022
+          },
+          "score": -100.0,
+          "seed": 1001,
+          "tns_improvement": -2.5276540299069543,
+          "valid": true,
+          "wns_improvement": 0.19161836288357742
+        },
+        {
+          "case": "ariane133-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": 5.175826124197975,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 136.73199137711958,
+            "wns_ns": 0.7123820253851022
+          },
+          "score": 5.175826124197975,
+          "seed": 1002,
+          "tns_improvement": -0.1382205608892833,
+          "valid": true,
+          "wns_improvement": 0.3367264944388743
+        },
+        {
+          "case": "ariane133-ng45",
+          "overflow_penalty": 0.0,
+          "raw_score": 130.39150994616116,
+          "reason": null,
+          "reference_mean_deficits": {
+            "tns_ns": 136.73199137711958,
+            "wns_ns": 0.7123820253851022
+          },
+          "score": 130.39150994616116,
+          "seed": 1003,
+          "tns_improvement": 1.9076238495583646,
+          "valid": true,
+          "wns_improvement": 0.3983519743164829
+        }
+      ],
+      "completed_cells": 9,
+      "invalid_cells": 0,
+      "per_case": {
+        "ariane133-ng45": 11.855778690119713,
+        "bp-ng45": 1.312634472074575,
+        "bp_fe-ng45": -32.94979194317118
+      },
+      "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+      "score": -6.593792926992297,
+      "split": "train",
+      "task": "full_flow",
+      "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+      "verified_cells": 9
+    }
+  },
+  "candidate_files": {
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d"
+  },
+  "outer_harness": {
+    "ok": true
+  },
+  "snapshot_stable": true
+}

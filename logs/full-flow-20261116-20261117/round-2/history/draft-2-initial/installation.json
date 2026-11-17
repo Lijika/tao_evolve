@@ -1,0 +1,17 @@
+{
+  "backup": "/mnt/taoeda-work/agent-development/round-2-design/runtime-upgrade",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "installed_at": 1794853159.154592,
+  "official_configuration_unchanged": true,
+  "official_framework_verified": true,
+  "official_ledger_manually_modified": false,
+  "retained_model_calls": 64,
+  "retained_official_evaluations": 1,
+  "runtime_config": {
+    "max_evaluations": 10,
+    "pending_model_usage_policy": "continue_after_successful_turn",
+    "review_after_evaluations": 1
+  },
+  "same_official_campaign": true,
+  "upgrade_id": "bbf45b1b34d28c695b1eef613bb9a4b085a92498788cb9c803d8ee621ee8311f"
+}

@@ -1,0 +1,11 @@
+**Observations**
+Implemented the cross-die fraction guard in `Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-327` and wrote the validated 16-field contract. Synthetic branches returned `1.30` for low fraction, `1.0` for high fraction, and preserved explicit `2.5`; `py_compile` and 4 unit tests passed. No physical flow or official matrix ran.
+
+**Supporting/Counterevidence**
+Parent ecf5 is valid 9/9 at `-6.5938`; `bp_fe` ratios of 0.128–0.138 exceed the gate and all three cells are negative. Counterevidence: Ariane 1001 is `-100` despite a 0.0708 ratio, and no same-stage parent/child cells exist.
+
+**Competing Explanation**
+The mixed result may instead reflect density, legalization, CTS/routing, or seed noise; the 12% threshold may be overfit.
+
+**Next Discriminating Check**
+Run the official nine-cell matched matrix and compare `bp_fe` recovery, retained bp/Ariane gains, overflow, DRC, and legality. Critical endpoint migration and cross-process generalization remain unknown.

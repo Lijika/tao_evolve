@@ -1,0 +1,27 @@
+{
+  "pid": 753421,
+  "started_epoch": 1794833089.1566536,
+  "command": [
+    "python3",
+    "-u",
+    "start.py",
+    "--task",
+    "full_flow",
+    "--api-key-file",
+    "/home/vipuser/.config/taoeda/deepseek.key",
+    "--agent-cpu",
+    "4",
+    "--agent-memory-gb",
+    "16",
+    "--no-retain-physical-files"
+  ],
+  "log": "/mnt/taoeda-work/agent-development/full-flow-acceptance.log",
+  "work_root": "/mnt/taoeda-work/contest-work/full_flow",
+  "codex_version": "codex-cli 0.167.1",
+  "official_ledger_archived_intact": true,
+  "prior_requests": {
+    "evaluations": 0,
+    "model_calls": 0
+  },
+  "participant_failure_archive": "/mnt/taoeda-work/agent-development/startup-failure"
+}

@@ -1,0 +1,1060 @@
+{
+  "active": {
+    "budget_envelope_rmb": "1.273427871111111111111111111",
+    "changed_paths": [
+      "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+    ],
+    "checkout": {
+      "checkout_id": "bef488b75834ded48302fec1e54dede48d3d2adf",
+      "parent": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "path": "/workspace/workspaces/bef488b75834ded48302fec1e54dede48d3d2adf"
+    },
+    "checkout_request_id": "bef488b75834ded48302fec1e54dede48d3d2adf",
+    "compact": false,
+    "contract": {
+      "contract_id": "bef488b75834ded48302fec1e54dede48d3d2adf-crossdie-fraction-guard-v1",
+      "downstream_obligations": [
+        "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in the existing stage contract.",
+        "Keep die fences, node-to-fence assignment, macro halo, density policy, legalization and PDN execution unchanged; only the automatic net-weight decision may change.",
+        "Keep HBT grid/placement, OPT, CTS clock and parasitic models, routing layers and adjustment, endpoint coverage and stage order intact.",
+        "Compare parent and child only for matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+        "Retain all nine training cells, including the Ariane 1001 -100 clamp, in later evidence; unknown or unscored cells must remain unknown."
+      ],
+      "edit_stages": [
+        "placement"
+      ],
+      "falsifier": "Reject if the next official same-stage matrix does not improve over parent ecf5 or if bp_fe does not recover while bp and Ariane gains disappear; also reject on worse GRT overflow, DRC, legality or PDN/HBT/CTS contract failure, or if a comparable paid ablation shows the guard is indistinguishable from the parent.",
+      "final_endpoint": "post_grt",
+      "impact_refs": [
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+        "open3dbench/runner.py:2269"
+      ],
+      "main_mechanism": "Gate the automatic fanout-aware cross-die placement weight by the observed cross-die net fraction: apply the 1.30/1.15/1.05 factors only when cross-die nets are at most 12% of all PlaceDB nets; otherwise keep unit net weights. An explicit non-unit cross_die_net_weight remains authoritative.",
+      "parent_candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+      "physical_invariants": [
+        "Net weights remain finite and positive; only nets with assigned endpoints on both dies are candidates for automatic scaling.",
+        "When the cross-die fraction exceeds 12%, automatic weighting is disabled and cross-die weights remain at their incoming values.",
+        "Die assignment, physical connectivity, netlist identity, PDK/Liberty/LEF/SDC and clock definitions are not rewritten.",
+        "Placement units, target density, site/row geometry, macro-halo constraints and PDN special wires are untouched.",
+        "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+      ],
+      "portability_obligation": "The rule depends on valid partition assignment, cross-die net identity and PlaceDB net/pin metadata. The threshold was inferred from the current nine training cells and makes no claim for unseen designs, PDKs, seeds or the hidden validation cases; explicit configuration weights continue to override the automatic path.",
+      "source_refs": [
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-328",
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:627-631",
+        "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+      ],
+      "task": "full_flow",
+      "task_analysis": {
+        "alternative_explanation": "The mixed parent result may instead reflect seed noise, placement density, legalization displacement, CTS or routing rather than cross-die weighting. Two short untested alternatives are uniformly damping all automatic factors and reverting the weighting entirely; neither is claimed causal without a comparable paid ablation.",
+        "candidate_intervention_set": [
+          "placement"
+        ],
+        "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+        "downstream_constraints": "Placement must still publish the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+        "endpoint_expected_effect": "At post_grt, disabling automatic cross-die overweighting above 12% should move the three bp_fe cells back toward their reference deficits while retaining the prior bp and Ariane behavior; overflow should remain near the parent's zero/near-zero levels. Sign, magnitude and critical-set migration remain unknown.",
+        "first_observed_divergence": "The parent ecf5 official matrix is complete and valid (9/9, score -6.5938): bp_fe seeds score -55.27/-11.20/-32.38, Ariane 1001 is clamped to -100, and Ariane 1003 scores +130.39. No selected parent cells are available, so this is not a same-stage parent/child comparison. The first source-observable divergence is the cross-die fraction guard at concurrent_lol.py:312-315; physical divergence remains endpoint-level and mixed."
+      },
+      "tradeoff_statement": "The guard gives up potential cross-die timing pull on high-cut designs but avoids over-constraining a large shared-net set and adding local congestion. It does not change density, legality, area, power or runtime guarantees, and its 12% threshold is an empirically derived proxy rather than a calibrated criticality model.",
+      "unknowns": [
+        "selected_parent_cells is empty, so no same-stage parent/child cell evidence exists for causal comparison.",
+        "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists; local and final sign consistency is therefore unestablished.",
+        "The 12% threshold was inferred from three training cases and nine seeds; hidden-validation and cross-process generalization are unknown.",
+        "The training evidence is concentrated: all three bp_fe cells are negative, while the largest positive cell is Ariane seed 1003; equal-case averaging can hide this seed concentration.",
+        "The official score is authoritative; endpoint metrics and placement proxies are observations, and their exact mapping to the score is not assumed.",
+        "No invalid or missing cell was reported; the Ariane 1001 raw score was clamped to -100."
+      ],
+      "verified_impact_refs": [
+        {
+          "first_line": 405,
+          "last_line": 405,
+          "sha256": "0f1ae69eb5019776afa998e70ba1196bd838e15f84e3cb78c969c245c251b87e",
+          "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+          "text": "        return (hpwl_x+hpwl_y)*self.net_weights[net_id]"
+        },
+        {
+          "first_line": 258,
+          "last_line": 271,
+          "sha256": "7f5cc89c291e5d29b959a2b01186d6ad3cf70d62cf1e7620973fefccd27456e1",
+          "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+          "text": "        self.net_weights = net_weights\n        self.net_mask = net_mask\n        self.pin_mask = pin_mask\n        self.gamma = gamma\n        self.algorithm = algorithm\n\n    def forward(self, pos):\n        if self.algorithm == 'net-by-net':\n            return WeightedAverageWirelengthFunction.apply(\n                pos,\n                self.flat_netpin,\n                self.netpin_start,\n                self.pin2net_map,\n                self.net_weights,"
+        },
+        {
+          "first_line": 2269,
+          "last_line": 2269,
+          "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+          "source_ref": "open3dbench/runner.py:2269",
+          "text": "        placement = self.run_dir / STAGE_DIRS[\"placement\"]"
+        }
+      ],
+      "verified_source_refs": [
+        {
+          "first_line": 305,
+          "last_line": 328,
+          "sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55",
+          "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-328",
+          "text": "def _apply_cross_die_net_weights(placedb, assignment: Mapping[int, str], multiplier: float) -> Tuple[int, float]:\n    cross_die_ids = []\n    for net_id in range(len(placedb.net2pin_map)):\n        dies = set(_iter_node_dies_for_net(placedb, net_id, assignment))\n        if len(dies) >= 2:\n            cross_die_ids.append(net_id)\n    cross_die_count = len(cross_die_ids)\n    automatic_weight = float(multiplier) == 1.0\n    total_net_count = len(placedb.net2pin_map)\n    if automatic_weight and total_net_count:\n        automatic_weight = cross_die_count <= 0.12 * total_net_count\n    for net_id in cross_die_ids:\n        factor = float(multiplier)\n        if automatic_weight:\n            degree = len(placedb.net2pin_map[net_id])\n            if degree <= 2:\n                factor = 1.30\n            elif degree == 3:\n                factor = 1.15\n            else:\n                factor = 1.05\n        if factor != 1.0:\n            placedb.net_weights[net_id] *= factor\n    return cross_die_count, float(np.sum(placedb.net_weights))"
+        },
+        {
+          "first_line": 627,
+          "last_line": 631,
+          "sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55",
+          "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:627-631",
+          "text": "    cross_die_net_count, net_weight_sum = _apply_cross_die_net_weights(\n        placedb,\n        assignment,\n        float(cfg.get(\"cross_die_net_weight\", 0.2)),\n    )"
+        },
+        {
+          "first_line": 3,
+          "last_line": 3,
+          "sha256": "b527a379386ca6cf1336b00e79c5722761fe7ca46958dc3c7109697f380eff1c",
+          "source_ref": "Place-3D/config/placement/concurrent_dreamplace/default.json:3",
+          "text": "    \"cross_die_net_weight\": 1.0,"
+        }
+      ]
+    },
+    "contract_path": "/workspace/workspaces/.tao-evolve-full_flow/drafts/draft-2/contract.json",
+    "evidence_summary": {
+      "risk": {
+        "reason": "no_comparable_parent",
+        "status": "unknown"
+      },
+      "source_dependencies": {
+        "edges": [
+          {
+            "conditional": true,
+            "consumer": "routing",
+            "kind": "source_stage_directory_reference",
+            "producer": "cts",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2611"
+          },
+          {
+            "conditional": true,
+            "consumer": "partition",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:1414"
+          },
+          {
+            "conditional": true,
+            "consumer": "partition",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:1588"
+          },
+          {
+            "conditional": true,
+            "consumer": "partition",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:1609"
+          },
+          {
+            "conditional": true,
+            "consumer": "placement",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2017"
+          },
+          {
+            "conditional": true,
+            "consumer": "placement",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2070"
+          },
+          {
+            "conditional": true,
+            "consumer": "placement",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2121"
+          },
+          {
+            "conditional": true,
+            "consumer": "placement",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2124"
+          },
+          {
+            "conditional": true,
+            "consumer": "placement",
+            "kind": "source_stage_directory_reference",
+            "producer": "floorplan",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2154"
+          },
+          {
+            "conditional": true,
+            "consumer": "opt",
+            "kind": "source_stage_directory_reference",
+            "producer": "hbt",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2420"
+          },
+          {
+            "conditional": true,
+            "consumer": "floorplan",
+            "kind": "source_stage_directory_reference",
+            "producer": "input",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:1262"
+          },
+          {
+            "conditional": true,
+            "consumer": "cts",
+            "kind": "source_stage_directory_reference",
+            "producer": "opt",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2480"
+          },
+          {
+            "conditional": true,
+            "consumer": "hbt",
+            "kind": "source_stage_directory_reference",
+            "producer": "partition",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2270"
+          },
+          {
+            "conditional": true,
+            "consumer": "pdn",
+            "kind": "source_stage_directory_reference",
+            "producer": "partition",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2234"
+          },
+          {
+            "conditional": true,
+            "consumer": "placement",
+            "kind": "source_stage_directory_reference",
+            "producer": "partition",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:1986"
+          },
+          {
+            "conditional": true,
+            "consumer": "hbt",
+            "kind": "source_stage_directory_reference",
+            "producer": "pdn",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2268"
+          },
+          {
+            "conditional": true,
+            "consumer": "hbt",
+            "kind": "source_stage_directory_reference",
+            "producer": "placement",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2269"
+          },
+          {
+            "conditional": true,
+            "consumer": "pdn",
+            "kind": "source_stage_directory_reference",
+            "producer": "placement",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2215"
+          },
+          {
+            "conditional": true,
+            "consumer": "thermal",
+            "kind": "source_stage_directory_reference",
+            "producer": "report",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2697"
+          },
+          {
+            "conditional": true,
+            "consumer": "report",
+            "kind": "source_stage_directory_reference",
+            "producer": "routing",
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2673"
+          }
+        ],
+        "meaning": "Explicit source references; branch activation and causal effects remain unproven.",
+        "nodes": [
+          "input",
+          "floorplan",
+          "partition",
+          "placement",
+          "pdn",
+          "hbt",
+          "opt",
+          "cts",
+          "routing",
+          "report",
+          "thermal"
+        ],
+        "order": [
+          "input",
+          "floorplan",
+          "partition",
+          "placement",
+          "pdn",
+          "hbt",
+          "opt",
+          "cts",
+          "routing",
+          "report",
+          "thermal"
+        ],
+        "source_sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+        "status": "source_verified",
+        "task_stage_aliases": {
+          "grt": "routing"
+        }
+      },
+      "unknowns": []
+    },
+    "folder": "/workspace/workspaces/.tao-evolve-full_flow/drafts/draft-2",
+    "key": "draft-2",
+    "mode": "REPAIR_SAME_MECHANISM",
+    "model_budget_before": {
+      "model_cost_available_rmb": "12.19779200",
+      "unresolved_model_calls": 1
+    },
+    "parent_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "phase": "model",
+    "preflight": {
+      "assurance": "source_scope_and_integrity_only",
+      "changed_paths": [
+        "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+      ],
+      "digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+      "errors": [
+        "research_review_missing"
+      ],
+      "portability_card": {
+        "assurance": "source_observations_require_evidence_disposition",
+        "candidate_digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+        "changed_paths": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+        ],
+        "items": {
+          "explanation_scope": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "observed_processes": [
+              "ng45"
+            ],
+            "review_flag_ids": [],
+            "scope": "observed_source_only",
+            "status": "source_observed",
+            "transfer_status": "CROSS_PROCESS_UNVERIFIED"
+          },
+          "failure_behavior": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "review_flag_ids": [],
+            "status": "unknown",
+            "unknowns": [
+              "only_separate_executed_contracts_can_establish_coverage"
+            ]
+          },
+          "feature_origin": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "review_flag_ids": [],
+            "status": "unknown",
+            "unknowns": [
+              "input_feature_information_flow_not_verified"
+            ]
+          },
+          "process_attributes": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "review_flag_ids": [],
+            "status": "unknown",
+            "unknowns": [
+              "process_parameter_origin_not_semantically_verified"
+            ]
+          },
+          "randomness": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "review_flag_ids": [],
+            "status": "unknown",
+            "unknowns": [
+              "seed_use_and_selection_behavior_not_semantically_verified"
+            ]
+          },
+          "scale": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "review_flag_ids": [
+              "cc4ad8c27b9d84f09431",
+              "56c2a1ba3e3e8316a7ad",
+              "060f223f6e250222a531",
+              "b809b1a8a28e249123aa",
+              "5fbaff87efb1274268b3"
+            ],
+            "status": "unknown",
+            "unknowns": [
+              "normalization_population_and_branch_activation_not_verified"
+            ]
+          },
+          "units": {
+            "evidence_refs": [
+              "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306"
+            ],
+            "review_flag_ids": [],
+            "status": "unknown",
+            "unknowns": [
+              "numeric_units_and_conversion_require_source_review"
+            ]
+          }
+        },
+        "review_flags": [
+          {
+            "category": "scale",
+            "id": "cc4ad8c27b9d84f09431",
+            "reason": "numeric constant needs source/unit rationale",
+            "severity": "review",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:315",
+            "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          {
+            "category": "scale",
+            "id": "56c2a1ba3e3e8316a7ad",
+            "reason": "numeric constant needs source/unit rationale",
+            "severity": "review",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:321",
+            "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          {
+            "category": "scale",
+            "id": "060f223f6e250222a531",
+            "reason": "numeric constant needs source/unit rationale",
+            "severity": "review",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:322",
+            "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          {
+            "category": "scale",
+            "id": "b809b1a8a28e249123aa",
+            "reason": "numeric constant needs source/unit rationale",
+            "severity": "review",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:323",
+            "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          },
+          {
+            "category": "scale",
+            "id": "5fbaff87efb1274268b3",
+            "reason": "numeric constant needs source/unit rationale",
+            "severity": "review",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:325",
+            "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          }
+        ],
+        "schema_version": 1,
+        "source_evidence": [
+          {
+            "changed_lines": [
+              306,
+              310,
+              311,
+              312,
+              313,
+              314,
+              315,
+              316,
+              317,
+              318,
+              319,
+              320,
+              321,
+              322,
+              323,
+              324,
+              325,
+              326,
+              327
+            ],
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:306",
+            "source_sha256": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+          }
+        ],
+        "status": "review_required",
+        "unknowns": []
+      },
+      "probes": {
+        "assurance": "READY_FOR_OFFICIAL_UNPROVEN_PHYSICAL",
+        "budget_seconds": 180.0,
+        "cache": {
+          "enabled": true,
+          "reason": "exact_execution_inputs"
+        },
+        "capabilities": {
+          "A0": {
+            "reason": "unaffected_scope",
+            "status": "skipped"
+          },
+          "A1": {
+            "reason": "unaffected_scope",
+            "status": "skipped"
+          },
+          "B0": {
+            "reason": "tested_contract_only",
+            "status": "pass"
+          },
+          "B1": {
+            "reason": "disabled_by_v1_1",
+            "status": "disabled"
+          },
+          "C": {
+            "reason": "public_placement_summary_has_no_current_pin_geometry_or_capacity",
+            "status": "unknown"
+          },
+          "D": {
+            "reason": "disabled_by_v1_1",
+            "status": "disabled"
+          },
+          "E": {
+            "reason": "disabled_by_v1_1",
+            "status": "disabled"
+          },
+          "F": {
+            "reason": "unaffected_scope",
+            "status": "skipped"
+          }
+        },
+        "hard_errors": [],
+        "results": [
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "A0",
+            "reason": "unaffected_scope",
+            "reproducible": false,
+            "status": "skipped"
+          },
+          {
+            "binding": {
+              "mode": "candidate_code_executed",
+              "module": "/workspace/workspaces/bef488b75834ded48302fec1e54dede48d3d2adf/Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py",
+              "python_version": "3.8.10",
+              "source_sha256": {
+                "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py": "613b6ae50038225af1906b3f88fe9e20e791e344e6f0e3cdecde95fbba107e55"
+              },
+              "torch_version": "1.7.1+cu110"
+            },
+            "cache": {
+              "execution_reused": false,
+              "key": "a731e778fb933243fe005a47bf5a33ccd153709c0062a97fb368425690b5683e",
+              "record": "/workspace/scratch/tao-evolve/6eb7bdac44e94227b27fddf42e989687/probe-cache/a731e778fb933243fe005a47bf5a33ccd153709c0062a97fb368425690b5683e.json",
+              "status": "miss",
+              "stored": true
+            },
+            "candidate_bound": true,
+            "contract_verified": true,
+            "coverage": [
+              "density_range",
+              "net_weight_summary",
+              "initialization_region",
+              "pin_projection_and_gradient"
+            ],
+            "elapsed_seconds": 1.075,
+            "evidence_id": "/workspace/scratch/tao-evolve/draft-2/probes-0/B0-first/result.json",
+            "hard_errors": [],
+            "input_class": "synthetic_fixture",
+            "input_current": true,
+            "invariant_errors": [],
+            "kind": "invariant",
+            "metrics": {
+              "density_cases": 10,
+              "initialization_same_seed_equal": true,
+              "weight_cases": 3
+            },
+            "probe": "B0",
+            "reason": "tested_contract_only",
+            "reproducible": false,
+            "status": "pass"
+          },
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "A1",
+            "reason": "unaffected_scope",
+            "reproducible": false,
+            "status": "skipped"
+          },
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "C",
+            "reason": "public_placement_summary_has_no_current_pin_geometry_or_capacity",
+            "reproducible": false,
+            "status": "unknown"
+          },
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "F",
+            "reason": "unaffected_scope",
+            "reproducible": false,
+            "status": "skipped"
+          },
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "B1",
+            "reason": "disabled_by_v1_1",
+            "reproducible": false,
+            "status": "disabled"
+          },
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "D",
+            "reason": "disabled_by_v1_1",
+            "reproducible": false,
+            "status": "disabled"
+          },
+          {
+            "candidate_bound": false,
+            "contract_verified": false,
+            "hard_errors": [],
+            "input_current": false,
+            "kind": "observation",
+            "metrics": {},
+            "probe": "E",
+            "reason": "disabled_by_v1_1",
+            "reproducible": false,
+            "status": "disabled"
+          }
+        ]
+      },
+      "research_assessment": {
+        "assurance": "reference_and_consistency_checks_not_algorithm_quality_proof",
+        "decision": "revise",
+        "errors": [
+          "research_review_missing"
+        ],
+        "measurement_checks": [],
+        "reflection": {},
+        "reflection_subject": {
+          "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "evidence_role": "latest_experiment_for_reflection",
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "task": "full_flow"
+        },
+        "unknowns": [],
+        "version": 1
+      },
+      "review": {
+        "confirmed_violations": [],
+        "disposition": "unknown",
+        "portability_flag_ids": [
+          "cc4ad8c27b9d84f09431",
+          "56c2a1ba3e3e8316a7ad",
+          "060f223f6e250222a531",
+          "b809b1a8a28e249123aa",
+          "5fbaff87efb1274268b3"
+        ],
+        "semantic_warnings": [],
+        "status": "review_required"
+      },
+      "warnings": []
+    },
+    "probe_request_id": "c6d7a066c6f7794d0274da7b909b373e293b2486",
+    "prompt_path": "/workspace/workspaces/.tao-evolve-full_flow/drafts/draft-2/prompt-1.txt",
+    "repair_anchor": {
+      "contract_id": "bef488b75834ded48302fec1e54dede48d3d2adf-crossdie-fraction-guard-v1",
+      "edit_stages": [
+        "placement"
+      ],
+      "main_mechanism": "Gate the automatic fanout-aware cross-die placement weight by the observed cross-die net fraction: apply the 1.30/1.15/1.05 factors only when cross-die nets are at most 12% of all PlaceDB nets; otherwise keep unit net weights. An explicit non-unit cross_die_net_weight remains authoritative."
+    },
+    "repair_count": 1,
+    "repair_errors": [
+      "research_review_missing"
+    ],
+    "research_assessment": {
+      "assurance": "reference_and_consistency_checks_not_algorithm_quality_proof",
+      "decision": "revise",
+      "errors": [
+        "research_review_missing"
+      ],
+      "measurement_checks": [],
+      "reflection": {},
+      "reflection_subject": {
+        "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+        "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+        "evidence_role": "latest_experiment_for_reflection",
+        "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+        "task": "full_flow"
+      },
+      "unknowns": [],
+      "version": 1
+    },
+    "tree_digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+    "turn": {
+      "api_latency_seconds": null,
+      "duration_seconds": 171.52680805302225,
+      "exit_code": 0,
+      "final_message": "**observations**\n- Implemented a 12% cross-die fraction guard in `Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-328`; explicit non-unit weights still override.\n- Parent `ecf5` matrix: 9/9 valid, official score `-6.5938`; all `bp_fe` cells negative, Ariane 1001 clamped to `-100`, Ariane 1003 `+130.39`.\n- Contract written to `draft-2/contract.json` with the exact schema key set and no `reflection` field.\n\n**supporting/counterevidence**\n- Supports: `bp_fe` cross-die ratios are ~12.8\u201313.8%, while `bp`/Ariane are ~3.9\u201311.8%; the guard disables overweighting only for the harmed case.\n- Counter: no same-stage parent/child cells exist, so the mixed result may be seed noise rather than a weight effect.\n\n**competing explanation**\n- Placement density, legalization, CTS, or routing may dominate. Uniformly damping all factors and fully reverting remain untested alternatives.\n\n**next discriminating check**\n- Run the official nine-cell matrix and compare matched post-GRT endpoint metrics against parent `ecf5`, checking `bp_fe` recovery, retained `bp`/Ariane gains, overflow, DRC, and legality.\n\nChecks: `py_compile` passed; toy low/high-fraction and explicit-multiplier checks passed; 4 placement unit tests passed. Unresolved: critical endpoint migration and cross-process generalization remain unknown.",
+      "model": "deepseek-flash",
+      "session_identity_valid": true,
+      "success": true,
+      "terminal_tool_calls": 29,
+      "thread_id": "01a1e465-24f0-7902-ae39-6eb3a36e2ff4",
+      "timed_out": false,
+      "timing_scope": "Agent-turn wall time including client, network, tool execution and waits; not pure API inference",
+      "turn_completed": true
+    }
+  },
+  "active_parent_roles": {
+    "delivery": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+    "exploration": null,
+    "score": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc"
+  },
+  "baseline": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+  "budget_observations": [
+    {
+      "after_available_rmb": "14.71719156",
+      "before_available_rmb": "15",
+      "draft": "draft-1",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "unresolved_model_calls": 0
+    },
+    {
+      "after_available_rmb": "12.46085084",
+      "before_available_rmb": "14.71719156",
+      "draft": "draft-1",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "unresolved_model_calls": 1
+    },
+    {
+      "after_available_rmb": "12.19779200",
+      "before_available_rmb": "12.46085084",
+      "before_unresolved_model_calls": 1,
+      "draft": "draft-2",
+      "pending_model_usage_policy": "continue_after_successful_turn",
+      "semantics": "public_available_balance_not_charge",
+      "settled_cost_rmb": null,
+      "turn_request_id": "5f2d6063b29103a6ad122defc923df8f1f63dbca",
+      "turn_success": true,
+      "unresolved_model_calls": 1
+    }
+  ],
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "draft_failures": 0,
+  "policy_digest": "264c55f0cf17a646abe79b9ba3c7f890dac2b72087176e7047e78b245c7e4af1",
+  "records": [
+    {
+      "contract": {
+        "contract_id": "adf9465b45b1dbe31cbe46636f971623916c656e-crossdie-fanout-weight-v1",
+        "downstream_obligations": [
+          "Preserve partition_assignment.csv, cross_die_nets.csv, die_regions.json, placement DEF and both die ODBs in their existing stage contract.",
+          "Keep die fences, node-to-fence assignment, macro halo, legalization and PDN execution unchanged; only net objective weights may change.",
+          "Keep HBT grid/placement, CTS clock/parasitic models, routing layers/adjustment, endpoint coverage and stage order unchanged.",
+          "Compare parent and child only on matched case/seed/config cells and same-stage reports; do not infer a stage contribution by raw cross-stage subtraction.",
+          "Retain every training case/seed cell, including failures, in later evidence; unknown cells must remain unknown until an official evaluation exists."
+        ],
+        "edit_stages": [
+          "placement"
+        ],
+        "falsifier": "Reject this candidate if a comparable same-stage parent/child evaluation with identical design, seed, config and routing schedule shows no improvement in post-GRT cross-die HPWL or WNS/TNS, or shows increased GRT overflow, DRC, legalization displacement or a PDN/HBT/CTS contract failure; also reject if a paid ablation of the fanout factors is indistinguishable from the parent.",
+        "final_endpoint": "post_grt",
+        "impact_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+          "open3dbench/runner.py:2269"
+        ],
+        "main_mechanism": "In Concurrent LoL global placement, treat the default unit cross-die multiplier as an automatic mode: scale each cross-die net weight by a fanout-aware factor (1.30 for two-pin nets, 1.15 for three-pin nets, 1.05 for four-or-more-pin nets). This gives nets that must traverse an HBT a stronger placement pull toward aligned die-local coordinates, while an explicit non-unit cross_die_net_weight remains authoritative.",
+        "parent_candidate_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+        "physical_invariants": [
+          "Net weights remain finite and positive; only cross-die nets with endpoints on both assigned dies are scaled.",
+          "Die assignment and physical connectivity are not rewritten; cross-die net identity continues to come from pin-to-node assignment.",
+          "Placement units remain DREAMPlace DBU/um consistent; target density, site/row geometry and macro-halo constraints are untouched.",
+          "HBT, PDN, CTS, SDC, clock, Liberty, LEF and RC/parasitic models are not modified by this edit.",
+          "GRT overflow, DRC, unrouted nets, PDN special wires and HBT endpoint checks remain acceptance gates."
+        ],
+        "portability_obligation": "The mechanism depends on a valid partition_assignment, real DEF net/pin identity and DREAMPlace net_weights. It makes no claim for unseen PDKs, designs or seeds; degree thresholds are a source-level timing proxy, not a calibrated criticality model, and the edit must remain confined to the placement objective without changing netlist, PDK, Liberty, LEF, SDC or clock contracts.",
+        "source_refs": [
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+          "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+          "Place-3D/config/placement/concurrent_dreamplace/default.json:3"
+        ],
+        "task": "full_flow",
+        "task_analysis": {
+          "alternative_explanation": "Any post-GRT change could instead come from placement density, legalization displacement or local congestion rather than cross-die weighting. Untested short alternatives are a uniform cross-die weight boost and a backend-density whitespace reserve; neither is claimed as causal without a paid ablation.",
+          "candidate_intervention_set": [
+            "placement"
+          ],
+          "critical_endpoint_migration": "unknown: no verified endpoint identity mapping between parent and child is available, so no migration claim is supported.",
+          "downstream_constraints": "Placement must still emit the same partition handoff, legal DEF and die ODBs; HBT, PDN, OPT, CTS and GRT contracts, PDN special wires, clock/SDC projection, PDK/Liberty/LEF inputs and endpoint coverage remain unchanged. Only matched same-stage parent/child reports may be compared, and no cross-stage raw subtraction may be used to claim a stage cause.",
+          "endpoint_expected_effect": "At post_grt, expect equal or lower cross-die weighted HPWL and possibly lower WNS/TNS if cross-die nets are critical, at the risk of higher local congestion and GRT overflow; sign, magnitude and critical-set migration remain unknown.",
+          "first_observed_divergence": "No official parent/child cell or stage report exists. The first source-observable divergence is at Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:307-322, where the default unit-multiplier path now enters an automatic fanout-aware branch and changes cross-die net_weights; the first physical divergence is unmeasured."
+        },
+        "tradeoff_statement": "Stronger cross-die weights can shorten point-to-point cross-die wirelength and reduce HBT-interface detours, but may pull cells toward die boundaries, raising local density, legalization displacement and GRT overflow; no area, power or runtime improvement is guaranteed.",
+        "unknowns": [
+          "No official scored matrix exists for this campaign; all nine training cells are unscored and no -100 failure cells were supplied.",
+          "No comparable parent/child cell, stage report or cross-process paid ablation is available, so physical sign and magnitude are unknown.",
+          "The post-GRT scoring weights among timing, wirelength, congestion and power are unknown.",
+          "The assumption that low-fanout cross-die nets are timing-critical is unverified for these designs.",
+          "Training case/seed concentration and cross-process generalization are unknown because no scored cell exists.",
+          "Critical endpoint migration is unknown until a verified parent/child endpoint identity mapping exists."
+        ],
+        "verified_impact_refs": [
+          {
+            "first_line": 405,
+            "last_line": 405,
+            "sha256": "0f1ae69eb5019776afa998e70ba1196bd838e15f84e3cb78c969c245c251b87e",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/PlaceDB.py:405",
+            "text": "        return (hpwl_x+hpwl_y)*self.net_weights[net_id]"
+          },
+          {
+            "first_line": 258,
+            "last_line": 271,
+            "sha256": "7f5cc89c291e5d29b959a2b01186d6ad3cf70d62cf1e7620973fefccd27456e1",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/ops/weighted_average_wirelength/weighted_average_wirelength.py:258-271",
+            "text": "        self.net_weights = net_weights\n        self.net_mask = net_mask\n        self.pin_mask = pin_mask\n        self.gamma = gamma\n        self.algorithm = algorithm\n\n    def forward(self, pos):\n        if self.algorithm == 'net-by-net':\n            return WeightedAverageWirelengthFunction.apply(\n                pos,\n                self.flat_netpin,\n                self.netpin_start,\n                self.pin2net_map,\n                self.net_weights,"
+          },
+          {
+            "first_line": 2269,
+            "last_line": 2269,
+            "sha256": "a60d39bb424f30bf80370b8e2b06f1d1b3248149bf5f68d6752aa59c6392788b",
+            "source_ref": "open3dbench/runner.py:2269",
+            "text": "        placement = self.run_dir / STAGE_DIRS[\"placement\"]"
+          }
+        ],
+        "verified_source_refs": [
+          {
+            "first_line": 305,
+            "last_line": 323,
+            "sha256": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:305-323",
+            "text": "def _apply_cross_die_net_weights(placedb, assignment: Mapping[int, str], multiplier: float) -> Tuple[int, float]:\n    cross_die_count = 0\n    automatic_weight = float(multiplier) == 1.0\n    for net_id in range(len(placedb.net2pin_map)):\n        dies = set(_iter_node_dies_for_net(placedb, net_id, assignment))\n        if len(dies) >= 2:\n            cross_die_count += 1\n            factor = float(multiplier)\n            if automatic_weight:\n                degree = len(placedb.net2pin_map[net_id])\n                if degree <= 2:\n                    factor = 1.30\n                elif degree == 3:\n                    factor = 1.15\n                else:\n                    factor = 1.05\n            if factor != 1.0:\n                placedb.net_weights[net_id] *= factor\n    return cross_die_count, float(np.sum(placedb.net_weights))"
+          },
+          {
+            "first_line": 622,
+            "last_line": 626,
+            "sha256": "4a973a00710789f14431164521cdb5124c6b7ef20166f6c9bb92a25b96e85d0d",
+            "source_ref": "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py:622-626",
+            "text": "    cross_die_net_count, net_weight_sum = _apply_cross_die_net_weights(\n        placedb,\n        assignment,\n        float(cfg.get(\"cross_die_net_weight\", 0.2)),\n    )"
+          },
+          {
+            "first_line": 3,
+            "last_line": 3,
+            "sha256": "b527a379386ca6cf1336b00e79c5722761fe7ca46958dc3c7109697f380eff1c",
+            "source_ref": "Place-3D/config/placement/concurrent_dreamplace/default.json:3",
+            "text": "    \"cross_die_net_weight\": 1.0,"
+          }
+        ]
+      },
+      "parent_id": "0c1f0e77dd3961be7408c67eb381f395532a20c6210ebd5ea8d72719d4586188",
+      "receipt": {
+        "artifacts_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+        "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+        "feedback": {
+          "candidate_id": "ecf5ef1b19b8aeb89338114ef61274dbd70086193f4e5d6a8d87c654eecb9cbc",
+          "cells": [
+            {
+              "case": "bp_fe-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -55.26847361545787,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 339.2830195787466,
+                "wns_ns": 0.6848528604730505
+              },
+              "score": -55.26847361545787,
+              "seed": 1001,
+              "tns_improvement": -0.5986346508842654,
+              "valid": true,
+              "wns_improvement": -0.4837598640600486
+            },
+            {
+              "case": "bp_fe-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -11.202262913701672,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 339.2830195787466,
+                "wns_ns": 0.6848528604730505
+              },
+              "score": -11.202262913701672,
+              "seed": 1002,
+              "tns_improvement": 0.006963793162135275,
+              "valid": true,
+              "wns_improvement": -0.2905022625857447
+            },
+            {
+              "case": "bp_fe-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -32.37863930035398,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 339.2830195787466,
+                "wns_ns": 0.6848528604730505
+              },
+              "score": -32.37863930035398,
+              "seed": 1003,
+              "tns_improvement": -0.3017884123252465,
+              "valid": true,
+              "wns_improvement": -0.3567833640209797
+            },
+            {
+              "case": "bp-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -4.719286773631615,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 7709.019494591678,
+                "wns_ns": 7.97252834464225
+              },
+              "score": -4.719286773631615,
+              "seed": 1001,
+              "tns_improvement": -0.08127227400123847,
+              "valid": true,
+              "wns_improvement": 0.0039262416610673185
+            },
+            {
+              "case": "bp-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": 10.095481049074893,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 7709.019494591678,
+                "wns_ns": 7.97252834464225
+              },
+              "score": 10.095481049074893,
+              "seed": 1002,
+              "tns_improvement": 0.17203835590730998,
+              "valid": true,
+              "wns_improvement": -0.005670507634092613
+            },
+            {
+              "case": "bp-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -1.4382908592195527,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 7709.019494591678,
+                "wns_ns": 7.97252834464225
+              },
+              "score": -1.4382908592195527,
+              "seed": 1003,
+              "tns_improvement": -0.02863573894283609,
+              "valid": true,
+              "wns_improvement": 0.006996336933765319
+            },
+            {
+              "case": "ariane133-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": -143.99450727907416,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 136.73199137711958,
+                "wns_ns": 0.7123820253851022
+              },
+              "score": -100.0,
+              "seed": 1001,
+              "tns_improvement": -2.5276540299069543,
+              "valid": true,
+              "wns_improvement": 0.19161836288357742
+            },
+            {
+              "case": "ariane133-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": 5.175826124197975,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 136.73199137711958,
+                "wns_ns": 0.7123820253851022
+              },
+              "score": 5.175826124197975,
+              "seed": 1002,
+              "tns_improvement": -0.1382205608892833,
+              "valid": true,
+              "wns_improvement": 0.3367264944388743
+            },
+            {
+              "case": "ariane133-ng45",
+              "overflow_penalty": 0.0,
+              "raw_score": 130.39150994616116,
+              "reason": null,
+              "reference_mean_deficits": {
+                "tns_ns": 136.73199137711958,
+                "wns_ns": 0.7123820253851022
+              },
+              "score": 130.39150994616116,
+              "seed": 1003,
+              "tns_improvement": 1.9076238495583646,
+              "valid": true,
+              "wns_improvement": 0.3983519743164829
+            }
+          ],
+          "completed_cells": 9,
+          "invalid_cells": 0,
+          "per_case": {
+            "ariane133-ng45": 11.855778690119713,
+            "bp-ng45": 1.312634472074575,
+            "bp_fe-ng45": -32.94979194317118
+          },
+          "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+          "score": -6.593792926992297,
+          "split": "train",
+          "task": "full_flow",
+          "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+          "verified_cells": 9
+        },
+        "files_index": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902/files.json",
+        "logs_dir": "/workspace/evaluations/49518aee056fd7d032539e65aa231e3266846902",
+        "reason": null,
+        "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+        "status": "succeeded"
+      },
+      "tree_digest": "20e9666e0063a5959c44d274170595296391373e7af2599a6d593f9289305f36"
+    }
+  ],
+  "sequence": 2,
+  "stagnation": 0,
+  "task": "full_flow",
+  "task_digest": "d024a8416debe9cd72f2e6da3f0a6cfa459b9e20476cfa1de8f85c69928dce5f",
+  "version": 1
+}

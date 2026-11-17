@@ -1,0 +1,598 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-17T02:38:43.273530+08:00",
+  "runtime_inclusion": false,
+  "task": "full_flow",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "draft_key": "draft-2",
+  "checkout_id": "bef488b75834ded48302fec1e54dede48d3d2adf",
+  "tree_digest": "93e83f6b16c6a019e1df27d6221ff4c42d978a05e4be397f7fa4c747e6e0b7cc",
+  "status": "review_completed_material_design_error",
+  "execution_acceptance": "passed",
+  "quality_review_completed": true,
+  "candidate_quality_accepted": false,
+  "ready_for_next_official_evaluation": false,
+  "overall_conclusion": "Agent已展示完整反馈读取、退化识别、受限源码设计和不确定性表达能力；本次12%开关使用了不一致的网络集合，候选未实现声称的bp_fe干预，因此设计质量审查发现实质缺陷。",
+  "recommendation": "保留当前草稿和首轮冠军，先处理已证实的网络集合不一致，再决定是否消耗下一次官方评估；本审查未修改候选或注入新算法。",
+  "official_evaluations": 1,
+  "second_draft_officially_submitted": false,
+  "second_draft_physical_validity": null,
+  "second_draft_official_score": null,
+  "criteria": [
+    {
+      "id": "Q1",
+      "criterion": "反馈与父代身份",
+      "verdict": "supported",
+      "finding": "最新反馈、编辑父代和合同均绑定首轮ecf5候选及同一campaign，分析承接其自动fanout权重机制。",
+      "evidence": [
+        "acceptance/draft/prompt-0.txt#mandatory.reflection_binding",
+        "acceptance/draft/contract.json#parent_candidate_id",
+        "acceptance/draft/contract-evidence.json#latest_contract"
+      ]
+    },
+    {
+      "id": "Q2",
+      "criterion": "完整九组与退化",
+      "verdict": "supported_with_minor_wording_error",
+      "finding": "输入保留完整九组，报告正确识别bp_fe三组负分及Ariane从-100到+130.39的波动；合同将三个种子九组写为nine seeds。",
+      "evidence": [
+        "acceptance/draft/contract-evidence.json#cells",
+        "acceptance/final-report.md#observations",
+        "acceptance/draft/contract.json#unknowns"
+      ]
+    },
+    {
+      "id": "Q3",
+      "criterion": "对准正式终点",
+      "verdict": "partial",
+      "finding": "设计以post-GRT为终点并保留官方分数，但未分析已提供的WNS/TNS贡献，尤其Ariane1001的WNS改善与TNS严重退化相反。",
+      "evidence": [
+        "acceptance/draft/contract-evidence.json#cells[6]",
+        "acceptance/draft/contract.json#task_analysis.endpoint_expected_effect",
+        "audit-work/contest-source/framework/competition/scoring.py:82-89"
+      ]
+    },
+    {
+      "id": "Q4",
+      "criterion": "跨阶段解释与因果边界",
+      "verdict": "supported_uncertainty_boundary",
+      "finding": "明确承认缺少同campaign的已评估祖先矩阵和端点身份映射，保留seed、density、legalization、CTS及routing的替代解释，未提供已经证明的跨阶段因果链。",
+      "evidence": [
+        "acceptance/draft/contract-evidence.json#risk",
+        "acceptance/draft/contract-evidence.json#endpoint_migration",
+        "acceptance/draft/contract.json#task_analysis.alternative_explanation"
+      ]
+    },
+    {
+      "id": "Q5",
+      "criterion": "机制与实际代码",
+      "verdict": "material_design_error",
+      "finding": "12%阈值来自过滤后的partition网络比例，代码却使用完整PlaceDB网络集合；首轮九组实际比例全部低于12%，预期关闭bp_fe权重的行为在已观测输入中不会发生。",
+      "evidence": [
+        "acceptance/candidate.diff",
+        "runtime_log_evidence.rows",
+        "count_comparison",
+        "audit-work/contest-source/physical/Place-3D/thirdparty/DREAMPlace/dreamplace/convert_common.py:201-225"
+      ]
+    },
+    {
+      "id": "Q6",
+      "criterion": "收益、代价与可推翻假设",
+      "verdict": "testable_statement_but_current_candidate_not_discriminating",
+      "finding": "合同列出bp_fe恢复、保留其他case收益及合法性反证，但当前九组开关均不触发，下一次同条件评估无法有效检验所述关闭权重机制；运行时间和新增列表内存代价未测量。",
+      "evidence": [
+        "acceptance/draft/contract.json#falsifier",
+        "acceptance/draft/contract.json#tradeoff_statement",
+        "acceptance/candidate.diff",
+        "function_verification"
+      ]
+    },
+    {
+      "id": "Q7",
+      "criterion": "证据不足时的判断",
+      "verdict": "partial",
+      "finding": "物理效果、迁移和泛化保持未知，局部预检限定为接口不变量；报告将partition比例直接视作实际开关输入，缺少对数值定义的核对。",
+      "evidence": [
+        "acceptance/draft/contract.json#unknowns",
+        "acceptance/draft/preflight-0.json#probes.assurance",
+        "acceptance/final-report.md#supporting/counterevidence",
+        "runtime_log_evidence.rows"
+      ]
+    }
+  ],
+  "confirmed_insights": [
+    "准确识别bp_fe三个seed持续负分，区分其与Ariane高度依赖seed的收益。",
+    "尝试使用可计算的结构量限制既有权重机制，并保留显式非单位配置覆盖。",
+    "承认缺少祖先对照和因果证据，提出可在同case/seed的post-GRT端点核查的预期。"
+  ],
+  "hypotheses_not_established": [
+    "较高partition cut-net比例导致自动权重伤害bp_fe。",
+    "12%可以跨设计、种子或工艺区分收益与损失。",
+    "放松跨die拉力将改善bp_fe终点且不损害其他case。"
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "high",
+      "status": "confirmed",
+      "title": "阈值输入集合与据以选阈值的统计不同",
+      "details": "报告12.8–13.8%来自partition cut_net_count/net_count。候选实际采用_apply_cross_die_net_weights内跨die计数除以len(placedb.net2pin_map)。公开placement日志同时给出实际计数；bp_fe为3604/32210、3851/32210、3673/32210，全部小于12%。其余六组也小于12%。父代和候选在这些计数下均保留1.30/1.15/1.05自动因素。",
+      "scope_limit": "这是对已有真实输入计数、实际源码和提取函数行为的结论；第二轮完整物理流程未运行，未来成绩保持未知。"
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "status": "confirmed_omission",
+      "title": "终点评分分项已提供但分析没有使用",
+      "details": "Ariane1001的wns_improvement=0.19161836、tns_improvement=-2.52765403，前者贡献约+7.6647分，后者约-151.6592分，得到raw -143.9945并截为-100；报告只引用最终分和结构比例。bp_fe三个WNS改善量均负，seed1002的TNS改善量略正，这些差异没有进入所述机制解释。"
+    },
+    {
+      "id": "F3",
+      "severity": "low",
+      "status": "confirmed_wording_and_measurement_limit",
+      "title": "种子数与运行代价表述需要限定",
+      "details": "实际为三个训练case乘三个seed，共九cells，合同的nine seeds不准确。候选增加cross_die_ids列表与第二次遍历，复杂度仍为线性；新增内存和运行时间未基准测量，运行保障的措辞只能作为未证明的边界。"
+    }
+  ],
+  "count_comparison": [
+    {
+      "case": "bp_fe-ng45",
+      "seed": 1001,
+      "cross_die_count": 3604,
+      "placedb_net_count": 32210,
+      "fraction": 0.11189071716858119,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 3411,
+      "partition_net_count": 26555,
+      "partition_fraction": 0.12845038599133873,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s1/output/run/20_partition/metrics.json#net_count",
+      "parent_score": -55.26847361545787
+    },
+    {
+      "case": "bp_fe-ng45",
+      "seed": 1002,
+      "cross_die_count": 3851,
+      "placedb_net_count": 32210,
+      "fraction": 0.11955914312325365,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 3655,
+      "partition_net_count": 26555,
+      "partition_fraction": 0.13763886273771417,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s2/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s2/output/run/20_partition/metrics.json#net_count",
+      "parent_score": -11.202262913701672
+    },
+    {
+      "case": "bp_fe-ng45",
+      "seed": 1003,
+      "cross_die_count": 3673,
+      "placedb_net_count": 32210,
+      "fraction": 0.11403290903446135,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 3408,
+      "partition_net_count": 26555,
+      "partition_fraction": 0.1283374129165882,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s3/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp_fe-ng45/s3/output/run/20_partition/metrics.json#net_count",
+      "parent_score": -32.37863930035398
+    },
+    {
+      "case": "bp-ng45",
+      "seed": 1001,
+      "cross_die_count": 5844,
+      "placedb_net_count": 173429,
+      "fraction": 0.03369678658125227,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 5831,
+      "partition_net_count": 149382,
+      "partition_fraction": 0.03903415404801114,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp-ng45/s1/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp-ng45/s1/output/run/20_partition/metrics.json#net_count",
+      "parent_score": -4.719286773631615
+    },
+    {
+      "case": "bp-ng45",
+      "seed": 1002,
+      "cross_die_count": 5940,
+      "placedb_net_count": 173429,
+      "fraction": 0.034250327223244094,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 5927,
+      "partition_net_count": 149382,
+      "partition_fraction": 0.0396768017565704,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp-ng45/s2/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp-ng45/s2/output/run/20_partition/metrics.json#net_count",
+      "parent_score": 10.095481049074893
+    },
+    {
+      "case": "bp-ng45",
+      "seed": 1003,
+      "cross_die_count": 5812,
+      "placedb_net_count": 173429,
+      "fraction": 0.03351227303392166,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 5799,
+      "partition_net_count": 149382,
+      "partition_fraction": 0.03881993814515805,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp-ng45/s3/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/bp-ng45/s3/output/run/20_partition/metrics.json#net_count",
+      "parent_score": -1.4382908592195527
+    },
+    {
+      "case": "ariane133-ng45",
+      "seed": 1001,
+      "cross_die_count": 10888,
+      "placedb_net_count": 161308,
+      "fraction": 0.0674982021970392,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 10840,
+      "partition_net_count": 153150,
+      "partition_fraction": 0.07078028077048645,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s1/output/run/20_partition/metrics.json#net_count",
+      "parent_score": -100.0
+    },
+    {
+      "case": "ariane133-ng45",
+      "seed": 1002,
+      "cross_die_count": 18125,
+      "placedb_net_count": 161308,
+      "fraction": 0.11236268504971855,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 18022,
+      "partition_net_count": 153150,
+      "partition_fraction": 0.117675481554032,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s2/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s2/output/run/20_partition/metrics.json#net_count",
+      "parent_score": 5.175826124197975
+    },
+    {
+      "case": "ariane133-ng45",
+      "seed": 1003,
+      "cross_die_count": 11885,
+      "placedb_net_count": 161308,
+      "fraction": 0.07367892478984303,
+      "disables_automatic_weights": false,
+      "synthetic_parent_and_candidate_weights_equal": true,
+      "return_values_equal": true,
+      "partition_cut_net_count": 11830,
+      "partition_net_count": 153150,
+      "partition_fraction": 0.0772445315050604,
+      "partition_numerator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s3/output/run/20_partition/metrics.json#cut_net_count",
+      "partition_denominator_evidence": "49518aee056fd7d032539e65aa231e3266846902:cells/ariane133-ng45/s3/output/run/20_partition/metrics.json#net_count",
+      "parent_score": 130.39150994616116
+    }
+  ],
+  "runtime_log_evidence": {
+    "observed_at": "2026-11-17 02:35:44 +0800",
+    "request_id": "49518aee056fd7d032539e65aa231e3266846902",
+    "files_index_sha256": "d501dd17c0a79536ebbac66c2f7fec48d3a9266117b1cd1585b2c3655f3fa90a",
+    "rows": [
+      {
+        "case": "bp_fe-ng45",
+        "seed": 1001,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/bp_fe-ng45/s1/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/bp_fe-ng45/s1/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "4378e025f11dfd9d49adcf7978637cdbce16558ae9da5c7543509810b5ed0255",
+        "source_bytes": 7174624,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=10632 top=15215 movable_mapped=25847 cross_die_nets=3604 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 28358, #terminals = 0, # terminal_NIs = 2511, #movable = 25847, #nets = 32210"
+          }
+        ]
+      },
+      {
+        "case": "bp_fe-ng45",
+        "seed": 1002,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/bp_fe-ng45/s2/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/bp_fe-ng45/s2/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "1237fe11b3fbee58598abff50f7c647dd892c5b3844d219c08d8d608762f115e",
+        "source_bytes": 7148735,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=10608 top=15239 movable_mapped=25847 cross_die_nets=3851 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 28358, #terminals = 0, # terminal_NIs = 2511, #movable = 25847, #nets = 32210"
+          }
+        ]
+      },
+      {
+        "case": "bp_fe-ng45",
+        "seed": 1003,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/bp_fe-ng45/s3/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/bp_fe-ng45/s3/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "856e3d1805107492b03dc4704717d94201a04d905953088b317395a3ae23523c",
+        "source_bytes": 7302573,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=15055 top=10792 movable_mapped=25847 cross_die_nets=3673 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 28358, #terminals = 0, # terminal_NIs = 2511, #movable = 25847, #nets = 32210"
+          }
+        ]
+      },
+      {
+        "case": "bp-ng45",
+        "seed": 1001,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/bp-ng45/s1/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/bp-ng45/s1/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "bedaad3df05c7fc4d7718a386a6b25f6a6c795945993903e1d2faae11638aa73",
+        "source_bytes": 29373735,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=70124 top=74100 movable_mapped=144224 cross_die_nets=5844 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 145422, #terminals = 0, # terminal_NIs = 1198, #movable = 144224, #nets = 173429"
+          }
+        ]
+      },
+      {
+        "case": "bp-ng45",
+        "seed": 1002,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/bp-ng45/s2/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/bp-ng45/s2/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "ddf3a4b4756ce8105d980eaf2ad6aec5f146b70dc3be5e02a0f127ca2b13f479",
+        "source_bytes": 29690244,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=74086 top=70138 movable_mapped=144224 cross_die_nets=5940 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 145422, #terminals = 0, # terminal_NIs = 1198, #movable = 144224, #nets = 173429"
+          }
+        ]
+      },
+      {
+        "case": "bp-ng45",
+        "seed": 1003,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/bp-ng45/s3/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/bp-ng45/s3/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "367a4c95d87038ffd55e8edab42c3749343cffaac1550d3a98e7cbc6baa6b945",
+        "source_bytes": 29361830,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=70141 top=74083 movable_mapped=144224 cross_die_nets=5812 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 145422, #terminals = 0, # terminal_NIs = 1198, #movable = 144224, #nets = 173429"
+          }
+        ]
+      },
+      {
+        "case": "ariane133-ng45",
+        "seed": 1001,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/ariane133-ng45/s1/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/ariane133-ng45/s1/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "b4e334bd97b37c23273706dd8a556ea65d147f073c429e8e65ec7824fba79007",
+        "source_bytes": 30751610,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=72204 top=59346 movable_mapped=131550 cross_die_nets=10888 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 132045, #terminals = 0, # terminal_NIs = 495, #movable = 131550, #nets = 161308"
+          }
+        ]
+      },
+      {
+        "case": "ariane133-ng45",
+        "seed": 1002,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/ariane133-ng45/s2/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/ariane133-ng45/s2/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "cf23ddc4dcfbb5e464c254fa3c945819782b531cb7be61427f56c15979c878e3",
+        "source_bytes": 30326394,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=59138 top=72412 movable_mapped=131550 cross_die_nets=18125 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 132045, #terminals = 0, # terminal_NIs = 495, #movable = 131550, #nets = 161308"
+          }
+        ]
+      },
+      {
+        "case": "ariane133-ng45",
+        "seed": 1003,
+        "source": "/mnt/taoeda-work/contest-work/full_flow/agent-evaluations/49518aee056fd7d032539e65aa231e3266846902/cells/ariane133-ng45/s3/output/run/30_placement/stages/02_global_place/run.log.gz",
+        "public_key": "cells/ariane133-ng45/s3/output/run/30_placement/stages/02_global_place/run.log",
+        "source_sha256": "aa570e23573d54cc6dea58e20b210665c30e264b2bd6c2ccb2e703d7b84796af",
+        "source_bytes": 30121921,
+        "selected_lines": [
+          {
+            "line": 13,
+            "text": "[INFO   ] DREAMPlace - Concurrent LoL constraints: bottom=59459 top=72091 movable_mapped=131550 cross_die_nets=11885 weight=1"
+          },
+          {
+            "line": 23,
+            "text": "#nodes = 132045, #terminals = 0, # terminal_NIs = 495, #movable = 131550, #nets = 161308"
+          }
+        ]
+      }
+    ]
+  },
+  "function_verification": {
+    "scope": "Extracted original and candidate pure weight functions, using synthetic connectivity with the real nine count pairs. This verifies gate behavior and weight equality for those counts; no physical flow or official evaluation was run.",
+    "rows": [
+      {
+        "case": "bp_fe-ng45",
+        "seed": 1001,
+        "cross_die_count": 3604,
+        "placedb_net_count": 32210,
+        "fraction": 0.11189071716858119,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "bp_fe-ng45",
+        "seed": 1002,
+        "cross_die_count": 3851,
+        "placedb_net_count": 32210,
+        "fraction": 0.11955914312325365,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "bp_fe-ng45",
+        "seed": 1003,
+        "cross_die_count": 3673,
+        "placedb_net_count": 32210,
+        "fraction": 0.11403290903446135,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "bp-ng45",
+        "seed": 1001,
+        "cross_die_count": 5844,
+        "placedb_net_count": 173429,
+        "fraction": 0.03369678658125227,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "bp-ng45",
+        "seed": 1002,
+        "cross_die_count": 5940,
+        "placedb_net_count": 173429,
+        "fraction": 0.034250327223244094,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "bp-ng45",
+        "seed": 1003,
+        "cross_die_count": 5812,
+        "placedb_net_count": 173429,
+        "fraction": 0.03351227303392166,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "ariane133-ng45",
+        "seed": 1001,
+        "cross_die_count": 10888,
+        "placedb_net_count": 161308,
+        "fraction": 0.0674982021970392,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "ariane133-ng45",
+        "seed": 1002,
+        "cross_die_count": 18125,
+        "placedb_net_count": 161308,
+        "fraction": 0.11236268504971855,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      },
+      {
+        "case": "ariane133-ng45",
+        "seed": 1003,
+        "cross_die_count": 11885,
+        "placedb_net_count": 161308,
+        "fraction": 0.07367892478984303,
+        "disables_automatic_weights": false,
+        "synthetic_parent_and_candidate_weights_equal": true,
+        "return_values_equal": true
+      }
+    ]
+  },
+  "endpoint_example": {
+    "case": "ariane133-ng45",
+    "seed": 1001,
+    "wns_improvement": 0.19161836288357742,
+    "tns_improvement": -2.5276540299069543,
+    "wns_score_component": 7.664734515343097,
+    "tns_score_component": -151.65924179441726,
+    "overflow_penalty": 0.0,
+    "raw_score": -143.99450727907416,
+    "official_score": -100.0
+  },
+  "verification_limits": [
+    "提取函数验证使用真实九组计数构造的合成连接，不是完整物理评估。",
+    "报告自述py_compile、toy checks及四项placement测试；本次归档独立确认的是预检B0通过，未另行取回这些自述测试的终端全文。",
+    "未改变runtime、候选、框架、官方账本或模型输入。"
+  ],
+  "evidence_files": [
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/review-criteria.md",
+      "sha256": "d6a8b09ad0698e1af834586e6ddc254dca185d92831839df240b349fb5d45b23"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/acceptance.json",
+      "sha256": "a212b0030bb2d9aaef7e6be62536e4118b262d21711f9a6eb107957ea8df2cca"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/final-report.md",
+      "sha256": "3af1b108970e0117e338325c59dbe0926aecb8e1c4ea26db8bb2e3374c114dff"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/draft/contract.json",
+      "sha256": "d18576d4ce3fae29e3ee0333af4493ac5ed7eae8841f83c466440d270483eced"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/draft/contract-evidence.json",
+      "sha256": "ddf47ff010f5d713ec9858ef0d3a7e6ab2e57b67bac47644690b25a58b1f732e"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/draft/prompt-0.txt",
+      "sha256": "a4d765370ad1ca396a6c113170123c9e704fb23578c08d23e8192b55aeb8c501"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/candidate.diff",
+      "sha256": "d7a1c868bc7ce155f524a2ea05dc2a9cc591cd1e307378489d350c0d86600ef7"
+    },
+    {
+      "path": "/home/lhjysyx/taoeda/agent-development/round-2-design/acceptance/draft/preflight-0.json",
+      "sha256": "5ecbfa90c466a5843d301a4debcf970c42b5c486689ceca0d0bb1931e543f969"
+    }
+  ],
+  "review_inputs_scope": "Same full_flow campaign public training evidence, retained candidate source, original framework/source definitions; no held-out data."
+}

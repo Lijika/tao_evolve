@@ -1,0 +1,11 @@
+{
+  "assurance": "source_scope_and_integrity_only",
+  "changed_paths": [
+    "Place-3D/thirdparty/DREAMPlace/dreamplace/concurrent_lol.py"
+  ],
+  "digest": "20e9666e0063a5959c44d274170595296391373e7af2599a6d593f9289305f36",
+  "errors": [
+    "contract_invalid:contract fields differ: ['reflection']"
+  ],
+  "warnings": []
+}

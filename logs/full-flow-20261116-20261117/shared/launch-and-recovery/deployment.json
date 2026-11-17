@@ -1,0 +1,8 @@
+{
+  "stamp": "20261116-203012",
+  "backup": "/mnt/taoeda-work/agent-development/backups/20261116-203012",
+  "agent_root": "/mnt/taoeda-work/contest-source/agent",
+  "work_root": "/mnt/taoeda-work/contest-work",
+  "runtime_files": 65,
+  "runtime_manifest_sha256": "a77bfb557b48858f44c87876063dee88147cf2c8d52819d661472620f724c65a"
+}

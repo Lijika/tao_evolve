@@ -1,0 +1,115 @@
+{
+  "status": "failed",
+  "ok": false,
+  "observed_at": "2026-11-17 04:30:25 +0800",
+  "campaign_id": "6eb7bdac44e94227b27fddf42e989687",
+  "checks": {
+    "same_campaign_launch": true,
+    "matching_installation": true,
+    "reviewed_runtime_installed": true,
+    "original_harness_and_budget": true,
+    "only_first_official_evaluation": true,
+    "only_first_submit_intent": true,
+    "original_model_rows_and_reservation_preserved": true,
+    "same_journal_campaign": true,
+    "same_task_campaign_and_records": true,
+    "official_checkpoint_session_succeeded": false
+  },
+  "failed_assertions": [
+    "official_checkpoint_session_succeeded"
+  ],
+  "pending": [
+    "second_draft_submit_ready",
+    "fresh_checkpoint_summary",
+    "fresh_official_agent_result"
+  ],
+  "model_call_states": {
+    "settled": 125,
+    "uncertain": 1
+  },
+  "settled_model_cost_rmb": "1.01759352",
+  "reserved_model_cost_rmb": "2.228224",
+  "actual_total_model_charge_rmb": null,
+  "official_evaluations": 1,
+  "quality_review": "pending independent review against round-2-design/review-criteria.md",
+  "physical_validity_of_second_draft": null,
+  "official_score_of_second_draft": null,
+  "scope": "Same-campaign second design checkpoint and evidence; read-only collection.",
+  "artifacts": {
+    "launch.json": {
+      "source": "/mnt/taoeda-work/agent-development/architecture-review-20261117/launch.json",
+      "sha256": "6702e7b892253f3c5a6b0c50629e4163e2050870f4cdf6e65abceb4816bd4178",
+      "bytes": 783
+    },
+    "installation.json": {
+      "source": "/mnt/taoeda-work/agent-development/architecture-review-20261117/installed.json",
+      "sha256": "39154e40b64a806ad0a3727f8db8ab725b8ea23ea2eda6a5b26d73390738e6b5",
+      "bytes": 573
+    },
+    "runtime-manifest.json": {
+      "source": "/mnt/taoeda-work/agent-development/architecture-review-20261117/runtime-manifest.json",
+      "sha256": "b0c8d8b4987a9841f704e0f684b6d64239a7f651a7bb2e74259c77de043cb507",
+      "bytes": 20540
+    },
+    "runtime.json": {
+      "source": "/mnt/taoeda-work/contest-source/agent/full_flow/runtime.json",
+      "sha256": "b331d0825cf60a8748a9e5f1eaf78cfeee99aeabb165cd91fe0c664ff9dcaaea",
+      "bytes": 127
+    },
+    "state.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/state.json",
+      "sha256": "f4c89dea3dd376e084532e57c369db3a60b3f1a6611a7d810cfe8eda8a99af45",
+      "bytes": 52589
+    },
+    "session-result.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/session-result.json",
+      "sha256": "b866bc7834909222a4e1045a9ca36233b163396b08f350b44d5449249c7edf87",
+      "bytes": 485
+    },
+    "draft/contract.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract.json",
+      "sha256": "353d3acc98598bbcbd95dbf0635144818c2c321ff04225fce04cf56c95bafe72",
+      "bytes": 16103
+    },
+    "draft/contract-evidence.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract-evidence.json",
+      "sha256": "380d644ed57bed331362e60c4e2af18a682c5f60f8e9be16f800fe4131de0d9e",
+      "bytes": 19839181
+    },
+    "draft/contract-source-policy.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract-source-policy.json",
+      "sha256": "264c55f0cf17a646abe79b9ba3c7f890dac2b72087176e7047e78b245c7e4af1",
+      "bytes": 10390
+    },
+    "draft/contract-schema.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/contract-schema.json",
+      "sha256": "6807480edf5b15500804a487de102f21f6c00776bc11ab315d6e72cdea3554b1",
+      "bytes": 3265
+    },
+    "draft/prompt-1.txt": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/prompt-1.txt",
+      "sha256": "cd7fd65dbd0e6bd2234c02a369e9a2f5fb688edc306f935d7c01dc7cf0ed5784",
+      "bytes": 14131
+    },
+    "draft/preflight-0.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/workspaces/contest-agent/.tao-evolve-full_flow/drafts/draft-2/preflight-0.json",
+      "sha256": "27c7abb89ea4f9e2c4b5d2840ea89abf4ccc0a4c9c93cc7fa69fdbb0fcbb31d2",
+      "bytes": 11354
+    },
+    "official-codex-state.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/control/contest-agent-codex/state.json",
+      "sha256": "2933cc0a4eb5366bcc3604162b1ec41e94fb771e0d91f6a23fc94fbf7fc46bbb",
+      "bytes": 8066
+    },
+    "turn-result.json": {
+      "source": "/mnt/taoeda-work/contest-work/full_flow/control/contest-agent-codex/5e402ec71f510e94be73342860da383df53e58f3/agent/result.json",
+      "sha256": "0ad567c3fd4a19556c13358cc00da5c7d36ca816c41c8ff90c15dbd05d5f090e",
+      "bytes": 1606
+    },
+    "final-report.md": {
+      "source": "turn-result.json#final_message",
+      "sha256": "fcb9a8a814ef4b1400d0b0fef5e8dcbe38ff5eefe8c0f9b09d12613320566644",
+      "bytes": 1145
+    }
+  }
+}

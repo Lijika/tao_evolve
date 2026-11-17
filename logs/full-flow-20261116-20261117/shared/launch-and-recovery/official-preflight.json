@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "start.py",
+    "--task",
+    "full_flow",
+    "--check",
+    "--agent-cpu",
+    "4",
+    "--agent-memory-gb",
+    "16",
+    "--no-retain-physical-files"
+  ],
+  "returncode": 0,
+  "stdout": "赛题运行数据、镜像与任务配置检查通过。\n",
+  "stderr": ""
+}

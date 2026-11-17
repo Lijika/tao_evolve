@@ -18,3 +18,6 @@ venv/
 # Local execution output
 *.log
 .tao-evolve-*/
+
+# Reviewed historical records on the evolution-logs branch
+!/logs/**/*.log
