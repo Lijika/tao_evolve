@@ -12,6 +12,7 @@ import stat
 from pathlib import Path
 
 from .preflight import check_changes
+from .portability_v11 import build_portability_card
 
 
 def file_digest(path):
@@ -83,31 +84,34 @@ def snapshot_tree(root, retain_python=True, ignore_python_caches=True):
 
 def _review_flags(text):
     """Potential side effects require semantic review, never keyword conviction."""
-    flags = set()
+    flags = {}
     try:
         tree = ast.parse(text)
     except (SyntaxError, ValueError, UnicodeError):
         return flags
     for node in ast.walk(tree):
+        found = set()
         if isinstance(node, (ast.Import, ast.ImportFrom)):
             modules = [n.name for n in node.names] if isinstance(node, ast.Import) else [node.module or ""]
             if any(m.split(".")[0] in {"subprocess", "socket", "requests", "urllib", "ctypes"} for m in modules):
-                flags.add("external_io_or_native_import")
+                found.add("external_io_or_native_import")
         if isinstance(node, ast.Call):
             name = (node.func.id if isinstance(node.func, ast.Name)
                     else node.func.attr if isinstance(node.func, ast.Attribute) else "")
             if name in {"exec", "eval", "__import__", "system", "popen", "setattr", "putenv"}:
-                flags.add("dynamic_code_or_side_effect_call")
+                found.add("dynamic_code_or_side_effect_call")
         if isinstance(node, (ast.Assign, ast.AugAssign)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
             for target in targets:
                 if isinstance(target, ast.Subscript) and isinstance(target.value, ast.Attribute):
                     if target.value.attr in {"environ", "modules", "path"}:
-                        flags.add("runtime_environment_or_import_mutation")
+                        found.add("runtime_environment_or_import_mutation")
+        for flag in found:
+            flags[(flag, ast.dump(node, include_attributes=False))] = node.lineno
     return flags
 
 
-def check_tree(before, root, policy, original_paths=None):
+def check_tree(before, root, policy, original_paths=None, portability_context=None):
     """Check candidate source against the official public allowlist/scoped AST."""
     after = snapshot_tree(root)
     old_entries, entries = before["entries"], after["entries"]
@@ -133,14 +137,23 @@ def check_tree(before, root, policy, original_paths=None):
         if new and name.endswith(".py"):
             new_text = after["python_sources"].get(name, "")
             old_text = before.get("python_sources", {}).get(name, "")
-            for flag in sorted(_review_flags(new_text) - _review_flags(old_text)):
-                warnings.append("semantic_review:%s:%s" % (name, flag))
+            old_flags, new_flags = _review_flags(old_text), _review_flags(new_text)
+            for flag, node in sorted(set(new_flags) - set(old_flags)):
+                warnings.append("semantic_review:%s:%d:%s" % (name, new_flags[(flag, node)], flag))
     bound_policy = dict(policy)
     bound_policy["original_paths"] = list(original_paths if original_paths is not None
                                           else policy.get("original_paths", old_entries))
     errors.extend(check_changes(old_data, new_data, bound_policy))
+    card = build_portability_card(before.get("python_sources", {}),
+                                  after["python_sources"], changed, after["digest"],
+                                  portability_context)
+    review = {"status": "review_required" if warnings or card["review_flags"] else "no_static_findings",
+              "semantic_warnings": warnings,
+              "portability_flag_ids": [flag["id"] for flag in card["review_flags"]],
+              "disposition": "unknown", "confirmed_violations": []}
     return {"errors": sorted(set(errors)), "warnings": warnings, "changed_paths": changed,
             "digest": after["digest"], "snapshot": after,
+            "portability_card": card, "review": review,
             "assurance": "source_scope_and_integrity_only"}
 
 

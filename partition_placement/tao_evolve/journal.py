@@ -28,10 +28,19 @@ class IntentJournal:
     def close(self):
         self.db.close()
 
+    def request_id(self, op: str, logical_key: str) -> str:
+        return hashlib.sha256((self.campaign_id + ":" + op + ":" + logical_key).encode()).hexdigest()[:40]
+
+    def entries(self, op: str):
+        rows = self.db.execute(
+            "SELECT request_id,state,response FROM intents WHERE op=? ORDER BY rowid", (op,))
+        return [{"request_id": row[0], "state": row[1],
+                 "response": json.loads(row[2]) if row[2] is not None else None} for row in rows]
+
     def prepare(self, op: str, logical_key: str, payload: Mapping) -> str:
         # ID intentionally excludes payload: reusing the same logical key with
         # altered arguments is a conflict, not a silently new remote request.
-        rid = hashlib.sha256((self.campaign_id + ":" + op + ":" + logical_key).encode()).hexdigest()[:40]
+        rid = self.request_id(op, logical_key)
         text = canonical(payload)
         self.db.execute("BEGIN IMMEDIATE")
         try:
@@ -54,13 +63,48 @@ class IntentJournal:
         return {"op": row[0], "payload": json.loads(row[1]), "state": row[2],
                 "response": json.loads(row[3]) if row[3] is not None else None}
 
+    def guard_snapshot(self):
+        # SQLite changes its own file bytes on close/reopen; compare committed data.
+        return {
+            "metadata": [list(row) for row in self.db.execute("SELECT key,value FROM metadata ORDER BY key")],
+            "intents": [list(row) for row in self.db.execute(
+                "SELECT request_id,op,payload,state,response FROM intents ORDER BY rowid")],
+            "events": [list(row) for row in self.db.execute("SELECT seq,kind,data FROM events ORDER BY seq")],
+        }
+
+    def guard_matches(self, before, pending_request_id=None):
+        current = self.guard_snapshot()
+        if current == before:
+            return True
+        if (current["metadata"] != before["metadata"]
+                or len(current["intents"]) != len(before["intents"])):
+            return False
+        changed = [(old, new) for old, new in zip(before["intents"], current["intents"]) if old != new]
+        if len(changed) != 1:
+            return False
+        old, new = changed[0]
+        if (new[0] != pending_request_id or old[:3] != new[:3]
+                or new[3] != "guard_pending" or new[4] is None):
+            return False
+        response = json.loads(new[4])
+        if response.get("guard_before", {}).get("journal") != before:
+            return False
+        events = current["events"]
+        prior = before["events"]
+        if events[:len(prior)] != prior:
+            return False
+        suffix = events[len(prior):]
+        expected = {"request_id": new[0], "state": "guard_pending"}
+        return bool(suffix) and all(row[1] == "request_state" and json.loads(row[2]) == expected
+                                    for row in suffix)
+
     def record(self, rid: str, state: str, response: Optional[Mapping] = None):
-        if state not in {"prepared", "sending", "uncertain", "accepted", "running", "reconciling", "succeeded", "failed", "rejected"}:
+        if state not in {"prepared", "sending", "uncertain", "accepted", "running", "reconciling", "succeeded", "failed", "rejected", "guard_rejected", "guard_pending"}:
             raise ValueError("Unknown journal state")
         self.db.execute("BEGIN IMMEDIATE")
         try:
             old = self.get(rid)
-            if old["state"] in {"succeeded", "failed", "rejected"}:
+            if old["state"] in {"succeeded", "failed", "rejected", "guard_rejected"}:
                 if state != old["state"] or (response is not None and response != old["response"]):
                     raise ValueError("Cannot rewrite a terminal receipt")
             else:

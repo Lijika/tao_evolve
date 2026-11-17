@@ -32,14 +32,15 @@ class Runway:
     guaranteed_ten_rounds: bool = False
 
 def plan_runway(s, observed_round_costs=(), reserve=D('1.00'),
-                guarded_backend=False, draft_ready=False, has_legal_champion=False):
+                guarded_backend=False, draft_ready=False, has_legal_champion=False,
+                pending_usage_after_success=False):
     a,r=money(s.available),money(reserve)
     q=None if s.minimum_request_reservation is None else money(s.minimum_request_reservation)
     # An unknown public admission reserve cannot support a bounded-backend claim.
     guarded_backend=guarded_backend and q is not None
     if s.remaining_submissions<0 or s.unresolved_calls<0:
         raise ValueError('Invalid counter')
-    if s.unresolved_calls:
+    if s.unresolved_calls and not pending_usage_after_success:
         return Runway('reconcile',D(0),D(0),D(0))
     if draft_ready and s.evaluation_allowed and s.remaining_submissions>0:
         return Runway('submit_ready',D(0),D(0),D(0))

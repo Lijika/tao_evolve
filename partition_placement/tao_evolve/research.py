@@ -10,10 +10,11 @@ import re
 from .context_v11 import compact_packet
 from .portfolio_v11 import Cell, MatrixResult, paired_risk
 from .task_profiles import get_profile, validate_edit_stages
-from .tradeoff_v11 import DependencyGraph, retention_signal
+from .tradeoff_v11 import (DependencyGraph, retention_signal,
+                          compare_reported_endpoints, hypothesis_interactions)
 
 
-PARSER_VERSION = "tao-evidence-1"
+PARSER_VERSION = "tao-evidence-2"
 FILE_LIMIT = 512 * 1024
 INDEX_LIMIT = 8 * 1024 * 1024
 TOTAL_LIMIT = 8 * 1024 * 1024
@@ -24,6 +25,9 @@ BASE_STRINGS = (
 BASE_LISTS = (
     "edit_stages", "source_refs", "impact_refs", "downstream_obligations",
     "physical_invariants", "unknowns",
+)
+SCORE_COMPONENTS = (
+    "wns_improvement", "tns_improvement", "overflow_penalty", "reference_mean_deficits",
 )
 TASK_FIELDS = {
     "partition_placement": (
@@ -198,6 +202,8 @@ def contract_shape(task):
         shape["task_analysis"]["editable_scope"] = ["partition", "placement"]
     else:
         shape["task_analysis"]["candidate_intervention_set"] = ["selected edit stage"]
+    from .research_record import research_review_shape
+    shape["research_review"] = research_review_shape()
     return shape
 
 
@@ -207,9 +213,14 @@ def validate_model_contract(path, task, checkout_root, changed_paths):
         raise ValueError("contract must be a regular file, not a symlink")
     contract, _ = _read_json(path, 64 * 1024)
     expected_fields = set(BASE_STRINGS + BASE_LISTS + ("task_analysis",))
-    if set(contract) != expected_fields:
+    # Legacy contracts remain readable for the same-campaign recovery path.
+    # The controller's current research assessment requires a new review.
+    if set(contract) not in (expected_fields, expected_fields | {"research_review"}):
         raise ValueError("contract fields differ: " +
                          str(sorted(set(contract).symmetric_difference(expected_fields))))
+    review = contract.get("research_review")
+    unchanged_stop = (not changed_paths and isinstance(review, dict)
+                      and review.get("decision") == "stop")
     for name in BASE_STRINGS:
         if not isinstance(contract[name], str) or not contract[name].strip():
             raise ValueError("contract requires nonempty " + name)
@@ -217,13 +228,15 @@ def validate_model_contract(path, task, checkout_root, changed_paths):
         value = contract[name]
         if (not isinstance(value, list) or
                 any(not isinstance(x, str) or not x.strip() for x in value) or
-                (name not in ("impact_refs", "unknowns") and not value)):
+                (name not in ("impact_refs", "unknowns") and not value
+                 and not (unchanged_stop and name == "edit_stages"))):
             raise ValueError("contract requires string array " + name)
         if len(set(value)) != len(value):
             raise ValueError("duplicate contract entries: " + name)
     if contract["task"] != task or contract["final_endpoint"] != get_profile(task).endpoint:
         raise ValueError("contract task or official endpoint differs")
-    stages = validate_edit_stages(task, contract["edit_stages"])
+    stages = ([] if unchanged_stop and not contract["edit_stages"]
+              else validate_edit_stages(task, contract["edit_stages"]))
     actual = {_stage_for_path(name) for name in changed_paths}
     if actual != set(stages):
         raise ValueError("contract edit_stages differ from actual changed stages")
@@ -316,6 +329,30 @@ def _metric_stage(name):
     if "/analysis/" in name:
         return "endpoint"
     return None
+
+
+def _setup_endpoints(text):
+    """Read actual OpenSTA report_checks blocks; reject incomplete path blocks."""
+    blocks = re.split(r"(?=^\s*Startpoint:)", text, flags=re.MULTILINE)
+    rows = []
+    for block in blocks:
+        if not re.search(r"^\s*Startpoint:", block, re.MULTILINE):
+            continue
+        endpoint = re.findall(r"^\s*Endpoint:\s+(\S+)(?:\s+\([^\n]*)?\s*$",
+                              block, re.MULTILINE)
+        slack = re.findall(r"^\s*([-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)"
+                           r"\s+slack\s+\((?:VIOLATED|MET)\)\s*$",
+                           block, re.MULTILINE)
+        if len(endpoint) != 1 or len(slack) != 1 or not re.search(
+                r"^\s*Path Type:\s+max\s*$", block, re.MULTILINE):
+            raise ValueError("setup_report_path_block_incomplete_or_unsupported")
+        value = float(slack[0])
+        if not math.isfinite(value):
+            raise ValueError("setup_report_nonfinite_slack")
+        rows.append({"endpoint": endpoint[0], "slack_ns": value})
+    if not rows:
+        raise ValueError("setup_report_has_no_parseable_paths")
+    return rows
 
 
 class EvidenceCompiler:
@@ -508,7 +545,7 @@ class EvidenceCompiler:
             keys.append(key)
             public_cell = {name: cell.get(name) for name in
                            ("case", "seed", "score", "raw_score", "valid", "reason")}
-            for name in ("status", "stage", "failure_stage"):
+            for name in ("status", "stage", "failure_stage") + SCORE_COMPONENTS:
                 if name in cell:
                     public_cell[name] = cell[name]
             if cell.get("diagnostics"):
@@ -558,10 +595,16 @@ class EvidenceCompiler:
         index_path = Path(reply["files_index"])
         try:
             index_name = index_path.resolve().relative_to(root)
-            index, _ = _read_json(_inside(root, index_name), INDEX_LIMIT)
+            index, index_raw = _read_json(_inside(root, index_name), INDEX_LIMIT)
         except (OSError, ValueError, UnicodeError) as error:
             summary["unknowns"].append("files_index_unreadable: " + str(error))
             return {}, []
+        summary["public_artifacts"] = {
+            "artifacts_dir": str(root), "files_index": str(index_path.resolve()),
+            "files_index_sha256": _sha(index_raw)}
+        feedback_path = root / "feedback.json"
+        if feedback_path.is_file() and not feedback_path.is_symlink():
+            summary["public_artifacts"]["feedback_file"] = str(feedback_path)
         selected = {}
         errors = []
         total = 0
@@ -572,7 +615,11 @@ class EvidenceCompiler:
                 continue
             receipt = name.endswith("/verified/result.json")
             metric = name.endswith("metrics.json") and _metric_stage(name) is not None
-            if not (receipt or metric):
+            report = name.endswith(("/analysis/assembly/setup.rpt",
+                                    "/output/run/60_opt/assembly/passive/replay_setup.rpt"))
+            manifest = name.endswith(("/analysis/manifest.json",
+                                      "/output/run/60_opt/stage_manifest.json"))
+            if not (receipt or metric or report or manifest):
                 continue
             try:
                 record = index[name]
@@ -587,7 +634,15 @@ class EvidenceCompiler:
                 if record.get("encoding") not in ("identity", "gzip"):
                     raise ValueError("unknown index encoding")
                 path = _inside(root, record["path"])
-                value, raw = _read_json(path, FILE_LIMIT, record["encoding"] == "gzip")
+                if report:
+                    opener = gzip.open if record["encoding"] == "gzip" else open
+                    with opener(str(path), "rb") as handle:
+                        raw = handle.read(FILE_LIMIT + 1)
+                    if len(raw) > FILE_LIMIT:
+                        raise ValueError("setup report exceeds bounded reader limit")
+                    value = {"report_text": raw.decode("utf-8")}
+                else:
+                    value, raw = _read_json(path, FILE_LIMIT, record["encoding"] == "gzip")
                 total += len(raw)
                 if len(raw) != size or _sha(raw) != record.get("source_sha256"):
                     raise ValueError("public artifact hash/size differs from files_index")
@@ -596,7 +651,7 @@ class EvidenceCompiler:
                 errors.append(name + ": " + str(error))
         return selected, errors
 
-    def _observations(self, files, summary):
+    def _cell_receipts(self, files, summary):
         bindings = {}
         for name, (value, _) in files.items():
             if not name.endswith("/verified/result.json"):
@@ -611,6 +666,10 @@ class EvidenceCompiler:
                     value.get("task_digest") == summary["task_digest"] and
                     value.get("status") == "verified"):
                 bindings[(parts[1], parts[2])] = value
+        return bindings
+
+    def _observations(self, files, summary):
+        bindings = self._cell_receipts(files, summary)
         observations = []
         registry = {}
         keys = {(c["case"], c["seed"]) for c in summary["cells"]}
@@ -675,7 +734,106 @@ class EvidenceCompiler:
                                      "source_sha256": digest, "evidence_id": evidence_id})
         return registry, observations
 
-    def compile(self, feedback, parent_feedback=None):
+    def _endpoint_sets(self, files, summary):
+        """Use published manifests and real report paths, never fabricated maps."""
+        rows = []
+        for (case, seed_label), receipt in sorted(self._cell_receipts(files, summary).items()):
+            prefix = "cells/%s/%s/" % (case, seed_label)
+            full = self.task == "full_flow"
+            stage = "endpoint" if full else "opt"
+            folder = prefix + ("analysis/" if full else "output/run/60_opt/")
+            report_name = folder + ("assembly/setup.rpt" if full else
+                                    "assembly/passive/replay_setup.rpt")
+            manifest_name = folder + ("manifest.json" if full else "stage_manifest.json")
+            row = {"case": case, "seed": receipt["seed"]["partition"], "stage": stage,
+                   "candidate_id": summary["candidate_id"], "task_digest": summary["task_digest"],
+                   "status": "unknown", "reason": "published_setup_report_unavailable",
+                   "evidence_id": str(summary["request_id"]) + ":" + report_name,
+                   "scope": "reported_setup_endpoints_only"}
+            rows.append(row)
+            if report_name not in files:
+                continue
+            try:
+                paths = _setup_endpoints(files[report_name][0]["report_text"])
+            except (KeyError, ValueError) as error:
+                row["reason"] = str(error)
+                continue
+            row.update(reported_path_count=len(paths), reported_paths=paths,
+                       violating_endpoints=sorted({p["endpoint"] for p in paths if p["slack_ns"] < 0}),
+                       report_sha256=files[report_name][1],
+                       reason="timing_definition_or_coverage_unverified")
+            metric_name = folder + "metrics.json"
+            metric = files.get(metric_name, ({}, None))[0]
+            definition = self._known_definition(
+                stage, "timing.wns_setup" if full else "final_global.wns_setup", metric, receipt)
+            source = self._binding(
+                "open3dbench/backend/post_route.py" if full else "open3dbench/backend/three_d_opt.py",
+                "ASSEMBLY_STA_TCL" if full else "PASSIVE_GLOBAL_STA_TCL",
+                ["report_checks -path_delay max -group_path_count %d > $::env(%s)" %
+                 (50 if full else 20, "REPORT_SETUP" if full else "OPT_PASSIVE_SETUP")])
+            if not definition.get("coverage_complete") or not source:
+                continue
+            row["measurement_contract"] = {
+                key: definition[key] for key in
+                ("definition", "unit", "view", "clock_model", "parasitic_model", "endpoint_coverage")}
+            row["measurement_contract"].update(report_path_limit_per_group=50 if full else 20,
+                                               report_kind="setup_max",
+                                               parser_version=PARSER_VERSION)
+            row["definition_refs"] = definition["definition_refs"] + source
+            manifest = files.get(manifest_name, ({}, None))[0]
+            row["reason"] = "published_timing_identity_manifest_unavailable"
+            if not manifest:
+                continue
+            artifacts = manifest.get("artifacts", {})
+            if not isinstance(artifacts, dict):
+                continue
+            if full:
+                exporter = self._binding("grt_bench/endpoint.py", "run", [
+                    '"SETUP":"setup.rpt"', '"artifacts": records(output)',
+                    'write_passive_assembly(assembly / "design.v"',
+                    'shutil.copyfile(handoff.assembly_sdc, assembly / "design.sdc")'], True)
+                if (not exporter or manifest.get("endpoint") != receipt.get("endpoint")
+                        or manifest.get("implementation_sha256") != exporter[0]["sha256"]):
+                    row["reason"] = "official_endpoint_manifest_exporter_unverified"
+                    continue
+                names = {"timing_netlist": ("assembly/design.v", "assembly/design.v"),
+                         "sdc": ("assembly/design.sdc", "assembly/design.sdc")}
+                report_record = artifacts.get("assembly/setup.rpt", {})
+                if report_record.get("sha256") != row["report_sha256"]:
+                    row["reason"] = "setup_report_differs_from_endpoint_manifest"
+                    continue
+                row["identity_basis"] = "published_complete_assembly_netlist_and_sdc"
+            else:
+                exporter = self._binding("open3dbench/backend/three_d_opt.py", "optimize", [
+                    '"OPT_PASSIVE_SETUP": str(final_assembly / "passive/replay_setup.rpt")',
+                    'shutil.copytree(best_global_source / "passive", final_assembly / "passive"'])
+                if not exporter or manifest.get("stage") != "opt" or manifest.get("status") != "success":
+                    row["reason"] = "official_opt_final_report_exporter_unverified"
+                    continue
+                names = {"bottom_netlist": ("bottom_verilog", "bottom/design.v"),
+                         "top_netlist": ("top_verilog", "top/design.v"),
+                         "sdc": ("assembly_sdc", "assembly/design.sdc"),
+                         "boundary": ("boundary", "assembly/boundary.json")}
+                row["identity_basis"] = "published_opt_die_netlists_boundary_and_sdc"
+            identity = {}
+            for label, (key, expected_path) in names.items():
+                item = artifacts.get(key, {})
+                fingerprint = item.get("sha256")
+                if (not isinstance(fingerprint, str) or
+                        re.fullmatch(r"[0-9a-f]{64}", fingerprint) is None or
+                        (not full and item.get("path") != expected_path)):
+                    break
+                identity[label] = fingerprint
+            if len(identity) != len(names):
+                row["reason"] = "timing_netlist_or_constraints_identity_record_missing"
+                continue
+            row.update(status="observed", reason=None, identity=identity,
+                       identity_manifest_id=str(summary["request_id"]) + ":" + manifest_name,
+                       identity_manifest_sha256=files[manifest_name][1],
+                       identity_definition_refs=exporter)
+        return rows
+
+    def compile(self, feedback, parent_feedback=None, contract=None):
         summary = self._matrix(feedback)
         files, errors = self._files(feedback, summary)
         summary["unknowns"].extend(errors)
@@ -689,24 +847,57 @@ class EvidenceCompiler:
                                             if self.source_root else
                                             {"status": "unknown", "reason": "source_root_unbound",
                                              "nodes": [], "edges": []}))
+        summary["endpoint_observations"] = self._endpoint_sets(files, summary)
+        summary["hypothesis_graph"] = hypothesis_interactions(contract, summary["source_dependencies"])
+        if summary["endpoint_observations"]:
+            summary["endpoint_migration"]["reason"] = "no_comparable_parent"
         if parent_feedback is not None:
             parent = self.compile(parent_feedback)
-            self._pair(parent, summary)
+            if parent.get("public_artifacts"):
+                summary["comparison_parent_public_artifacts"] = {
+                    "candidate_id": parent["candidate_id"], "request_id": parent["request_id"],
+                    **parent["public_artifacts"]}
+            self._pair(parent, summary, contract)
         summary["stage_conflict_supported"] = any(
             row["local_final_relation"] in ("local_gain_not_retained", "proxy_regression_final_gain")
             for row in summary["tradeoff_ledger"])
         summary["dependency_evidence_available"] = (
             summary["source_dependencies"]["status"] == "source_verified" and
             bool(summary["source_dependencies"]["edges"]))
+        from .research_record import measurement_catalog
+        summary["measurement_catalog"] = measurement_catalog(summary)
         return summary
 
-    def _pair(self, parent, child):
+    def _pair(self, parent, child, contract=None):
         if parent["task_digest"] != child["task_digest"] or not child["task_digest"]:
             child["unknowns"].append("parent_metric_contract_unbound_or_different")
             return
         if parent["candidate_id"] == child["candidate_id"]:
             child["unknowns"].append("parent_and_child_are_same_candidate")
             return
+        endpoint_parent = {(r["case"], r["seed"], r["stage"]): r
+                           for r in parent.get("endpoint_observations", [])}
+        migrations = []
+        for row in child.get("endpoint_observations", []):
+            key = (row["case"], row["seed"], row["stage"])
+            old = endpoint_parent.get(key, {})
+            result = compare_reported_endpoints(old, row)
+            result.update(case=key[0], seed=key[1], stage=key[2])
+            if result["status"] != "compared":
+                result["parent_reason"] = old.get("reason", "parent_setup_report_unavailable")
+                result["child_reason"] = row.get("reason")
+            migrations.append(result)
+        compared_count = sum(r["status"] == "compared" for r in migrations)
+        expected_keys = {(c["case"], c["seed"]) for c in child["cells"]}
+        compared_keys = {(r["case"], r["seed"]) for r in migrations if r["status"] == "compared"}
+        child["endpoint_migration"] = {
+            "status": "compared" if compared_count else "unknown",
+            "reason": None if compared_count else "no_verified_comparable_endpoint_identity",
+            "rows": migrations, "scope": "reported_setup_endpoints_only",
+            "all_constrained_tns": "use_official_feedback",
+            "compared_cells": compared_count, "expected_cells": len(expected_keys),
+            "coverage": ("complete_training_matrix" if expected_keys and compared_keys == expected_keys
+                         else "partial_or_unavailable")}
         if parent["matrix_complete"] and child["matrix_complete"]:
             def matrix(row):
                 return MatrixResult(row["campaign_id"], row["task"], row["candidate_id"],
@@ -738,6 +929,20 @@ class EvidenceCompiler:
                      "observed_benefit": "unknown", "observed_cost": "unknown",
                      "local_final_relation": "insufficient_evidence",
                      "critical_set_change": "unknown"}
+            graph = child["source_dependencies"]
+            source_stage = graph.get("task_stage_aliases", {}).get(observed["stage"], observed["stage"])
+            downstream = {source_stage}
+            for _ in graph.get("nodes", []):
+                downstream.update(edge["consumer"] for edge in graph["edges"]
+                                  if edge["producer"] in downstream)
+            entry["affected_consumers"] = [
+                {"stage": edge["consumer"], "source_ref": edge["source_ref"],
+                 "relation": "source_dependency_not_causal"}
+                for edge in graph["edges"] if edge["producer"] in downstream]
+            matching = next((r for r in migrations if
+                             (r["case"], r["seed"], r["stage"]) == (key[0], key[1], observed["stage"])), None)
+            if matching and matching["status"] == "compared":
+                entry["critical_set_change"] = matching
             if old["contract"] != observed["contract"]:
                 entry.update(status="incomparable", reason="measurement_contract_mismatch")
             else:
@@ -758,6 +963,31 @@ class EvidenceCompiler:
                 else:
                     entry["reason"] = "direction_or_endpoint_coverage_unknown"
             child["tradeoff_ledger"].append(entry)
+        groups = {}
+        for entry in child["tradeoff_ledger"]:
+            if entry["status"] == "compared":
+                groups.setdefault(entry["metric_id"], []).append(entry)
+        consistency = {}
+        for metric_id in {entry["metric_id"] for entry in child["tradeoff_ledger"]}:
+            paired = groups.get(metric_id, [])
+            by_case = {}
+            for row in paired:
+                by_case.setdefault(row["case"], []).append(row["gain"])
+            consistency[metric_id] = {
+                "scope": "observed_comparable_training_pairs",
+                "compared_cells": len(paired), "expected_cells": len(child["cells"]),
+                "per_case": {case: {"mean_gain": sum(gains) / len(gains),
+                                    "negative_cells": sum(g < 0 for g in gains),
+                                    "seed_spread": max(gains) - min(gains)}
+                             for case, gains in sorted(by_case.items())}}
+        for entry in child["tradeoff_ledger"]:
+            entry["case_consistency"] = consistency[entry["metric_id"]]
+            entry["next_discriminating_action"] = {
+                "status": "proposed" if contract else "requires_current_run_choice",
+                "contract_falsifier": (contract or {}).get("falsifier"),
+                "check": ("verify_measurement_definition_and_coverage" if entry["status"] != "compared"
+                          else "inspect_source_consumers_and_test_matched_official_endpoint"),
+                "evidence_ids": entry["evidence_ids"]}
 
 
 def summarize_feedback(feedback, campaign_id, parent_feedback=None):
@@ -807,14 +1037,26 @@ def build_prompt(task, checkout, source_policy, state, evidence, contract_path,
     if evidence and (evidence.get("task") != task or
                      (campaign and evidence.get("campaign_id") != campaign)):
         raise ValueError("prompt evidence task/campaign differs")
+    evidence = dict(evidence or {})
+    from .research_record import measurement_catalog, REFLECTION_FIELDS
+    for key in ("reflection_memory", "preflight_context", "review_context"):
+        if key in state and key not in evidence:
+            evidence[key] = state[key]
+    evidence["measurement_catalog"] = measurement_catalog(evidence)
+    evidence["hypothesis_graph"] = hypothesis_interactions(
+        evidence.get("latest_contract"), evidence.get("source_dependencies", {}))
     destination = Path(contract_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     policy_path = destination.parent / (destination.stem + "-source-policy.json")
     evidence_path = destination.parent / (destination.stem + "-evidence.json")
+    schema_path = destination.parent / (destination.stem + "-schema.json")
+    schema = contract_shape(task)
+    schema_raw = _dump(schema).encode("utf-8")
     policy_raw = _dump(source_policy).encode("utf-8")
     evidence_raw = _dump(evidence or {}).encode("utf-8")
     policy_path.write_bytes(policy_raw)
     evidence_path.write_bytes(evidence_raw)
+    schema_path.write_bytes(schema_raw)
     folder = Path(__file__).resolve().parent.parent / "prompts"
     names = ["00_initial.txt", "01_plan_" + task + ".txt", "02_edit.txt",
              "04_reflect_" + task + ".txt"]
@@ -828,9 +1070,8 @@ def build_prompt(task, checkout, source_policy, state, evidence, contract_path,
             "evidence_candidate_id": (evidence or {}).get("candidate_id"),
             "evidence_request_id": (evidence or {}).get("request_id"),
             "selected_parent_candidate_id": state.get("parent_candidate_id", checkout.get("parent")),
-            "instruction": "Reflect on the latest experiment, including failures and lower scores. "
-                           "Use the selected parent checkout as the edit base. Read latest_contract and "
-                           "selected_parent_evidence in the evidence file when present.",
+            "instruction": "Analyze latest failure/success; edit selected parent. "
+                           "Read latest_contract/selected_parent_evidence.",
         },
         "rule_packet": {"task": task, "endpoint": profile.endpoint,
                         "editable_stages": sorted(profile.editable_stages),
@@ -845,8 +1086,19 @@ def build_prompt(task, checkout, source_policy, state, evidence, contract_path,
                             "model_budget_mode", "unresolved_model_calls",
                             "budget_envelope_rmb", "budget_mode",
                             "remaining_agent_submissions") if key in state}},
-        "action_contract_schema": contract_shape(task),
+        "action_contract_schema": {
+            "path": str(schema_path.resolve()), "sha256": _sha(schema_raw),
+            "field_count": len(schema), "research_review_required": True,
+            "instruction": "Read the full schema file."},
         "evidence_pointer": {"path": str(evidence_path.resolve()), "sha256": _sha(evidence_raw)},
+        "research_context": {
+            "measurement_catalog": "evidence_pointer#measurement_catalog",
+            **{key: "evidence_pointer#" + key for key in (
+                "reflection_memory", "preflight_context", "review_context", "hypothesis_graph")
+               if evidence.get(key)}},
+        "public_artifacts": {key: value for key, value in
+                             (evidence or {}).get("public_artifacts", {}).items()
+                             if key in ("files_index", "files_index_sha256")},
         "official_score": (evidence or {}).get("official_score"),
         "all_cells": (evidence or {}).get("cells", []),
         "selected_parent_cells": (evidence or {}).get("selected_parent_evidence", {}).get("cells", []),
@@ -855,9 +1107,46 @@ def build_prompt(task, checkout, source_policy, state, evidence, contract_path,
                                   "unknowns": (evidence or {}).get("unknowns", []),
                                   "repair_errors": repair_errors or []},
     }
+    memory = evidence.get("reflection_memory", [])
+    if isinstance(memory, list) and memory:
+        latest = memory[-1]
+        reflection = latest.get("reflection") or {}
+        mandatory["reflection_memory_preview"] = {
+            "candidate_id": latest.get("candidate_id"), "request_id": latest.get("request_id"),
+            "parent_candidate_id": latest.get("parent_candidate_id"),
+            "reflection_subject": latest.get("reflection_subject"),
+            "reflection": {key: str(reflection.get(key, "unknown"))[:24]
+                           for key in REFLECTION_FIELDS},
+            "preview_only": True, "read_complete": "evidence_pointer#reflection_memory"}
     optional = [(name, evidence[name]) for name in (
-        "failure_diagnostics", "risk", "tradeoff_ledger", "source_dependencies", "metric_registry",
+        "reflection_memory", "review_context", "preflight_context", "failure_diagnostics",
+        "risk", "hypothesis_graph", "tradeoff_ledger", "source_dependencies", "metric_registry",
         "observations", "endpoint_migration", "latest_contract",
         "selected_parent_evidence") if evidence and evidence.get(name)]
+    if compact:
+        cells = mandatory["all_cells"]
+        if any(name in cell for cell in cells for name in SCORE_COMPONENTS):
+            reference_values, reference_rows = [], []
+            for cell in cells:
+                value = cell.get("reference_mean_deficits")
+                if value not in reference_values:
+                    reference_values.append(value)
+                reference_rows.append(reference_values.index(value))
+            mandatory["official_cell_components"] = {
+                "columns": SCORE_COMPONENTS[:-1],
+                "rows_aligned_with_all_cells": [[cell.get(name) for name in SCORE_COMPONENTS[:-1]]
+                                                for cell in cells],
+                "reference_mean_deficits": {
+                    "values": reference_values, "value_ids_aligned_with_all_cells": reference_rows}}
+        for key in ("all_cells", "selected_parent_cells"):
+            mandatory[key] = [{name: value for name, value in cell.items()
+                               if name not in SCORE_COMPONENTS} for cell in mandatory[key]]
+        for key, column_key in (("all_cells", "all_cell_columns"),
+                                ("selected_parent_cells", "selected_parent_cell_columns")):
+            cells = mandatory[key]
+            if cells:
+                columns = sorted({name for cell in cells for name in cell})
+                mandatory[column_key] = columns
+                mandatory[key] = [[cell.get(name) for name in columns] for cell in cells]
     # The controller adds its execution restrictions after this packet.
     return compact_packet(mandatory, optional, (10 * 1024 if compact else 16 * 1024) - 1024)

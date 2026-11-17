@@ -13,6 +13,14 @@ from .portfolio_v11 import Cell, MatrixResult, complete_official
 TERMINAL = frozenset(("succeeded", "failed", "rejected"))
 
 
+class LocalGuardViolation(RuntimeError):
+    pass
+
+
+class GuardStatusUnavailable(RuntimeError):
+    pass
+
+
 def digest(value):
     # Match the documented task JSON identity, including ASCII escaping.
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
@@ -132,11 +140,51 @@ class PublicAdapter:
                 raise ValueError("Unknown evaluation status")
             self.sleep(5)
 
+    def verify_after(self, journal, rid, frozen, response, after_call):
+        """Keep a failed check bound to its original snapshot and original receipt."""
+        if not after_call:
+            return
+        for attempt in range(3):
+            try:
+                after_call(frozen)
+                return
+            except LocalGuardViolation as error:
+                journal.record(rid, "guard_rejected", {
+                    "official_response": response, "guard_error": str(error)})
+                raise
+            except GuardStatusUnavailable as error:
+                if attempt < 2:
+                    self.sleep(1)
+                    continue
+                pending_error = error
+            except Exception as error:
+                pending_error = error
+            journal.record(rid, "guard_pending", {
+                "official_response": response, "guard_before": frozen,
+                "guard_error": str(pending_error)})
+            raise RuntimeError("Model turn local guard verification pending: " + rid) from pending_error
+
     def codex(self, journal, logical_key, prompt, before_call=None, after_call=None):
         rid = journal.prepare("codex", logical_key, {"prompt": prompt})
         local = journal.get(rid)
+        if local["state"] == "guard_rejected":
+            raise RuntimeError("Model turn rejected by local guard: " + rid)
         if local["state"] in {"succeeded", "failed"}:
             return local["response"]
+        if local["state"] == "guard_pending":
+            saved = local["response"] or {}
+            if not after_call or not saved.get("guard_before"):
+                raise RuntimeError("Model turn local guard verification pending: " + rid)
+            self.verify_after(journal, rid, saved["guard_before"],
+                              saved.get("official_response"), after_call)
+            result = saved.get("official_response")
+            if not isinstance(result, dict) or type(result.get("success")) is not bool:
+                # No new model dispatch or pre-call snapshot can supply a lost receipt.
+                raise RuntimeError("Original model receipt still requires reconciliation: " + rid)
+            if result.get("status") in {"running", "reconciliation_required"}:
+                raise RuntimeError("Original model turn still requires reconciliation: " + rid)
+            journal.record(rid, "succeeded" if result["success"] else "failed", result)
+            return result
         errors = 0
         while True:
             journal.record(rid, "sending")
@@ -144,8 +192,7 @@ class PublicAdapter:
             try:
                 result = self.context.codex_turn(prompt, request_id=rid)
             except (RuntimeError, OSError):
-                if after_call:
-                    after_call(frozen)
+                self.verify_after(journal, rid, frozen, None, after_call)
                 # A lost reply can still have spent money and changed the workspace.
                 journal.record(rid, "uncertain")
                 errors += 1
@@ -153,8 +200,7 @@ class PublicAdapter:
                     raise
                 self.sleep(5)
                 continue
-            if after_call:
-                after_call(frozen)
+            self.verify_after(journal, rid, frozen, result, after_call)
             if result.get("status") == "running" and result.get("retryable") is True:
                 journal.record(rid, "running", result)
                 self.sleep(5)

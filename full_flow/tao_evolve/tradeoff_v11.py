@@ -63,6 +63,86 @@ def endpoint_turnover(parent_top, child_top, mapping_verified=False):
     if not a or not b:return None
     return 1.0-len(a&b)/float(len(a|b))
 
+
+def compare_reported_endpoints(parent, child):
+    """Compare bounded setup-report sets only when their identity proof matches.
+
+    Equal complete timing-netlist and SDC records establish a deliberately
+    narrow identity case. Changed netlists need a separate mapping proof.
+    Reported endpoint sets are not the complete TNS endpoint universe.
+    """
+    result = {"status": "unknown", "reason": "endpoint_identity_unverified",
+              "scope": "reported_setup_endpoints_only",
+              "all_constrained_tns": "use_official_feedback",
+              "turnover": None}
+    if parent.get("status") != "observed" or child.get("status") != "observed":
+        result["reason"] = "endpoint_report_or_identity_evidence_unavailable"
+        return result
+    if any(parent.get(key) != child.get(key) for key in
+           ("task_digest", "case", "seed", "stage", "measurement_contract")):
+        result["reason"] = "endpoint_measurement_contract_differs"
+        return result
+    if not parent.get("identity") or parent["identity"] != child.get("identity"):
+        result["reason"] = "timing_netlist_or_constraints_changed_no_identity_mapping"
+        return result
+    if parent.get("candidate_id") == child.get("candidate_id"):
+        result["reason"] = "parent_and_child_are_same_candidate"
+        return result
+    old, new = set(parent["violating_endpoints"]), set(child["violating_endpoints"])
+    result.update(status="compared", reason=None, mapping_verified=True,
+                  mapping_basis=child.get("identity_basis",
+                                          "identical_published_timing_netlist_and_constraints"),
+                  parent_endpoints=sorted(old), child_endpoints=sorted(new),
+                  added=sorted(new - old), removed=sorted(old - new),
+                  retained=sorted(old & new), union=sorted(old | new),
+                  parent_reported_path_count=parent["reported_path_count"],
+                  child_reported_path_count=child["reported_path_count"],
+                  turnover=endpoint_turnover(old, new, True),
+                  evidence_ids=[parent["evidence_id"], child["evidence_id"]])
+    if old or new:
+        # An empty reported violating set is known here, not a missing report.
+        result["turnover"] = 1.0 - len(old & new) / float(len(old | new))
+    return result
+
+
+def hypothesis_interactions(contract, source_graph):
+    """Retain current-run proposed propagation separately from the source DAG."""
+    if not contract:
+        return {"status": "unknown", "reason": "no_current_contract",
+                "nodes": [], "edges": []}
+    stages = contract.get("edit_stages", [])
+    aliases = source_graph.get("task_stage_aliases", {})
+    selected = {aliases.get(stage, stage) for stage in stages}
+    source_edges = source_graph.get("edges", [])
+    downstream = set(selected)
+    for _ in range(len(source_graph.get("nodes", []))):
+        reached = {edge["consumer"] for edge in source_edges
+                   if edge["producer"] in downstream}
+        if reached.issubset(downstream):
+            break
+        downstream.update(reached)
+    review = contract.get("research_review", {})
+    checks = review.get("measurement_checks", []) if isinstance(review, dict) else []
+    supporting = [item["evidence_id"] for item in checks
+                  if isinstance(item, dict) and item.get("use") == "support"
+                  and isinstance(item.get("evidence_id"), str)]
+    counter = [item["evidence_id"] for item in checks
+               if isinstance(item, dict) and item.get("use") == "counterevidence"
+               and isinstance(item.get("evidence_id"), str)]
+    edges = [{"producer": edge["producer"], "consumer": edge["consumer"],
+              "status": "tentative", "hypothesis": contract.get("main_mechanism"),
+              "benefit_and_cost": contract.get("tradeoff_statement"),
+              "structural_dependency_ref": edge["source_ref"],
+              "supporting_measurement_ids": supporting,
+              "counterevidence_ids": counter}
+             for edge in source_edges if edge["producer"] in downstream]
+    return {"status": "proposed", "contract_id": contract.get("contract_id"),
+            "nodes": sorted(downstream), "intervention_stages": sorted(selected),
+            "edges": edges, "falsifier": contract.get("falsifier"),
+            "alternative_explanation": contract.get("task_analysis", {}).get("alternative_explanation"),
+            "meaning": "Model-proposed propagation on source dependencies; no proven causal interaction.",
+            "causal_status": "hypothesis"}
+
 class DependencyGraph:
     """Edges MUST be constructed from current official flow/code, not model guesses."""
     def __init__(self, edges):
